@@ -25,7 +25,7 @@ Android 地铁到站查询 App：打开即定位 → 找最近地铁站 → 用*
 | 线路主题色 + 自适应前景色 | `domain/LineVisuals.kt`，权威色在 `city_beijing.json` 的 `LineRef.color` |
 | 用户分时段校准 + 两小时到站锚点 | `domain/UserCalibration.kt`、`data/model/UserOverrides.kt#ArrivalObservation` |
 | 系统预计 / 用户校准口径切换（全局记忆、无样本回退） | `domain/ArrivalDisplayMode.kt`、`data/source/SettingsStore.kt` |
-| 用户自填区间车 | `domain/ShortTurnPlanner.kt` + `ui/SettingsScreen.kt` 的「区间车」分组 |
+| 用户自填区间车 | `domain/ShortTurnPlanner.kt` + `ui/ShortTurnManagementScreen.kt` 独立页面 |
 | 分线路/交路/日型管理总班次数、同班沿途站修正与防超车 | `domain/DepartureSchedulePlanner.kt`、`domain/TripStationPlanner.kt`、`ui/ScheduleManagementScreen.kt`、`docs/departure-schedule-management.md` |
 | 首班 / 末班 / 首末班标志、收车空态 | `ArrivalEstimator.serviceWindow()`、`StationServiceWindow.isFinishedAt` |
 | 深/浅/跟随系统主题、我的线路按城市折叠与置顶 | `ui/SettingsScreen.kt`、`ui/MetroBottomDock.kt`、`data/source/SettingsStore.kt` |
@@ -202,7 +202,7 @@ App 内调试选站入口已按产品要求移除。界面验证优先使用主�
    - 用完切回 Gboard：`ime set com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME`。
    - 仓库里的 `tools/emulator-input/type-text.ps1` 仍可用（它走 `ADB_INPUT_B64`），但 B64 已非必须。
 5. **验证依赖「当前时刻」的 UI**（首末班标志、收车空态）：App **没有**调试时钟，模拟器也改不了系统时间，只能**改数据**绕过时钟：
-   - 先用设置页正常录入一条区间车，再 `run-as` 覆写 `files/user_overrides.json`；
+   - 先用独立“区间车”页面正常录入一条区间车，再 `run-as` 覆写 `files/user_overrides.json`；
    - `departures` 设成**未来**时刻 → 能看到班次行与首末班标签；设成**已过去**的时刻 → 触发「今日已收车 · 首班 XX:XX」；
    - 必须同时用 `"patternEnabled": {"forward": false, "reverse": false}` **关掉内置全程车交路**，否则被测班次会被「每方向最近 3 班」截断、根本看不见；
    - 改完 `am force-stop` + `am start` 生效；

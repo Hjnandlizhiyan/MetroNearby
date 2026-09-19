@@ -18,7 +18,7 @@ object NetworkMapCatalog {
             id = DEFAULT_CITY_ID,
             provinceName = "北京市",
             cityName = "北京",
-            title = "北京地铁线网图",
+            title = "北京地铁",
             sourceLabel = "北京京港地铁官网",
             updatedAt = "2026-05-16"
         )

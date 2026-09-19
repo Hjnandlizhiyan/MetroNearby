@@ -1,16 +1,21 @@
 package com.metronearby.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.metronearby.R
 import com.metronearby.data.MetroRepository
@@ -47,17 +52,11 @@ fun SubscriptionBoard(
                         modifier = Modifier.size(176.dp)
                     )
                     Text("还没有订阅站点", style = MaterialTheme.typography.titleMedium)
-                    Text(
-                        "搜索常用站，进入站点后点击“订阅本站”。",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+                    Text("搜索常用站，进入站点后点击“订阅本站”。", style = MaterialTheme.typography.bodyMedium)
                     TextButton(onClick = onAdd) { Text("添加订阅站点") }
                 }
             } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text("常用站与通勤方向", style = MaterialTheme.typography.titleLarge)
                         Text("关注的站点集中查看，保存在本机。", style = MaterialTheme.typography.bodyMedium)
@@ -73,17 +72,57 @@ fun SubscriptionBoard(
         }
         items(subscriptions, key = { TransferStationResolver.normalize(it.stationName) }) { subscription ->
             val previews = remember(subscription, lines, now, service, arrivalDisplayMode) {
-                StationSubscriptions.preview(subscription, models, overrides, service, now, clock.timeInMillis, arrivalDisplayMode)
+                StationSubscriptions.preview(
+                    subscription, models, overrides, service, now, clock.timeInMillis, arrivalDisplayMode
+                )
             }
-            Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(subscription.stationName, style = MaterialTheme.typography.titleLarge)
-                    Text(StationSubscriptions.description(subscription, models), style = MaterialTheme.typography.bodyMedium)
+            val primaryColor = subscriptionColor(previews.firstOrNull()?.lineColorHex)
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = primaryColor.copy(alpha = 0.10f))
+            ) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        SubscriptionLineBadge(previews.firstOrNull()?.lineName, previews.firstOrNull()?.lineColorHex)
+                        Spacer(Modifier.width(10.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(subscription.stationName, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                            Text(
+                                StationSubscriptions.description(subscription, models),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                     previews.forEach { preview ->
-                        if (previews.size > 1) Text("${preview.lineName} · ${preview.direction}", style = MaterialTheme.typography.labelLarge)
-                        Text(StationSubscriptions.arrivalText(preview, now, arrivalDisplayMode), color = MaterialTheme.colorScheme.primary)
-                        StationSubscriptions.arrivalModeNote(preview, now, arrivalDisplayMode)?.let {
-                            Text(it, color = MaterialTheme.colorScheme.tertiary, style = MaterialTheme.typography.bodySmall)
+                        val lineColor = subscriptionColor(preview.lineColorHex)
+                        Surface(
+                            color = lineColor.copy(alpha = 0.12f),
+                            shape = RoundedCornerShape(14.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(Modifier.padding(horizontal = 12.dp, vertical = 10.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    if (previews.size > 1) {
+                                        SubscriptionLineBadge(preview.lineName, preview.lineColorHex)
+                                        Spacer(Modifier.width(8.dp))
+                                    }
+                                    Text(
+                                        if (previews.size > 1) preview.direction else "${preview.lineName} · ${preview.direction}",
+                                        style = MaterialTheme.typography.labelLarge,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                }
+                                Text(
+                                    StationSubscriptions.arrivalText(preview, now, arrivalDisplayMode),
+                                    color = subscriptionReadableColor(preview.lineColorHex),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                StationSubscriptions.arrivalModeNote(preview, now, arrivalDisplayMode)?.let {
+                                    Text(it, color = MaterialTheme.colorScheme.tertiary, style = MaterialTheme.typography.bodySmall)
+                                }
+                            }
                         }
                     }
                     Row {
@@ -94,10 +133,39 @@ fun SubscriptionBoard(
                 }
             }
         }
-        item { Text("到站时间为离线时刻表推算，仅供参考。当前口径：${arrivalDisplayMode.displayName}。", style = MaterialTheme.typography.bodySmall) }
+        item {
+            Text(
+                "到站时间为离线时刻表推算，仅供参考。当前口径：${arrivalDisplayMode.displayName}。",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
         item { Spacer(Modifier.height(16.dp)) }
     }
 }
+
+@Composable
+private fun SubscriptionLineBadge(lineName: String?, colorHex: String?) {
+    val label = LineVisuals.badgeText(lineName) ?: "线"
+    val parsed = LineVisuals.parseHexColor(colorHex)
+    val background = parsed?.let { Color(it.toArgb()) } ?: MaterialTheme.colorScheme.primary
+    val foreground = parsed?.let { Color(LineVisuals.foregroundOn(it).toArgb()) } ?: Color.White
+    Box(
+        modifier = Modifier.defaultMinSize(minWidth = 28.dp, minHeight = 28.dp)
+            .background(background, CircleShape).padding(horizontal = 6.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(label, color = foreground, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+private fun subscriptionColor(colorHex: String?): Color =
+    LineVisuals.parseHexColor(colorHex)?.let { Color(it.toArgb()) } ?: MaterialTheme.colorScheme.primary
+
+@Composable
+private fun subscriptionReadableColor(colorHex: String?): Color =
+    LineVisuals.parseHexColor(colorHex)?.let { Color(LineVisuals.readableOnLightSurface(it).toArgb()) }
+        ?: MaterialTheme.colorScheme.primary
 
 @Composable
 fun SubscriptionDialog(
@@ -117,20 +185,27 @@ fun SubscriptionDialog(
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text("通勤线路")
-                ChoiceMenu(choices.firstOrNull { it.line.lineId == lineId }?.line?.lineName ?: if (lineId == null) "全部线路" else "请选择线路",
-                    listOf(null to "全部线路") + choices.map { it.line.lineId to it.line.lineName }) {
-                    lineId = it; directionId = null
-                }
+                ChoiceMenu(
+                    choices.firstOrNull { it.line.lineId == lineId }?.line?.lineName
+                        ?: if (lineId == null) "全部线路" else "请选择线路",
+                    listOf(null to "全部线路") + choices.map { it.line.lineId to it.line.lineName }
+                ) { lineId = it; directionId = null }
                 if (lineId != null) {
                     Text("通勤方向")
-                    ChoiceMenu(directions[directionId] ?: if (directionId == null) "全部方向" else "请选择方向",
-                        listOf(null to "全部方向") + directions.map { it.key to it.value }) { directionId = it }
+                    ChoiceMenu(
+                        directions[directionId] ?: if (directionId == null) "全部方向" else "请选择方向",
+                        listOf(null to "全部方向") + directions.map { it.key to it.value }
+                    ) { directionId = it }
                 }
                 Text("每站保存一组通勤偏好，也可选择全部线路或全部方向。订阅后可在主页随时查看。")
                 if (!StationSubscriptions.valid(draft, models)) Text("当前站点、线路或方向不可用，请重新选择。")
             }
         },
-        confirmButton = { TextButton(enabled = StationSubscriptions.valid(draft, models), onClick = { onSave(draft) }) { Text("保存订阅") } },
+        confirmButton = {
+            TextButton(enabled = StationSubscriptions.valid(draft, models), onClick = { onSave(draft) }) {
+                Text("保存订阅")
+            }
+        },
         dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } }
     )
 }
@@ -141,7 +216,9 @@ private fun ChoiceMenu(label: String, options: List<Pair<String?, String>>, onSe
     Box {
         OutlinedButton(onClick = { expanded = true }) { Text("$label ▾") }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            options.forEach { (id, name) -> DropdownMenuItem(text = { Text(name) }, onClick = { onSelect(id); expanded = false }) }
+            options.forEach { (id, name) ->
+                DropdownMenuItem(text = { Text(name) }, onClick = { onSelect(id); expanded = false })
+            }
         }
     }
 }

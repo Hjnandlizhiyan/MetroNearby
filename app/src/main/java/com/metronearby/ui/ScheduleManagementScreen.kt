@@ -25,6 +25,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -271,11 +272,29 @@ fun ScheduleManagementScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     message?.let { StatusText(it) }
-                    if (hasAnyManualSchedule) {
-                        TextButton(onClick = { showRestoreAllConfirmation = true }) {
-                            Text("恢复本线路全部默认")
-                        }
+                    Text("恢复默认班次", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                    Text(
+                        "恢复后重新使用内置时刻或间隔估算，不影响到站校准和区间车。",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    OutlinedButton(
+                        enabled = manuallySaved,
+                        onClick = {
+                            onRestoreSystem(selectedLine.line.lineId, pattern.id, serviceType)
+                            trips = TripStationPlanner.tripsFromDepartures(pattern.id, serviceType, systemTimes)
+                            countText = systemTimes.size.toString()
+                            message = "已恢复当前交路的${if (serviceType == ServiceTypes.WEEKDAY) "工作日" else "周末"}默认班次"
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("恢复当前交路 · ${if (serviceType == ServiceTypes.WEEKDAY) "工作日" else "周末"}")
                     }
+                    OutlinedButton(
+                        enabled = hasAnyManualSchedule,
+                        onClick = { showRestoreAllConfirmation = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) { Text("恢复整条线路全部默认班次") }
                     Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                         Button(
                             enabled = trips.isNotEmpty(),
@@ -292,14 +311,6 @@ fun ScheduleManagementScreen(
                             }
                         ) { Text("保存班次表") }
                         TextButton(onClick = { addTripError = null; addingTrip = true }) { Text("添加一班") }
-                        if (manuallySaved) {
-                            TextButton(onClick = {
-                                onRestoreSystem(selectedLine.line.lineId, pattern.id, serviceType)
-                                trips = TripStationPlanner.tripsFromDepartures(pattern.id, serviceType, systemTimes)
-                                countText = systemTimes.size.toString()
-                                message = "已恢复系统班次表"
-                            }) { Text("恢复系统") }
-                        }
                     }
                 }
             }

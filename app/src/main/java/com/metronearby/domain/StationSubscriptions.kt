@@ -40,7 +40,13 @@ object StationSubscriptions {
         return "${selected.line.lineName} · $direction"
     }
 
-    data class Preview(val lineName: String, val direction: String, val arrival: ArrivalItem?, val window: StationServiceWindow?)
+    data class Preview(
+        val lineName: String,
+        val lineColorHex: String?,
+        val direction: String,
+        val arrival: ArrivalItem?,
+        val window: StationServiceWindow?
+    )
 
     fun preview(item: StationSubscription, lines: List<MetroLine>, overrides: Map<String, UserOverrides?>,
                 serviceType: String, now: Int, currentEpochMillis: Long? = null,
@@ -50,7 +56,13 @@ object StationSubscriptions {
             val estimator = ArrivalEstimator(selected.line, overrides[selected.line.lineId])
             val arrivals = estimator.nextArrivalsByDirection(selected.stationId, serviceType, now, 1, currentEpochMillis, displayMode).associateBy { it.directionId }
             estimator.boardingDirections(selected.stationId).filterKeys { item.directionId == null || it == item.directionId }.map { (id, label) ->
-                Preview(selected.line.lineName, label, arrivals[id]?.arrivals?.firstOrNull(), estimator.serviceWindow(selected.stationId, serviceType, id))
+                Preview(
+                    lineName = selected.line.lineName,
+                    lineColorHex = selected.line.color,
+                    direction = label,
+                    arrival = arrivals[id]?.arrivals?.firstOrNull(),
+                    window = estimator.serviceWindow(selected.stationId, serviceType, id)
+                )
             }
         }
     }

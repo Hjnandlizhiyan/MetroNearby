@@ -303,7 +303,7 @@ fun MetroNearbyScreen(
     var showScheduleManagement by rememberSaveable { mutableStateOf(false) }
     var showLinePicker by rememberSaveable { mutableStateOf(false) }
     var showNetworkMap by rememberSaveable { mutableStateOf(false) }
-    var openShortTurnOnLaunch by rememberSaveable { mutableStateOf(false) }
+    var showShortTurnManagement by rememberSaveable { mutableStateOf(false) }
     var settingsDockDestination by remember { mutableStateOf<DockDestination?>(null) }
 
     val onDockNavigate: (DockDestination) -> Unit = { destination ->
@@ -316,6 +316,7 @@ fun MetroNearbyScreen(
                 showNetworkMap = false
                 showLinePicker = false
                 showSubscriptions = false
+                showShortTurnManagement = false
                 settingsDockDestination = null
             }
             DockDestination.SUBSCRIPTIONS -> {
@@ -324,6 +325,7 @@ fun MetroNearbyScreen(
                 showNetworkMap = false
                 showLinePicker = false
                 showSubscriptions = true
+                showShortTurnManagement = false
                 settingsDockDestination = null
                 focusManager.clearFocus()
             }
@@ -332,15 +334,17 @@ fun MetroNearbyScreen(
                 showScheduleManagement = true
                 showNetworkMap = false
                 showLinePicker = false
+                showShortTurnManagement = false
                 settingsDockDestination = null
             }
             DockDestination.SHORT_TURN -> {
+                showSettings = false
                 showScheduleManagement = false
                 showNetworkMap = false
                 showLinePicker = false
-                showSettings = true
-                openShortTurnOnLaunch = true
-                settingsDockDestination = DockDestination.SHORT_TURN
+                showSubscriptions = false
+                showShortTurnManagement = true
+                settingsDockDestination = null
             }
             DockDestination.LINE_PICKER -> showLinePicker = true
             DockDestination.NETWORK_MAP -> {
@@ -348,6 +352,7 @@ fun MetroNearbyScreen(
                 showScheduleManagement = false
                 showLinePicker = false
                 showNetworkMap = true
+                showShortTurnManagement = false
                 settingsDockDestination = null
             }
         }
@@ -389,6 +394,28 @@ fun MetroNearbyScreen(
         return
     }
 
+    if (showShortTurnManagement) {
+        ShortTurnManagementScreen(
+            lines = loadedLines,
+            initialLineId = selectedResolved?.line?.lineId,
+            onAdd = { lineId, startStationId, endStationId, departures ->
+                repository.addShortTurn(lineId, startStationId, endStationId, departures)
+                reloadKey += 1
+            },
+            onRemove = { lineId, index ->
+                repository.removeShortTurn(lineId, index)
+                reloadKey += 1
+            },
+            bottomBar = {
+                MetroBottomDock(
+                    selected = if (showLinePicker) DockDestination.LINE_PICKER else DockDestination.SHORT_TURN,
+                    onNavigate = onDockNavigate
+                )
+            },
+            onBack = { showShortTurnManagement = false }
+        )
+        return
+    }
     if (showScheduleManagement) {
         ScheduleManagementScreen(
             lines = loadedLines,
@@ -447,25 +474,6 @@ fun MetroNearbyScreen(
                     onLineChange(dataFile)
                 }
             },
-            shortTurnSection = selectedResolved?.let { resolved ->
-                SettingsShortTurnSection(
-                    line = resolved.line,
-                    shortTurns = resolved.overrides?.shortTurns.orEmpty(),
-                    onAdd = { startStationId, endStationId, departures ->
-                        repository.addShortTurn(
-                            lineId = resolved.line.lineId,
-                            startStationId = startStationId,
-                            endStationId = endStationId,
-                            departures = departures
-                        )
-                        reloadKey += 1
-                    },
-                    onRemove = { index ->
-                        repository.removeShortTurn(lineId = resolved.line.lineId, index = index)
-                        reloadKey += 1
-                    }
-                )
-            },
             onAddCustomLine = { line ->
                 onCustomLinesChange(customLines + line)
                 onLineChange("custom:${line.lineId}")
@@ -478,8 +486,6 @@ fun MetroNearbyScreen(
                 onSubscriptionsChange(subscriptions.filterNot { it.lineId == lineId })
                 if (lineDataFile == removedKey) onLineChange(DEFAULT_LINE_DATA_FILE)
             },
-            openShortTurnOnLaunch = openShortTurnOnLaunch,
-            onShortTurnLaunchConsumed = { openShortTurnOnLaunch = false },
             bottomBar = {
                 MetroBottomDock(
                     selected = if (showLinePicker) DockDestination.LINE_PICKER else settingsDockDestination,
@@ -517,8 +523,17 @@ fun MetroNearbyScreen(
         topBar = {
             Column {
                 TopAppBar(
-                    title = { Text(if (showSubscriptions) "我的订阅" else "附近地铁站") },
+                    title = { Text(if (showSubscriptions) "我的订阅" else "Metro Nearby") },
                     actions = {
+                        if (!showSubscriptions && pickedStationName != null) {
+                            TextButton(onClick = {
+                                pickedStationName = null
+                                query = ""
+                                granted = locationProvider.hasPermission()
+                                retryKey += 1
+                                focusManager.clearFocus()
+                            }) { Text("返回最近站") }
+                        }
                         TextButton(onClick = {
                             settingsDockDestination = null
                             showSettings = true

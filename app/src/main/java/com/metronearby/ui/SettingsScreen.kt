@@ -31,7 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -70,19 +69,6 @@ data class SettingsLineOption(
 )
 
 /**
- * 「区间车」分组所需的线路数据与回调。
- *
- * 合法性一律经 [ShortTurnPlanner] 判断，界面展示的拒绝原因与落库后实际折算的结果同源，
- * 不会出现「界面说能存、实际被丢弃」的情况。
- */
-data class SettingsShortTurnSection(
-    val line: MetroLine,
-    val shortTurns: List<ShortTurn>,
-    val onAdd: (startStationId: String, endStationId: String, departures: List<String>) -> Unit,
-    val onRemove: (index: Int) -> Unit
-)
-
-/**
  * 设置界面。
  *
  * 按「分组标题 + 卡片 + 可点选项」组织，后续新增设置项直接往
@@ -101,17 +87,13 @@ fun SettingsScreen(
     onLineSelect: (String) -> Unit = {},
     onAddCustomLine: (MetroLine) -> Unit = {},
     onRemoveCustomLine: (String) -> Unit = {},
-    shortTurnSection: SettingsShortTurnSection? = null,
     onManageSchedules: () -> Unit = {},
     subscriptionCount: Int = 0,
     onManageSubscriptions: () -> Unit = {},
-    openShortTurnOnLaunch: Boolean = false,
-    onShortTurnLaunchConsumed: () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     onBack: () -> Unit
 ) {
     val uriHandler = LocalUriHandler.current
-    var showShortTurnDialog by remember { mutableStateOf(false) }
     var showCustomLineDialog by remember { mutableStateOf(false) }
     var showUserGuide by remember { mutableStateOf(false) }
     var customLineToDelete by remember { mutableStateOf<MetroLine?>(null) }
@@ -141,24 +123,6 @@ fun SettingsScreen(
                 }) { Text("删除") }
             },
             dismissButton = { TextButton(onClick = { customLineToDelete = null }) { Text("取消") } }
-        )
-    }
-
-    LaunchedEffect(openShortTurnOnLaunch, shortTurnSection) {
-        if (openShortTurnOnLaunch && shortTurnSection != null) {
-            showShortTurnDialog = true
-            onShortTurnLaunchConsumed()
-        }
-    }
-
-    if (showShortTurnDialog && shortTurnSection != null) {
-        ShortTurnDialog(
-            line = shortTurnSection.line,
-            onDismiss = { showShortTurnDialog = false },
-            onConfirm = { startStationId, endStationId, departures ->
-                shortTurnSection.onAdd(startStationId, endStationId, departures)
-                showShortTurnDialog = false
-            }
         )
     }
 
@@ -307,40 +271,6 @@ fun SettingsScreen(
             }
             Spacer(Modifier.height(16.dp))
 
-            if (shortTurnSection != null) {
-                SettingsSection(title = "区间车") {
-                    Text(
-                        text = "运营方不公开区间车的发车时刻，这里补录你实际看到的班次。" +
-                            "只填起点站的发车时间，中间站会自动加上运行时间；" +
-                            "填多班会按你的间隔往后排。",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                    )
-                    if (shortTurnSection.shortTurns.isEmpty()) {
-                        Text(
-                            text = "还没有记录",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
-                        )
-                    } else {
-                        shortTurnSection.shortTurns.forEachIndexed { index, shortTurn ->
-                            ShortTurnRow(
-                                line = shortTurnSection.line,
-                                shortTurn = shortTurn,
-                                onRemove = { shortTurnSection.onRemove(index) }
-                            )
-                        }
-                    }
-                    TextButton(
-                        onClick = { showShortTurnDialog = true },
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    ) {
-                        Text("添加区间车")
-                    }
-                }
-            }
         }
     }
 }
@@ -385,7 +315,7 @@ private const val METRO_NEARBY_REPOSITORY_URL =
  * 呈现出来，而不是悄无声息地不生效。
  */
 @Composable
-private fun ShortTurnRow(
+internal fun ShortTurnRow(
     line: MetroLine,
     shortTurn: ShortTurn,
     onRemove: () -> Unit
@@ -427,7 +357,7 @@ private fun ShortTurnRow(
  * 保存按钮只在 [ShortTurnPlanner] 判定合法时可用，因此落库的数据一定是能算出班次的。
  */
 @Composable
-private fun ShortTurnDialog(
+internal fun ShortTurnDialog(
     line: MetroLine,
     onDismiss: () -> Unit,
     onConfirm: (startStationId: String, endStationId: String, departures: List<String>) -> Unit
