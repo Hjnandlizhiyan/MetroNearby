@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -109,6 +110,7 @@ fun SettingsScreen(
     bottomBar: @Composable () -> Unit = {},
     onBack: () -> Unit
 ) {
+    val uriHandler = LocalUriHandler.current
     var showShortTurnDialog by remember { mutableStateOf(false) }
     var showCustomLineDialog by remember { mutableStateOf(false) }
     var customLineToDelete by remember { mutableStateOf<MetroLine?>(null) }
@@ -273,6 +275,22 @@ fun SettingsScreen(
             }
             Spacer(Modifier.height(16.dp))
 
+            SettingsSection(title = "关于") {
+                Text(
+                    text = "查看 Metro Nearby 的源代码、使用说明与开发进度。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                )
+                TextButton(
+                    onClick = { uriHandler.openUri(METRO_NEARBY_REPOSITORY_URL) },
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                ) {
+                    Text("查看 GitHub 代码仓库 ↗")
+                }
+            }
+            Spacer(Modifier.height(16.dp))
+
             if (shortTurnSection != null) {
                 SettingsSection(title = "区间车") {
                     Text(
@@ -310,6 +328,9 @@ fun SettingsScreen(
         }
     }
 }
+
+private const val METRO_NEARBY_REPOSITORY_URL =
+    "https://github.com/Hjnandlizhiyan/MetroNearby"
 
 /**
  * 已记录的一条区间车：起终点、已填时刻与删除入口。
