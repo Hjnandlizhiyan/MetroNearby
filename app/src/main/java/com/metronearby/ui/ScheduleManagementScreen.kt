@@ -20,6 +20,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,6 +49,7 @@ import com.metronearby.data.model.MetroLine
 import com.metronearby.data.model.Pattern
 import com.metronearby.data.model.ServiceTypes
 import com.metronearby.domain.DepartureSchedulePlanner
+import com.metronearby.domain.ScheduleBatchEditor
 import com.metronearby.domain.TimeUtils
 import com.metronearby.domain.TripStationPlanner
 
@@ -97,6 +99,12 @@ fun ScheduleManagementScreen(
     var addTripError by remember { mutableStateOf<String?>(null) }
     var openedTripId by remember { mutableStateOf<String?>(null) }
     var showRestoreAllConfirmation by remember { mutableStateOf(false) }
+    var batchMode by remember(selectedLineId, pattern?.id, serviceType) { mutableStateOf(false) }
+    var selectedTripIds by remember(selectedLineId, pattern?.id, serviceType) {
+        mutableStateOf<Set<String>>(emptySet())
+    }
+    var showBatchShift by remember { mutableStateOf(false) }
+    var showBatchDeleteConfirmation by remember { mutableStateOf(false) }
     val hasAnyManualSchedule = selectedLine?.overrides?.let {
         it.serviceTrips.isNotEmpty() || it.serviceDepartures.isNotEmpty()
     } == true
@@ -124,6 +132,66 @@ fun ScheduleManagementScreen(
             }
         )
     }
+    if (showBatchShift && selectedLine != null && pattern != null) {
+        ScheduleBatchShiftDialog(
+            selectedCount = selectedTripIds.size,
+            onDismiss = { showBatchShift = false },
+            onConfirm = { offsetMinutes ->
+                when (val result = ScheduleBatchEditor.shift(
+                    line = selectedLine.line,
+                    pattern = pattern,
+                    serviceType = serviceType,
+                    trips = trips,
+                    selectedTripIds = selectedTripIds,
+                    offsetMinutes = offsetMinutes
+                )) {
+                    is ScheduleBatchEditor.Result.Updated -> {
+                        trips = result.trips
+                        selectedTripIds = emptySet()
+                        batchMode = false
+                        showBatchShift = false
+                        message = "已批量平移班次及沿途站时刻，请检查后保存"
+                    }
+                    is ScheduleBatchEditor.Result.Rejected -> message = result.reason
+                }
+            }
+        )
+    }
+    if (showBatchDeleteConfirmation && selectedLine != null && pattern != null) {
+        AlertDialog(
+            onDismissRequest = { showBatchDeleteConfirmation = false },
+            title = { Text("批量删除班次？") },
+            text = { Text("将从当前交路的${if (serviceType == ServiceTypes.WEEKDAY) "工作日" else "周末"}班次表中删除已选的 ${selectedTripIds.size} 班。") },
+            confirmButton = {
+                TextButton(onClick = {
+                    when (val result = ScheduleBatchEditor.remove(
+                        line = selectedLine.line,
+                        pattern = pattern,
+                        serviceType = serviceType,
+                        trips = trips,
+                        selectedTripIds = selectedTripIds
+                    )) {
+                        is ScheduleBatchEditor.Result.Updated -> {
+                            trips = result.trips
+                            countText = result.trips.size.toString()
+                            selectedTripIds = emptySet()
+                            batchMode = false
+                            showBatchDeleteConfirmation = false
+                            message = "已批量删除班次，请检查后保存"
+                        }
+                        is ScheduleBatchEditor.Result.Rejected -> {
+                            message = result.reason
+                            showBatchDeleteConfirmation = false
+                        }
+                    }
+                }) { Text("删除") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showBatchDeleteConfirmation = false }) { Text("取消") }
+            }
+        )
+    }
+
     val openedTrip = trips.firstOrNull { it.id == openedTripId }
     if (openedTrip != null && selectedLine != null && pattern != null) {
         TripStationDetailScreen(
@@ -192,7 +260,7 @@ fun ScheduleManagementScreen(
         ) {
             item {
                 Text(
-                    "每一行是一趟运行班次。点“沿途站”可修改同一趟车的中间站时间，保存时会检查倒置和超车。",
+                    "每一行是一趟运行班次。可逐班修改沿途站，也可批量平移或删除；保存时会检查倒置和超车。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -312,6 +380,51 @@ fun ScheduleManagementScreen(
                         ) { Text("保存班次表") }
                         TextButton(onClick = { addTripError = null; addingTrip = true }) { Text("添加一班") }
                     }
+                    OutlinedButton(
+                        enabled = trips.isNotEmpty(),
+                        onClick = {
+                            batchMode = true
+                            selectedTripIds = emptySet()
+                            message = null
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) { Text("批量修改班次（${trips.size}）") }
+                }
+            }
+            if (batchMode) {
+                item {
+                    SelectorCard {
+                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                "已选择 ${selectedTripIds.size} 班",
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.weight(1f)
+                            )
+                            TextButton(onClick = { selectedTripIds = trips.map { it.id }.toSet() }) {
+                                Text("全选")
+                            }
+                            TextButton(onClick = {
+                                batchMode = false
+                                selectedTripIds = emptySet()
+                            }) { Text("取消") }
+                        }
+                        Text(
+                            "平移会同时移动每辆车已有的沿途站锚点，并保留班次编号。",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button(
+                                enabled = selectedTripIds.isNotEmpty(),
+                                onClick = { showBatchShift = true }
+                            ) { Text("提前/延后") }
+                            OutlinedButton(
+                                enabled = selectedTripIds.isNotEmpty(),
+                                onClick = { showBatchDeleteConfirmation = true }
+                            ) { Text("批量删除") }
+                        }
+                    }
                 }
             }
             if (trips.isEmpty()) {
@@ -327,6 +440,13 @@ fun ScheduleManagementScreen(
                         index = index,
                         trip = trip,
                         systemSeconds = systemTimes.getOrNull(index),
+                        selected = trip.id in selectedTripIds,
+                        onSelectedChange = if (batchMode) {
+                            { checked ->
+                                selectedTripIds = if (checked) selectedTripIds + trip.id
+                                else selectedTripIds - trip.id
+                            }
+                        } else null,
                         onStations = { openedTripId = trip.id },
                         onDelete = {
                             trips = trips.toMutableList().apply { removeAt(index) }
@@ -501,6 +621,8 @@ private fun DepartureRow(
     index: Int,
     trip: ManagedTrip,
     systemSeconds: Int?,
+    selected: Boolean,
+    onSelectedChange: ((Boolean) -> Unit)?,
     onStations: () -> Unit,
     onDelete: () -> Unit
 ) {
@@ -510,6 +632,9 @@ private fun DepartureRow(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            if (onSelectedChange != null) {
+                Checkbox(checked = selected, onCheckedChange = onSelectedChange)
+            }
             Text("${index + 1}", modifier = Modifier.width(36.dp),
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Column(Modifier.weight(1f)) {
@@ -527,10 +652,49 @@ private fun DepartureRow(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            TextButton(onClick = onStations) { Text("沿途站") }
-            TextButton(onClick = onDelete) { Text("删除") }
+            if (onSelectedChange == null) {
+                TextButton(onClick = onStations) { Text("沿途站") }
+                TextButton(onClick = onDelete) { Text("删除") }
+            }
         }
     }
+}
+
+@Composable
+private fun ScheduleBatchShiftDialog(
+    selectedCount: Int,
+    onDismiss: () -> Unit,
+    onConfirm: (Int) -> Unit
+) {
+    var text by remember { mutableStateOf("") }
+    val minutes = text.toIntOrNull()
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("批量提前或延后") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("已选择 $selectedCount 班。输入正数表示延后，负数表示提前；沿途站锚点会同步移动。")
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = { value ->
+                        text = value.filterIndexed { index, char ->
+                            char.isDigit() || (char == '-' && index == 0)
+                        }
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    label = { Text("调整分钟数，例如 2 或 -2") }
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                enabled = minutes != null && minutes != 0,
+                onClick = { onConfirm(minutes!!) }
+            ) { Text("应用") }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } }
+    )
 }
 
 @Composable

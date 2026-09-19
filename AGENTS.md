@@ -26,7 +26,7 @@ Android 地铁到站查询 App：打开即定位 → 找最近地铁站 → 用*
 | 用户分时段校准 + 两小时到站锚点 | `domain/UserCalibration.kt`、`data/model/UserOverrides.kt#ArrivalObservation` |
 | 系统预计 / 用户校准口径切换（全局记忆、无样本回退） | `domain/ArrivalDisplayMode.kt`、`data/source/SettingsStore.kt` |
 | 用户自填区间车 | `domain/ShortTurnPlanner.kt`、`domain/ShortTurnBatchEditor.kt` + `ui/ShortTurnManagementScreen.kt` 独立页面，规则见 `docs/short-turn-management.md` |
-| 分线路/交路/日型管理总班次数、同班沿途站修正与防超车 | `domain/DepartureSchedulePlanner.kt`、`domain/TripStationPlanner.kt`、`ui/ScheduleManagementScreen.kt`、`docs/departure-schedule-management.md` |
+| 分线路/交路/日型管理总班次数、同班沿途站修正、批量平移/删除与防超车 | `domain/DepartureSchedulePlanner.kt`、`domain/TripStationPlanner.kt`、`domain/ScheduleBatchEditor.kt`、`ui/ScheduleManagementScreen.kt`、`docs/departure-schedule-management.md` |
 | 首班 / 末班 / 首末班标志、收车空态 | `ArrivalEstimator.serviceWindow()`、`StationServiceWindow.isFinishedAt` |
 | 深/浅/跟随系统主题、我的线路按城市折叠与置顶 | `ui/SettingsScreen.kt`、`ui/MetroBottomDock.kt`、`data/source/SettingsStore.kt` |
 | 用户自定义线路（城市/站序/坐标/双方向）并复用班次表管理 | `domain/CustomLineBuilder.kt`、`ui/CustomLineDialog.kt`，规则见 `docs/custom-lines.md` |
