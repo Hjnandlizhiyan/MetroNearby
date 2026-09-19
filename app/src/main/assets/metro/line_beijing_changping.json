@@ -1,0 +1,669 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_changping",
+  "lineName": "昌平线",
+  "color": "#D986BA",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_changping_01",
+    "bj_changping_02",
+    "bj_changping_03",
+    "bj_changping_04",
+    "bj_changping_05",
+    "bj_changping_06",
+    "bj_changping_07",
+    "bj_changping_08",
+    "bj_changping_09",
+    "bj_changping_10",
+    "bj_changping_11",
+    "bj_changping_12",
+    "bj_changping_13",
+    "bj_changping_14",
+    "bj_changping_15",
+    "bj_changping_16",
+    "bj_changping_17",
+    "bj_changping_18",
+    "bj_changping_19",
+    "bj_changping_20"
+  ],
+  "stations": [
+    {
+      "id": "bj_changping_01",
+      "name": "昌平西山口",
+      "lat": 40.244629,
+      "lng": 116.195369,
+      "aliases": [
+        "昌平西山口",
+        "昌平西山口站"
+      ]
+    },
+    {
+      "id": "bj_changping_02",
+      "name": "十三陵景区",
+      "lat": 40.240214,
+      "lng": 116.207637,
+      "aliases": [
+        "十三陵景区",
+        "十三陵景区站"
+      ]
+    },
+    {
+      "id": "bj_changping_03",
+      "name": "昌平",
+      "lat": 40.22055,
+      "lng": 116.23359,
+      "aliases": [
+        "昌平",
+        "昌平站"
+      ]
+    },
+    {
+      "id": "bj_changping_04",
+      "name": "昌平东关",
+      "lat": 40.221726,
+      "lng": 116.262059,
+      "aliases": [
+        "昌平东关",
+        "昌平东关站"
+      ]
+    },
+    {
+      "id": "bj_changping_05",
+      "name": "北邵洼",
+      "lat": 40.222001,
+      "lng": 116.281949,
+      "aliases": [
+        "北邵洼",
+        "北邵洼站"
+      ]
+    },
+    {
+      "id": "bj_changping_06",
+      "name": "南邵",
+      "lat": 40.207484,
+      "lng": 116.287534,
+      "aliases": [
+        "南邵",
+        "南邵站"
+      ]
+    },
+    {
+      "id": "bj_changping_07",
+      "name": "沙河高教园",
+      "lat": 40.164666,
+      "lng": 116.280465,
+      "aliases": [
+        "沙河高教园",
+        "沙河高教园站"
+      ]
+    },
+    {
+      "id": "bj_changping_08",
+      "name": "沙河",
+      "lat": 40.148278,
+      "lng": 116.288865,
+      "aliases": [
+        "沙河",
+        "沙河站"
+      ]
+    },
+    {
+      "id": "bj_changping_09",
+      "name": "巩华城",
+      "lat": 40.1309,
+      "lng": 116.293979,
+      "aliases": [
+        "巩华城",
+        "巩华城站"
+      ]
+    },
+    {
+      "id": "bj_changping_10",
+      "name": "朱辛庄",
+      "lat": 40.104297,
+      "lng": 116.313698,
+      "aliases": [
+        "朱辛庄",
+        "朱辛庄站"
+      ]
+    },
+    {
+      "id": "bj_changping_11",
+      "name": "生命科学园",
+      "lat": 40.09479,
+      "lng": 116.29423,
+      "aliases": [
+        "生命科学园",
+        "生命科学园站"
+      ]
+    },
+    {
+      "id": "bj_changping_12",
+      "name": "西二旗",
+      "lat": 40.053034,
+      "lng": 116.306295,
+      "aliases": [
+        "西二旗",
+        "西二旗站"
+      ]
+    },
+    {
+      "id": "bj_changping_13",
+      "name": "清河站",
+      "lat": 40.04109,
+      "lng": 116.314797,
+      "aliases": [
+        "清河站"
+      ]
+    },
+    {
+      "id": "bj_changping_14",
+      "name": "朱房北",
+      "lat": 40.036122,
+      "lng": 116.333318,
+      "aliases": [
+        "朱房北",
+        "朱房北站"
+      ]
+    },
+    {
+      "id": "bj_changping_15",
+      "name": "清河小营桥",
+      "lat": 40.034723,
+      "lng": 116.343739,
+      "aliases": [
+        "清河小营桥",
+        "清河小营桥站"
+      ]
+    },
+    {
+      "id": "bj_changping_16",
+      "name": "学知园",
+      "lat": 40.015005,
+      "lng": 116.352195,
+      "aliases": [
+        "学知园",
+        "学知园站"
+      ]
+    },
+    {
+      "id": "bj_changping_17",
+      "name": "六道口",
+      "lat": 40.000958,
+      "lng": 116.35267,
+      "aliases": [
+        "六道口",
+        "六道口站"
+      ]
+    },
+    {
+      "id": "bj_changping_18",
+      "name": "学院桥",
+      "lat": 39.988206,
+      "lng": 116.353438,
+      "aliases": [
+        "学院桥",
+        "学院桥站"
+      ]
+    },
+    {
+      "id": "bj_changping_19",
+      "name": "西土城",
+      "lat": 39.976549,
+      "lng": 116.354098,
+      "aliases": [
+        "西土城",
+        "西土城站"
+      ]
+    },
+    {
+      "id": "bj_changping_20",
+      "name": "蓟门桥",
+      "lat": 39.967744,
+      "lng": 116.355984,
+      "aliases": [
+        "蓟门桥",
+        "蓟门桥站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_changping_01": {
+      "forward": {
+        "firstDeparture": "05:00",
+        "lastDeparture": "22:51"
+      },
+      "reverse": {
+        "firstDeparture": "06:47",
+        "lastDeparture": "24:17"
+      }
+    },
+    "bj_changping_02": {
+      "forward": {
+        "firstDeparture": "05:02",
+        "lastDeparture": "22:53"
+      },
+      "reverse": {
+        "firstDeparture": "06:44",
+        "lastDeparture": "24:14"
+      }
+    },
+    "bj_changping_03": {
+      "forward": {
+        "firstDeparture": "05:08",
+        "lastDeparture": "22:59"
+      },
+      "reverse": {
+        "firstDeparture": "06:38",
+        "lastDeparture": "24:08"
+      }
+    },
+    "bj_changping_04": {
+      "forward": {
+        "firstDeparture": "05:12",
+        "lastDeparture": "23:03"
+      },
+      "reverse": {
+        "firstDeparture": "06:34",
+        "lastDeparture": "24:04"
+      }
+    },
+    "bj_changping_05": {
+      "forward": {
+        "firstDeparture": "05:15",
+        "lastDeparture": "23:06"
+      },
+      "reverse": {
+        "firstDeparture": "06:31",
+        "lastDeparture": "24:01"
+      }
+    },
+    "bj_changping_06": {
+      "forward": {
+        "firstDeparture": "05:19",
+        "lastDeparture": "23:10"
+      },
+      "reverse": {
+        "firstDeparture": "06:27",
+        "lastDeparture": "23:57"
+      }
+    },
+    "bj_changping_07": {
+      "forward": {
+        "firstDeparture": "05:27",
+        "lastDeparture": "23:18"
+      },
+      "reverse": {
+        "firstDeparture": "06:19",
+        "lastDeparture": "23:49"
+      }
+    },
+    "bj_changping_08": {
+      "forward": {
+        "firstDeparture": "05:31",
+        "lastDeparture": "23:22"
+      },
+      "reverse": {
+        "firstDeparture": "06:15",
+        "lastDeparture": "23:45"
+      }
+    },
+    "bj_changping_09": {
+      "forward": {
+        "firstDeparture": "05:35",
+        "lastDeparture": "23:26"
+      },
+      "reverse": {
+        "firstDeparture": "06:11",
+        "lastDeparture": "23:41"
+      }
+    },
+    "bj_changping_10": {
+      "forward": {
+        "firstDeparture": "05:41",
+        "lastDeparture": "23:32"
+      },
+      "reverse": {
+        "firstDeparture": "06:05",
+        "lastDeparture": "23:35"
+      }
+    },
+    "bj_changping_11": {
+      "forward": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:36"
+      },
+      "reverse": {
+        "firstDeparture": "06:01",
+        "lastDeparture": "23:31"
+      }
+    },
+    "bj_changping_12": {
+      "forward": {
+        "firstDeparture": "05:53",
+        "lastDeparture": "23:44"
+      },
+      "reverse": {
+        "firstDeparture": "05:53",
+        "lastDeparture": "23:23"
+      }
+    },
+    "bj_changping_13": {
+      "forward": {
+        "firstDeparture": "05:56",
+        "lastDeparture": "23:47"
+      },
+      "reverse": {
+        "firstDeparture": "05:50",
+        "lastDeparture": "23:20"
+      }
+    },
+    "bj_changping_14": {
+      "forward": {
+        "firstDeparture": "05:59",
+        "lastDeparture": "23:50"
+      },
+      "reverse": {
+        "firstDeparture": "05:47",
+        "lastDeparture": "23:17"
+      }
+    },
+    "bj_changping_15": {
+      "forward": {
+        "firstDeparture": "06:01",
+        "lastDeparture": "23:52"
+      },
+      "reverse": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:15"
+      }
+    },
+    "bj_changping_16": {
+      "forward": {
+        "firstDeparture": "06:06",
+        "lastDeparture": "23:57"
+      },
+      "reverse": {
+        "firstDeparture": "05:40",
+        "lastDeparture": "23:10"
+      }
+    },
+    "bj_changping_17": {
+      "forward": {
+        "firstDeparture": "06:09",
+        "lastDeparture": "24:00"
+      },
+      "reverse": {
+        "firstDeparture": "05:37",
+        "lastDeparture": "23:07"
+      }
+    },
+    "bj_changping_18": {
+      "forward": {
+        "firstDeparture": "06:12",
+        "lastDeparture": "24:03"
+      },
+      "reverse": {
+        "firstDeparture": "05:34",
+        "lastDeparture": "23:04"
+      }
+    },
+    "bj_changping_19": {
+      "forward": {
+        "firstDeparture": "06:14",
+        "lastDeparture": "24:05"
+      },
+      "reverse": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:02"
+      }
+    },
+    "bj_changping_20": {
+      "forward": {
+        "firstDeparture": "06:17",
+        "lastDeparture": "24:08"
+      },
+      "reverse": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_changping_01",
+      "to": "bj_changping_02",
+      "runSeconds": 145
+    },
+    {
+      "from": "bj_changping_02",
+      "to": "bj_changping_03",
+      "runSeconds": 340
+    },
+    {
+      "from": "bj_changping_03",
+      "to": "bj_changping_04",
+      "runSeconds": 270
+    },
+    {
+      "from": "bj_changping_04",
+      "to": "bj_changping_05",
+      "runSeconds": 200
+    },
+    {
+      "from": "bj_changping_05",
+      "to": "bj_changping_06",
+      "runSeconds": 200
+    },
+    {
+      "from": "bj_changping_06",
+      "to": "bj_changping_07",
+      "runSeconds": 510
+    },
+    {
+      "from": "bj_changping_07",
+      "to": "bj_changping_08",
+      "runSeconds": 225
+    },
+    {
+      "from": "bj_changping_08",
+      "to": "bj_changping_09",
+      "runSeconds": 230
+    },
+    {
+      "from": "bj_changping_09",
+      "to": "bj_changping_10",
+      "runSeconds": 370
+    },
+    {
+      "from": "bj_changping_10",
+      "to": "bj_changping_11",
+      "runSeconds": 225
+    },
+    {
+      "from": "bj_changping_11",
+      "to": "bj_changping_12",
+      "runSeconds": 505
+    },
+    {
+      "from": "bj_changping_12",
+      "to": "bj_changping_13",
+      "runSeconds": 180
+    },
+    {
+      "from": "bj_changping_13",
+      "to": "bj_changping_14",
+      "runSeconds": 195
+    },
+    {
+      "from": "bj_changping_14",
+      "to": "bj_changping_15",
+      "runSeconds": 120
+    },
+    {
+      "from": "bj_changping_15",
+      "to": "bj_changping_16",
+      "runSeconds": 260
+    },
+    {
+      "from": "bj_changping_16",
+      "to": "bj_changping_17",
+      "runSeconds": 185
+    },
+    {
+      "from": "bj_changping_17",
+      "to": "bj_changping_18",
+      "runSeconds": 170
+    },
+    {
+      "from": "bj_changping_18",
+      "to": "bj_changping_19",
+      "runSeconds": 160
+    },
+    {
+      "from": "bj_changping_19",
+      "to": "bj_changping_20",
+      "runSeconds": 130
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 蓟门桥",
+      "startStationId": "bj_changping_01",
+      "endStationId": "bj_changping_20",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:00",
+          "lastDeparture": "22:51",
+          "headways": [
+            {
+              "from": "05:00",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:51",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:00",
+          "lastDeparture": "22:51",
+          "headways": [
+            {
+              "from": "05:00",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:51",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 昌平西山口",
+      "startStationId": "bj_changping_20",
+      "endStationId": "bj_changping_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

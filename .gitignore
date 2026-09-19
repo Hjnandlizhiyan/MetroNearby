@@ -1,0 +1,16 @@
+*.iml
+*.apk
+.gradle/
+.kotlin/
+.idea/
+.arts/
+.codeartsdoer/
+local.properties
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+.DS_Store
+tools/line-pipeline/out/
+tools/line-pipeline/.backup/
+app/release/

@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_yizhuang_t1",
+  "lineName": "亦庄T1线",
+  "color": "#E6081B",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_yizhuang_t1_01",
+    "bj_yizhuang_t1_02",
+    "bj_yizhuang_t1_03",
+    "bj_yizhuang_t1_04",
+    "bj_yizhuang_t1_05",
+    "bj_yizhuang_t1_06",
+    "bj_yizhuang_t1_07",
+    "bj_yizhuang_t1_08",
+    "bj_yizhuang_t1_09",
+    "bj_yizhuang_t1_10",
+    "bj_yizhuang_t1_11",
+    "bj_yizhuang_t1_12",
+    "bj_yizhuang_t1_13",
+    "bj_yizhuang_t1_14"
+  ],
+  "stations": [
+    {
+      "id": "bj_yizhuang_t1_01",
+      "name": "定海园",
+      "lat": 39.801108,
+      "lng": 116.562094,
+      "aliases": [
+        "定海园",
+        "定海园站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_02",
+      "name": "定海园西",
+      "lat": 39.796054,
+      "lng": 116.551551,
+      "aliases": [
+        "定海园西",
+        "定海园西站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_03",
+      "name": "经海一路",
+      "lat": 39.790847,
+      "lng": 116.54071,
+      "aliases": [
+        "经海一路",
+        "经海一路站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_04",
+      "name": "亦创会展中心",
+      "lat": 39.784332,
+      "lng": 116.527148,
+      "aliases": [
+        "亦创会展中心",
+        "亦创会展中心站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_05",
+      "name": "荣昌东街",
+      "lat": 39.782799,
+      "lng": 116.521737,
+      "aliases": [
+        "荣昌东街",
+        "荣昌东街站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_06",
+      "name": "亦庄同仁",
+      "lat": 39.776849,
+      "lng": 116.518173,
+      "aliases": [
+        "亦庄同仁",
+        "亦庄同仁站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_07",
+      "name": "鹿圈东",
+      "lat": 39.766354,
+      "lng": 116.513824,
+      "aliases": [
+        "鹿圈东",
+        "鹿圈东站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_08",
+      "name": "泰河路",
+      "lat": 39.760017,
+      "lng": 116.511198,
+      "aliases": [
+        "泰河路",
+        "泰河路站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_09",
+      "name": "九号村",
+      "lat": 39.754939,
+      "lng": 116.508663,
+      "aliases": [
+        "九号村",
+        "九号村站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_10",
+      "name": "四海庄",
+      "lat": 39.746589,
+      "lng": 116.504487,
+      "aliases": [
+        "四海庄",
+        "四海庄站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_11",
+      "name": "太和桥北",
+      "lat": 39.741094,
+      "lng": 116.501753,
+      "aliases": [
+        "太和桥北",
+        "太和桥北站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_12",
+      "name": "瑞合庄",
+      "lat": 39.728841,
+      "lng": 116.503789,
+      "aliases": [
+        "瑞合庄",
+        "瑞合庄站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_13",
+      "name": "融兴街",
+      "lat": 39.722005,
+      "lng": 116.505525,
+      "aliases": [
+        "融兴街",
+        "融兴街站"
+      ]
+    },
+    {
+      "id": "bj_yizhuang_t1_14",
+      "name": "屈庄",
+      "lat": 39.714878,
+      "lng": 116.507327,
+      "aliases": [
+        "屈庄",
+        "屈庄站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_yizhuang_t1_01": {
+      "forward": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      },
+      "reverse": {
+        "firstDeparture": "06:04",
+        "lastDeparture": "23:34"
+      }
+    },
+    "bj_yizhuang_t1_02": {
+      "forward": {
+        "firstDeparture": "05:33",
+        "lastDeparture": "23:03"
+      },
+      "reverse": {
+        "firstDeparture": "06:01",
+        "lastDeparture": "23:31"
+      }
+    },
+    "bj_yizhuang_t1_03": {
+      "forward": {
+        "firstDeparture": "05:36",
+        "lastDeparture": "23:06"
+      },
+      "reverse": {
+        "firstDeparture": "05:58",
+        "lastDeparture": "23:28"
+      }
+    },
+    "bj_yizhuang_t1_04": {
+      "forward": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:09"
+      },
+      "reverse": {
+        "firstDeparture": "05:54",
+        "lastDeparture": "23:24"
+      }
+    },
+    "bj_yizhuang_t1_05": {
+      "forward": {
+        "firstDeparture": "05:41",
+        "lastDeparture": "23:11"
+      },
+      "reverse": {
+        "firstDeparture": "05:53",
+        "lastDeparture": "23:23"
+      }
+    },
+    "bj_yizhuang_t1_06": {
+      "forward": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:13"
+      },
+      "reverse": {
+        "firstDeparture": "05:51",
+        "lastDeparture": "23:21"
+      }
+    },
+    "bj_yizhuang_t1_07": {
+      "forward": {
+        "firstDeparture": "05:47",
+        "lastDeparture": "23:17"
+      },
+      "reverse": {
+        "firstDeparture": "05:47",
+        "lastDeparture": "23:17"
+      }
+    },
+    "bj_yizhuang_t1_08": {
+      "forward": {
+        "firstDeparture": "05:49",
+        "lastDeparture": "23:19"
+      },
+      "reverse": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:15"
+      }
+    },
+    "bj_yizhuang_t1_09": {
+      "forward": {
+        "firstDeparture": "05:51",
+        "lastDeparture": "23:21"
+      },
+      "reverse": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:13"
+      }
+    },
+    "bj_yizhuang_t1_10": {
+      "forward": {
+        "firstDeparture": "05:54",
+        "lastDeparture": "23:24"
+      },
+      "reverse": {
+        "firstDeparture": "05:40",
+        "lastDeparture": "23:10"
+      }
+    },
+    "bj_yizhuang_t1_11": {
+      "forward": {
+        "firstDeparture": "05:56",
+        "lastDeparture": "23:26"
+      },
+      "reverse": {
+        "firstDeparture": "05:38",
+        "lastDeparture": "23:08"
+      }
+    },
+    "bj_yizhuang_t1_12": {
+      "forward": {
+        "firstDeparture": "06:00",
+        "lastDeparture": "23:30"
+      },
+      "reverse": {
+        "firstDeparture": "05:34",
+        "lastDeparture": "23:04"
+      }
+    },
+    "bj_yizhuang_t1_13": {
+      "forward": {
+        "firstDeparture": "06:02",
+        "lastDeparture": "23:32"
+      },
+      "reverse": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:02"
+      }
+    },
+    "bj_yizhuang_t1_14": {
+      "forward": {
+        "firstDeparture": "06:04",
+        "lastDeparture": "23:34"
+      },
+      "reverse": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_yizhuang_t1_01",
+      "to": "bj_yizhuang_t1_02",
+      "runSeconds": 180
+    },
+    {
+      "from": "bj_yizhuang_t1_02",
+      "to": "bj_yizhuang_t1_03",
+      "runSeconds": 185
+    },
+    {
+      "from": "bj_yizhuang_t1_03",
+      "to": "bj_yizhuang_t1_04",
+      "runSeconds": 225
+    },
+    {
+      "from": "bj_yizhuang_t1_04",
+      "to": "bj_yizhuang_t1_05",
+      "runSeconds": 100
+    },
+    {
+      "from": "bj_yizhuang_t1_05",
+      "to": "bj_yizhuang_t1_06",
+      "runSeconds": 135
+    },
+    {
+      "from": "bj_yizhuang_t1_06",
+      "to": "bj_yizhuang_t1_07",
+      "runSeconds": 205
+    },
+    {
+      "from": "bj_yizhuang_t1_07",
+      "to": "bj_yizhuang_t1_08",
+      "runSeconds": 135
+    },
+    {
+      "from": "bj_yizhuang_t1_08",
+      "to": "bj_yizhuang_t1_09",
+      "runSeconds": 115
+    },
+    {
+      "from": "bj_yizhuang_t1_09",
+      "to": "bj_yizhuang_t1_10",
+      "runSeconds": 170
+    },
+    {
+      "from": "bj_yizhuang_t1_10",
+      "to": "bj_yizhuang_t1_11",
+      "runSeconds": 125
+    },
+    {
+      "from": "bj_yizhuang_t1_11",
+      "to": "bj_yizhuang_t1_12",
+      "runSeconds": 225
+    },
+    {
+      "from": "bj_yizhuang_t1_12",
+      "to": "bj_yizhuang_t1_13",
+      "runSeconds": 140
+    },
+    {
+      "from": "bj_yizhuang_t1_13",
+      "to": "bj_yizhuang_t1_14",
+      "runSeconds": 145
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 屈庄",
+      "startStationId": "bj_yizhuang_t1_01",
+      "endStationId": "bj_yizhuang_t1_14",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 定海园",
+      "startStationId": "bj_yizhuang_t1_14",
+      "endStationId": "bj_yizhuang_t1_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "coordSystem": "wgs84",
+  "lines": [
+    {
+      "lineId": "bj1",
+      "name": "1号线",
+      "color": "#A4343A",
+      "dataFile": "line_beijing_1.json"
+    },
+    {
+      "lineId": "bj2",
+      "name": "2号线",
+      "color": "#004B87",
+      "dataFile": "line_beijing_2.json"
+    },
+    {
+      "lineId": "bj3",
+      "name": "3号线",
+      "color": "#D90627",
+      "dataFile": "line_beijing_3.json"
+    },
+    {
+      "lineId": "bj4",
+      "name": "4号线",
+      "color": "#008C95",
+      "dataFile": "line_beijing_4.json"
+    },
+    {
+      "lineId": "bj5",
+      "name": "5号线",
+      "color": "#AA0061",
+      "dataFile": "line_beijing_5.json"
+    },
+    {
+      "lineId": "bj6",
+      "name": "6号线",
+      "color": "#B58500",
+      "dataFile": "line_beijing_6.json"
+    },
+    {
+      "lineId": "bj7",
+      "name": "7号线",
+      "color": "#FFC56E",
+      "dataFile": "line_beijing_7.json"
+    },
+    {
+      "lineId": "bj8",
+      "name": "8号线",
+      "color": "#009B77",
+      "dataFile": "line_beijing_8.json"
+    },
+    {
+      "lineId": "bj9",
+      "name": "9号线",
+      "color": "#97D700",
+      "dataFile": "line_beijing_9.json"
+    },
+    {
+      "lineId": "bj10",
+      "name": "10号线",
+      "color": "#0092BC",
+      "dataFile": "line_beijing_10.json"
+    },
+    {
+      "lineId": "bj11",
+      "name": "11号线",
+      "color": "#FF8674",
+      "dataFile": "line_beijing_11.json"
+    },
+    {
+      "lineId": "bj12",
+      "name": "12号线",
+      "color": "#9C4F01",
+      "dataFile": "line_beijing_12.json"
+    },
+    {
+      "lineId": "bj13",
+      "name": "13号线",
+      "color": "#F4DA40",
+      "dataFile": "line_beijing_13.json"
+    },
+    {
+      "lineId": "bj14",
+      "name": "14号线",
+      "color": "#CA9A8E",
+      "dataFile": "line_beijing_14.json"
+    },
+    {
+      "lineId": "bj15",
+      "name": "15号线",
+      "color": "#653279",
+      "dataFile": "line_beijing_15.json"
+    },
+    {
+      "lineId": "bj16",
+      "name": "16号线",
+      "color": "#6BA539",
+      "dataFile": "line_beijing_16.json"
+    },
+    {
+      "lineId": "bj17",
+      "name": "17号线",
+      "color": "#00ABAB",
+      "dataFile": "line_beijing_17.json"
+    },
+    {
+      "lineId": "bj18",
+      "name": "18号线",
+      "color": "#665794",
+      "dataFile": "line_beijing_18.json"
+    },
+    {
+      "lineId": "bj19",
+      "name": "19号线",
+      "color": "#D3A3C9",
+      "dataFile": "line_beijing_19.json"
+    },
+    {
+      "lineId": "bj_yizhuang",
+      "name": "亦庄线",
+      "color": "#D0006F",
+      "dataFile": "line_beijing_yizhuang.json"
+    },
+    {
+      "lineId": "bj_yizhuang_t1",
+      "name": "亦庄T1线",
+      "color": "#E6081B",
+      "dataFile": "line_beijing_yizhuang_t1.json"
+    },
+    {
+      "lineId": "bj_fangshan",
+      "name": "房山线",
+      "color": "#D86018",
+      "dataFile": "line_beijing_fangshan.json"
+    },
+    {
+      "lineId": "bj_yanfang",
+      "name": "燕房线",
+      "color": "#D86018",
+      "dataFile": "line_beijing_yanfang.json"
+    },
+    {
+      "lineId": "bj_s1",
+      "name": "S1线",
+      "color": "#A45A2A",
+      "dataFile": "line_beijing_s1.json"
+    },
+    {
+      "lineId": "bj_changping",
+      "name": "昌平线",
+      "color": "#D986BA",
+      "dataFile": "line_beijing_changping.json"
+    },
+    {
+      "lineId": "bj_xijiao",
+      "name": "西郊线",
+      "color": "#D22630",
+      "dataFile": "line_beijing_xijiao.json"
+    },
+    {
+      "lineId": "bj_capital_airport",
+      "name": "首都机场线",
+      "color": "#A192B2",
+      "dataFile": "line_beijing_capital_airport.json"
+    },
+    {
+      "lineId": "bj_daxing_airport",
+      "name": "大兴机场线",
+      "color": "#0049A5",
+      "dataFile": "line_beijing_daxing_airport.json"
+    }
+  ]
+}

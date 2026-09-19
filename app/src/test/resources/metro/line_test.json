@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "lineId": "test",
+  "lineName": "测试线",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-18",
+  "dataSource": "unit test fixture",
+  "accuracyLevel": "estimated",
+  "needsReview": false,
+  "stationOrder": ["s1", "s2", "s3", "s4"],
+  "stations": [
+    { "id": "s1", "name": "甲站", "lat": 39.9057386, "lng": 116.3682035 },
+    { "id": "s2", "name": "乙站", "lat": 39.9059702, "lng": 116.3851622 },
+    { "id": "s3", "name": "丙站", "lat": 39.9063337, "lng": 116.3949169 },
+    { "id": "s4", "name": "丁站", "lat": 39.9069496, "lng": 116.4052789 }
+  ],
+  "stationServiceTimes": {
+    "s1": {
+      "east_full": { "firstDeparture": "06:00", "lastDeparture": "07:00" },
+      "east_short": { "firstDeparture": "06:10", "lastDeparture": "06:40" },
+      "west_full": { "firstDeparture": "06:06", "lastDeparture": "07:06" }
+    },
+    "s2": {
+      "east_full": { "firstDeparture": "06:02", "lastDeparture": "07:02" },
+      "east_short": { "firstDeparture": "06:12", "lastDeparture": "06:42" },
+      "west_full": { "firstDeparture": "06:04", "lastDeparture": "07:04" },
+      "west_short": { "firstDeparture": "06:22", "lastDeparture": "06:42" }
+    },
+    "s3": {
+      "east_full": { "firstDeparture": "06:04", "lastDeparture": "07:04" },
+      "east_short": { "firstDeparture": "06:14", "lastDeparture": "06:44" },
+      "west_full": { "firstDeparture": "06:02", "lastDeparture": "07:02" },
+      "west_short": { "firstDeparture": "06:20", "lastDeparture": "06:40" }
+    },
+    "s4": {
+      "east_full": { "firstDeparture": "06:06", "lastDeparture": "07:06" },
+      "west_full": { "firstDeparture": "06:00", "lastDeparture": "07:00" }
+    }
+  },
+  "segments": [
+    { "from": "s1", "to": "s2", "runSeconds": 120 },
+    { "from": "s2", "to": "s3", "runSeconds": 120 },
+    { "from": "s3", "to": "s4", "runSeconds": 120 }
+  ],
+  "patterns": [
+    {
+      "id": "east_full",
+      "name": "全程车",
+      "directionId": "east",
+      "directionLabel": "开往 丁站",
+      "startStationId": "s1",
+      "endStationId": "s4",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "06:00",
+          "lastDeparture": "07:00",
+          "headways": [
+            { "from": "06:00", "to": "06:06", "intervalSeconds": 120 },
+            { "from": "06:06", "to": "07:00", "intervalSeconds": 300 }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "06:00",
+          "lastDeparture": "07:00",
+          "headways": [
+            { "from": "06:00", "to": "07:00", "intervalSeconds": 600 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "east_short",
+      "name": "区间车 · 终点丙站",
+      "directionId": "east",
+      "startStationId": "s1",
+      "endStationId": "s3",
+      "isShortTurn": true,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "06:10",
+          "lastDeparture": "06:40",
+          "headways": [
+            { "from": "06:10", "to": "06:40", "intervalSeconds": 600 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "west_full",
+      "name": "全程车",
+      "directionId": "west",
+      "directionLabel": "开往 甲站",
+      "startStationId": "s4",
+      "endStationId": "s1",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "06:00",
+          "lastDeparture": "07:00",
+          "headways": [
+            { "from": "06:00", "to": "07:00", "intervalSeconds": 300 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "west_short",
+      "name": "区间车 · 终点甲站",
+      "directionId": "west",
+      "startStationId": "s3",
+      "endStationId": "s1",
+      "isShortTurn": true,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "06:20",
+          "lastDeparture": "06:40",
+          "headways": [
+            { "from": "06:20", "to": "06:40", "intervalSeconds": 600 }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

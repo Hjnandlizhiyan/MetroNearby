@@ -1,0 +1,436 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj18",
+  "lineName": "18号线",
+  "color": "#665794",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj18_01",
+    "bj18_02",
+    "bj18_03",
+    "bj18_04",
+    "bj18_05",
+    "bj18_06",
+    "bj18_07",
+    "bj18_08",
+    "bj18_09",
+    "bj18_10",
+    "bj18_11"
+  ],
+  "stations": [
+    {
+      "id": "bj18_01",
+      "name": "马连洼",
+      "lat": 40.032637,
+      "lng": 116.27252,
+      "aliases": [
+        "马连洼",
+        "马连洼站"
+      ]
+    },
+    {
+      "id": "bj18_02",
+      "name": "上地软件园",
+      "lat": 40.043954,
+      "lng": 116.286834,
+      "aliases": [
+        "上地软件园",
+        "上地软件园站"
+      ]
+    },
+    {
+      "id": "bj18_03",
+      "name": "东北旺",
+      "lat": 40.053069,
+      "lng": 116.295038,
+      "aliases": [
+        "东北旺",
+        "东北旺站"
+      ]
+    },
+    {
+      "id": "bj18_04",
+      "name": "龙泽西",
+      "lat": 40.07271,
+      "lng": 116.309473,
+      "aliases": [
+        "龙泽西",
+        "龙泽西站"
+      ]
+    },
+    {
+      "id": "bj18_05",
+      "name": "回龙观西大街",
+      "lat": 40.078414,
+      "lng": 116.330669,
+      "aliases": [
+        "回龙观西大街",
+        "回龙观西大街站"
+      ]
+    },
+    {
+      "id": "bj18_06",
+      "name": "文华路",
+      "lat": 40.080137,
+      "lng": 116.342685,
+      "aliases": [
+        "文华路",
+        "文华路站"
+      ]
+    },
+    {
+      "id": "bj18_07",
+      "name": "回龙观东大街",
+      "lat": 40.081175,
+      "lng": 116.363025,
+      "aliases": [
+        "回龙观东大街",
+        "回龙观东大街站"
+      ]
+    },
+    {
+      "id": "bj18_08",
+      "name": "霍营东",
+      "lat": 40.082034,
+      "lng": 116.376549,
+      "aliases": [
+        "霍营东",
+        "霍营东站"
+      ]
+    },
+    {
+      "id": "bj18_09",
+      "name": "天通苑",
+      "lat": 40.075222,
+      "lng": 116.412759,
+      "aliases": [
+        "天通苑",
+        "天通苑站"
+      ]
+    },
+    {
+      "id": "bj18_10",
+      "name": "太平庄",
+      "lat": 40.074126,
+      "lng": 116.426731,
+      "aliases": [
+        "太平庄",
+        "太平庄站"
+      ]
+    },
+    {
+      "id": "bj18_11",
+      "name": "天通苑东",
+      "lat": 40.068338,
+      "lng": 116.442339,
+      "aliases": [
+        "天通苑东",
+        "天通苑东站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj18_01": {
+      "forward": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "22:49"
+      },
+      "reverse": {
+        "firstDeparture": "06:01",
+        "lastDeparture": "23:42"
+      }
+    },
+    "bj18_02": {
+      "forward": {
+        "firstDeparture": "05:42",
+        "lastDeparture": "22:52"
+      },
+      "reverse": {
+        "firstDeparture": "05:58",
+        "lastDeparture": "23:39"
+      }
+    },
+    "bj18_03": {
+      "forward": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "22:55"
+      },
+      "reverse": {
+        "firstDeparture": "05:55",
+        "lastDeparture": "23:36"
+      }
+    },
+    "bj18_04": {
+      "forward": {
+        "firstDeparture": "05:49",
+        "lastDeparture": "22:59"
+      },
+      "reverse": {
+        "firstDeparture": "05:51",
+        "lastDeparture": "23:32"
+      }
+    },
+    "bj18_05": {
+      "forward": {
+        "firstDeparture": "05:53",
+        "lastDeparture": "23:03"
+      },
+      "reverse": {
+        "firstDeparture": "05:47",
+        "lastDeparture": "23:28"
+      }
+    },
+    "bj18_06": {
+      "forward": {
+        "firstDeparture": "05:55",
+        "lastDeparture": "23:05"
+      },
+      "reverse": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:26"
+      }
+    },
+    "bj18_07": {
+      "forward": {
+        "firstDeparture": "05:59",
+        "lastDeparture": "23:09"
+      },
+      "reverse": {
+        "firstDeparture": "05:41",
+        "lastDeparture": "23:22"
+      }
+    },
+    "bj18_08": {
+      "forward": {
+        "firstDeparture": "06:01",
+        "lastDeparture": "23:11"
+      },
+      "reverse": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:20"
+      }
+    },
+    "bj18_09": {
+      "forward": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "23:17"
+      },
+      "reverse": {
+        "firstDeparture": "05:33",
+        "lastDeparture": "23:14"
+      }
+    },
+    "bj18_10": {
+      "forward": {
+        "firstDeparture": "06:09",
+        "lastDeparture": "23:19"
+      },
+      "reverse": {
+        "firstDeparture": "05:31",
+        "lastDeparture": "23:12"
+      }
+    },
+    "bj18_11": {
+      "forward": {
+        "firstDeparture": "06:12",
+        "lastDeparture": "23:22"
+      },
+      "reverse": {
+        "firstDeparture": "05:28",
+        "lastDeparture": "23:09"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj18_01",
+      "to": "bj18_02",
+      "runSeconds": 205
+    },
+    {
+      "from": "bj18_02",
+      "to": "bj18_03",
+      "runSeconds": 155
+    },
+    {
+      "from": "bj18_03",
+      "to": "bj18_04",
+      "runSeconds": 280
+    },
+    {
+      "from": "bj18_04",
+      "to": "bj18_05",
+      "runSeconds": 220
+    },
+    {
+      "from": "bj18_05",
+      "to": "bj18_06",
+      "runSeconds": 135
+    },
+    {
+      "from": "bj18_06",
+      "to": "bj18_07",
+      "runSeconds": 205
+    },
+    {
+      "from": "bj18_07",
+      "to": "bj18_08",
+      "runSeconds": 145
+    },
+    {
+      "from": "bj18_08",
+      "to": "bj18_09",
+      "runSeconds": 345
+    },
+    {
+      "from": "bj18_09",
+      "to": "bj18_10",
+      "runSeconds": 150
+    },
+    {
+      "from": "bj18_10",
+      "to": "bj18_11",
+      "runSeconds": 180
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 天通苑东",
+      "startStationId": "bj18_01",
+      "endStationId": "bj18_11",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:39",
+          "lastDeparture": "22:49",
+          "headways": [
+            {
+              "from": "05:39",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:49",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:39",
+          "lastDeparture": "22:49",
+          "headways": [
+            {
+              "from": "05:39",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:49",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 马连洼",
+      "startStationId": "bj18_11",
+      "endStationId": "bj18_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:28",
+          "lastDeparture": "23:09",
+          "headways": [
+            {
+              "from": "05:28",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:09",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:28",
+          "lastDeparture": "23:09",
+          "headways": [
+            {
+              "from": "05:28",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:09",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

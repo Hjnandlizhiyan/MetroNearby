@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_yanfang",
+  "lineName": "燕房线",
+  "color": "#D86018",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_yanfang_01",
+    "bj_yanfang_02",
+    "bj_yanfang_03",
+    "bj_yanfang_04",
+    "bj_yanfang_05",
+    "bj_yanfang_06",
+    "bj_yanfang_07",
+    "bj_yanfang_08",
+    "bj_yanfang_09"
+  ],
+  "stations": [
+    {
+      "id": "bj_yanfang_01",
+      "name": "燕山",
+      "lat": 39.719615,
+      "lng": 115.973395,
+      "aliases": [
+        "燕山",
+        "燕山站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_02",
+      "name": "房山城关",
+      "lat": 39.706061,
+      "lng": 115.989599,
+      "aliases": [
+        "房山城关",
+        "房山城关站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_03",
+      "name": "饶乐府",
+      "lat": 39.701471,
+      "lng": 116.006103,
+      "aliases": [
+        "饶乐府",
+        "饶乐府站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_04",
+      "name": "马各庄",
+      "lat": 39.705103,
+      "lng": 116.016606,
+      "aliases": [
+        "马各庄",
+        "马各庄站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_05",
+      "name": "大石河东",
+      "lat": 39.709893,
+      "lng": 116.039906,
+      "aliases": [
+        "大石河东",
+        "大石河东站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_06",
+      "name": "星城",
+      "lat": 39.713681,
+      "lng": 116.06137,
+      "aliases": [
+        "星城",
+        "星城站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_07",
+      "name": "阎村",
+      "lat": 39.716731,
+      "lng": 116.080165,
+      "aliases": [
+        "阎村",
+        "阎村站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_08",
+      "name": "紫草坞",
+      "lat": 39.724606,
+      "lng": 116.08672,
+      "aliases": [
+        "紫草坞",
+        "紫草坞站"
+      ]
+    },
+    {
+      "id": "bj_yanfang_09",
+      "name": "阎村东",
+      "lat": 39.729028,
+      "lng": 116.100817,
+      "aliases": [
+        "阎村东",
+        "阎村东站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_yanfang_01": {
+      "forward": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "22:55"
+      },
+      "reverse": {
+        "firstDeparture": "05:47",
+        "lastDeparture": "23:12"
+      }
+    },
+    "bj_yanfang_02": {
+      "forward": {
+        "firstDeparture": "05:33",
+        "lastDeparture": "22:58"
+      },
+      "reverse": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:08"
+      }
+    },
+    "bj_yanfang_03": {
+      "forward": {
+        "firstDeparture": "05:36",
+        "lastDeparture": "23:01"
+      },
+      "reverse": {
+        "firstDeparture": "05:40",
+        "lastDeparture": "23:05"
+      }
+    },
+    "bj_yanfang_04": {
+      "forward": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:04"
+      },
+      "reverse": {
+        "firstDeparture": "05:38",
+        "lastDeparture": "23:03"
+      }
+    },
+    "bj_yanfang_05": {
+      "forward": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:08"
+      },
+      "reverse": {
+        "firstDeparture": "05:34",
+        "lastDeparture": "22:59"
+      }
+    },
+    "bj_yanfang_06": {
+      "forward": {
+        "firstDeparture": "05:46",
+        "lastDeparture": "23:11"
+      },
+      "reverse": {
+        "firstDeparture": "05:31",
+        "lastDeparture": "22:56"
+      }
+    },
+    "bj_yanfang_07": {
+      "forward": {
+        "firstDeparture": "05:49",
+        "lastDeparture": "23:14"
+      },
+      "reverse": {
+        "firstDeparture": "05:27",
+        "lastDeparture": "22:52"
+      }
+    },
+    "bj_yanfang_08": {
+      "forward": {
+        "firstDeparture": "05:52",
+        "lastDeparture": "23:17"
+      },
+      "reverse": {
+        "firstDeparture": "05:25",
+        "lastDeparture": "22:50"
+      }
+    },
+    "bj_yanfang_09": {
+      "forward": {
+        "firstDeparture": "05:54",
+        "lastDeparture": "23:19"
+      },
+      "reverse": {
+        "firstDeparture": "05:23",
+        "lastDeparture": "22:48"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_yanfang_01",
+      "to": "bj_yanfang_02",
+      "runSeconds": 235
+    },
+    {
+      "from": "bj_yanfang_02",
+      "to": "bj_yanfang_03",
+      "runSeconds": 180
+    },
+    {
+      "from": "bj_yanfang_03",
+      "to": "bj_yanfang_04",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj_yanfang_04",
+      "to": "bj_yanfang_05",
+      "runSeconds": 235
+    },
+    {
+      "from": "bj_yanfang_05",
+      "to": "bj_yanfang_06",
+      "runSeconds": 220
+    },
+    {
+      "from": "bj_yanfang_06",
+      "to": "bj_yanfang_07",
+      "runSeconds": 195
+    },
+    {
+      "from": "bj_yanfang_07",
+      "to": "bj_yanfang_08",
+      "runSeconds": 135
+    },
+    {
+      "from": "bj_yanfang_08",
+      "to": "bj_yanfang_09",
+      "runSeconds": 160
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 阎村东",
+      "startStationId": "bj_yanfang_01",
+      "endStationId": "bj_yanfang_09",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "22:55",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:55",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "22:55",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:55",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 燕山",
+      "startStationId": "bj_yanfang_09",
+      "endStationId": "bj_yanfang_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:23",
+          "lastDeparture": "22:48",
+          "headways": [
+            {
+              "from": "05:23",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:48",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:23",
+          "lastDeparture": "22:48",
+          "headways": [
+            {
+              "from": "05:23",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:48",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

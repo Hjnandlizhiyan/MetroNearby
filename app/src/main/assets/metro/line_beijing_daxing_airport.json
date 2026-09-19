@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_daxing_airport",
+  "lineName": "大兴机场线",
+  "color": "#0049A5",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_daxing_airport_01",
+    "bj_daxing_airport_02",
+    "bj_daxing_airport_03"
+  ],
+  "stations": [
+    {
+      "id": "bj_daxing_airport_01",
+      "name": "大兴机场",
+      "lat": 39.513289,
+      "lng": 116.416608,
+      "aliases": [
+        "大兴机场",
+        "大兴机场站"
+      ]
+    },
+    {
+      "id": "bj_daxing_airport_02",
+      "name": "大兴新城",
+      "lat": 39.735583,
+      "lng": 116.365522,
+      "aliases": [
+        "大兴新城",
+        "大兴新城站"
+      ]
+    },
+    {
+      "id": "bj_daxing_airport_03",
+      "name": "草桥",
+      "lat": 39.845869,
+      "lng": 116.351387,
+      "aliases": [
+        "草桥",
+        "草桥站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_daxing_airport_01": {
+      "forward": {
+        "firstDeparture": "06:00",
+        "lastDeparture": "23:00"
+      },
+      "reverse": {
+        "firstDeparture": "06:03",
+        "lastDeparture": "23:03"
+      }
+    },
+    "bj_daxing_airport_02": {
+      "forward": {
+        "firstDeparture": "06:15",
+        "lastDeparture": "23:15"
+      },
+      "reverse": {
+        "firstDeparture": "05:48",
+        "lastDeparture": "22:48"
+      }
+    },
+    "bj_daxing_airport_03": {
+      "forward": {
+        "firstDeparture": "06:26",
+        "lastDeparture": "23:26"
+      },
+      "reverse": {
+        "firstDeparture": "05:37",
+        "lastDeparture": "22:37"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_daxing_airport_01",
+      "to": "bj_daxing_airport_02",
+      "runSeconds": 900
+    },
+    {
+      "from": "bj_daxing_airport_02",
+      "to": "bj_daxing_airport_03",
+      "runSeconds": 715
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 草桥",
+      "startStationId": "bj_daxing_airport_01",
+      "endStationId": "bj_daxing_airport_03",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "06:00",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "06:00",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "06:00",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "06:00",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 大兴机场",
+      "startStationId": "bj_daxing_airport_03",
+      "endStationId": "bj_daxing_airport_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:37",
+          "lastDeparture": "22:37",
+          "headways": [
+            {
+              "from": "05:37",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:37",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:37",
+          "lastDeparture": "22:37",
+          "headways": [
+            {
+              "from": "05:37",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:37",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

@@ -1,0 +1,1045 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj4",
+  "lineName": "4号线",
+  "color": "#008C95",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-18",
+  "dataSource": "WGS-84 坐标和站序来自 OSM relation 2083779；2026-09-18 核对官方运营站序及两个始发站全程方向首末班：https://www.mtr.bj.cn/service/line/timetable/line-4；沿途时刻、运行时长及发车间隔仍为占位估算。",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "含大兴线贯通至天宫院；OSM 节点 528930289 缺名，按官网站序补为陶然亭，坐标保持不变。stationOrder/segments/别名由 tools/line-pipeline/New-LineJson.ps1 自动生成。stationServiceTimes 由「始发站首末班 + 逐段累计运行时长」推算，非官方公布值。两个始发站全程方向首末班已按官网核对；沿途首末班和发车间隔仍为占位估算，工作日/周末暂用同一组估算间隔。仅收录双向全程车，不含官方半程车、分段出库或临时延时运营；不能将全程末班视为该线路所有交路均已收车。stationServiceTimes 优先于 segments 生效（ArrivalEstimator.resolveBaseOffset），因此调整站间时长时须同步重算对应条目，或删除该条目让它回落到 segments。数据源：地铁 4号线/大兴线: 安河桥北 -> 天宫院（OSM relation 2083779），坐标系统 WGS-84。约 4 公里长区间（4号线新宫—西红门/6号线青年路—褡裢坡）不适用默认 130 秒，本线该段改为 300 秒估算并同步重算沿途首末班；不是实测区间用时。",
+  "stationOrder": [
+    "bj4_01",
+    "bj4_02",
+    "bj4_03",
+    "bj4_04",
+    "bj4_05",
+    "bj4_06",
+    "bj4_07",
+    "bj4_08",
+    "bj4_09",
+    "bj4_10",
+    "bj4_11",
+    "bj4_12",
+    "bj4_13",
+    "bj4_14",
+    "bj4_15",
+    "bj4_16",
+    "bj4_17",
+    "bj4_18",
+    "bj4_19",
+    "bj4_20",
+    "bj4_21",
+    "bj4_22",
+    "bj4_23",
+    "bj4_24",
+    "bj4_25",
+    "bj4_26",
+    "bj4_27",
+    "bj4_28",
+    "bj4_29",
+    "bj4_30",
+    "bj4_31",
+    "bj4_32",
+    "bj4_33",
+    "bj4_34",
+    "bj4_35"
+  ],
+  "stations": [
+    {
+      "id": "bj4_01",
+      "name": "安河桥北",
+      "lat": 40.0110255,
+      "lng": 116.2639813,
+      "aliases": [
+        "安河桥北站"
+      ]
+    },
+    {
+      "id": "bj4_02",
+      "name": "北宫门",
+      "lat": 40.001161,
+      "lng": 116.2713357,
+      "aliases": [
+        "北宫门站"
+      ]
+    },
+    {
+      "id": "bj4_03",
+      "name": "西苑",
+      "lat": 39.9966504,
+      "lng": 116.2855053,
+      "aliases": [
+        "西苑站"
+      ]
+    },
+    {
+      "id": "bj4_04",
+      "name": "圆明园",
+      "lat": 39.9982429,
+      "lng": 116.3037029,
+      "aliases": [
+        "圆明园站"
+      ]
+    },
+    {
+      "id": "bj4_05",
+      "name": "北京大学东门",
+      "lat": 39.9908074,
+      "lng": 116.3095941,
+      "aliases": [
+        "北京大学东门站"
+      ]
+    },
+    {
+      "id": "bj4_06",
+      "name": "中关村",
+      "lat": 39.9826925,
+      "lng": 116.3102538,
+      "aliases": [
+        "中关村站"
+      ]
+    },
+    {
+      "id": "bj4_07",
+      "name": "海淀黄庄",
+      "lat": 39.9747124,
+      "lng": 116.3114265,
+      "aliases": [
+        "海淀黄庄站"
+      ]
+    },
+    {
+      "id": "bj4_08",
+      "name": "人民大学",
+      "lat": 39.965758,
+      "lng": 116.3156202,
+      "aliases": [
+        "人民大学站"
+      ]
+    },
+    {
+      "id": "bj4_09",
+      "name": "魏公村",
+      "lat": 39.9563342,
+      "lng": 116.3170676,
+      "aliases": [
+        "魏公村站"
+      ]
+    },
+    {
+      "id": "bj4_10",
+      "name": "国家图书馆",
+      "lat": 39.9418236,
+      "lng": 116.318865,
+      "aliases": [
+        "国家图书馆站"
+      ]
+    },
+    {
+      "id": "bj4_11",
+      "name": "动物园",
+      "lat": 39.9368863,
+      "lng": 116.3327167,
+      "aliases": [
+        "动物园站"
+      ]
+    },
+    {
+      "id": "bj4_12",
+      "name": "西直门",
+      "lat": 39.9390927,
+      "lng": 116.3493268,
+      "aliases": [
+        "西直门站"
+      ]
+    },
+    {
+      "id": "bj4_13",
+      "name": "新街口",
+      "lat": 39.9393811,
+      "lng": 116.3613437,
+      "aliases": [
+        "新街口站"
+      ]
+    },
+    {
+      "id": "bj4_14",
+      "name": "平安里",
+      "lat": 39.9323177,
+      "lng": 116.3663949,
+      "aliases": [
+        "平安里站"
+      ]
+    },
+    {
+      "id": "bj4_15",
+      "name": "西四",
+      "lat": 39.9225541,
+      "lng": 116.3667178,
+      "aliases": [
+        "西四站"
+      ]
+    },
+    {
+      "id": "bj4_16",
+      "name": "灵境胡同",
+      "lat": 39.9149476,
+      "lng": 116.3671636,
+      "aliases": [
+        "灵境胡同站"
+      ]
+    },
+    {
+      "id": "bj4_17",
+      "name": "西单",
+      "lat": 39.9057485,
+      "lng": 116.3676628,
+      "aliases": [
+        "西单站"
+      ]
+    },
+    {
+      "id": "bj4_18",
+      "name": "宣武门",
+      "lat": 39.8983902,
+      "lng": 116.3679294,
+      "aliases": [
+        "宣武门站"
+      ]
+    },
+    {
+      "id": "bj4_19",
+      "name": "菜市口",
+      "lat": 39.8879008,
+      "lng": 116.3681094,
+      "aliases": [
+        "菜市口站"
+      ]
+    },
+    {
+      "id": "bj4_20",
+      "name": "陶然亭",
+      "lat": 39.8774343,
+      "lng": 116.368085,
+      "aliases": [
+        "陶然亭站"
+      ]
+    },
+    {
+      "id": "bj4_21",
+      "name": "北京南站",
+      "lat": 39.8634948,
+      "lng": 116.3726414,
+      "aliases": [
+        "北京南站"
+      ]
+    },
+    {
+      "id": "bj4_22",
+      "name": "马家堡",
+      "lat": 39.8516387,
+      "lng": 116.365093,
+      "aliases": [
+        "马家堡站"
+      ]
+    },
+    {
+      "id": "bj4_23",
+      "name": "角门西",
+      "lat": 39.8444042,
+      "lng": 116.364851,
+      "aliases": [
+        "角门西站"
+      ]
+    },
+    {
+      "id": "bj4_24",
+      "name": "公益西桥",
+      "lat": 39.8352652,
+      "lng": 116.3646416,
+      "aliases": [
+        "公益西桥站"
+      ]
+    },
+    {
+      "id": "bj4_25",
+      "name": "新宫",
+      "lat": 39.811161,
+      "lng": 116.3592596,
+      "aliases": [
+        "新宫站"
+      ]
+    },
+    {
+      "id": "bj4_26",
+      "name": "西红门",
+      "lat": 39.788393,
+      "lng": 116.3226513,
+      "aliases": [
+        "西红门站"
+      ]
+    },
+    {
+      "id": "bj4_27",
+      "name": "高米店北",
+      "lat": 39.7730294,
+      "lng": 116.3243819,
+      "aliases": [
+        "高米店北站"
+      ]
+    },
+    {
+      "id": "bj4_28",
+      "name": "高米店南",
+      "lat": 39.7622833,
+      "lng": 116.325577,
+      "aliases": [
+        "高米店南站"
+      ]
+    },
+    {
+      "id": "bj4_29",
+      "name": "枣园",
+      "lat": 39.7518044,
+      "lng": 116.3259177,
+      "aliases": [
+        "枣园站"
+      ]
+    },
+    {
+      "id": "bj4_30",
+      "name": "清源路",
+      "lat": 39.7417545,
+      "lng": 116.3262542,
+      "aliases": [
+        "清源路站"
+      ]
+    },
+    {
+      "id": "bj4_31",
+      "name": "黄村西大街",
+      "lat": 39.7304213,
+      "lng": 116.3264834,
+      "aliases": [
+        "黄村西大街站"
+      ]
+    },
+    {
+      "id": "bj4_32",
+      "name": "黄村火车站",
+      "lat": 39.7215041,
+      "lng": 116.3266134,
+      "aliases": [
+        "黄村火车站"
+      ]
+    },
+    {
+      "id": "bj4_33",
+      "name": "义和庄",
+      "lat": 39.7110984,
+      "lng": 116.3129771,
+      "aliases": [
+        "义和庄站"
+      ]
+    },
+    {
+      "id": "bj4_34",
+      "name": "生物医药基地",
+      "lat": 39.6851232,
+      "lng": 116.3156268,
+      "aliases": [
+        "生物医药基地站"
+      ]
+    },
+    {
+      "id": "bj4_35",
+      "name": "天宫院",
+      "lat": 39.6689895,
+      "lng": 116.3138671,
+      "aliases": [
+        "天宫院站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj4_01": {
+      "forward": {
+        "firstDeparture": "04:58",
+        "lastDeparture": "22:35"
+      },
+      "reverse": {
+        "firstDeparture": "06:21",
+        "lastDeparture": "24:01"
+      }
+    },
+    "bj4_02": {
+      "forward": {
+        "firstDeparture": "05:00",
+        "lastDeparture": "22:37"
+      },
+      "reverse": {
+        "firstDeparture": "06:19",
+        "lastDeparture": "23:59"
+      }
+    },
+    "bj4_03": {
+      "forward": {
+        "firstDeparture": "05:02",
+        "lastDeparture": "22:39"
+      },
+      "reverse": {
+        "firstDeparture": "06:17",
+        "lastDeparture": "23:57"
+      }
+    },
+    "bj4_04": {
+      "forward": {
+        "firstDeparture": "05:04",
+        "lastDeparture": "22:41"
+      },
+      "reverse": {
+        "firstDeparture": "06:15",
+        "lastDeparture": "23:55"
+      }
+    },
+    "bj4_05": {
+      "forward": {
+        "firstDeparture": "05:06",
+        "lastDeparture": "22:43"
+      },
+      "reverse": {
+        "firstDeparture": "06:12",
+        "lastDeparture": "23:52"
+      }
+    },
+    "bj4_06": {
+      "forward": {
+        "firstDeparture": "05:08",
+        "lastDeparture": "22:45"
+      },
+      "reverse": {
+        "firstDeparture": "06:10",
+        "lastDeparture": "23:50"
+      }
+    },
+    "bj4_07": {
+      "forward": {
+        "firstDeparture": "05:11",
+        "lastDeparture": "22:48"
+      },
+      "reverse": {
+        "firstDeparture": "06:08",
+        "lastDeparture": "23:48"
+      }
+    },
+    "bj4_08": {
+      "forward": {
+        "firstDeparture": "05:13",
+        "lastDeparture": "22:50"
+      },
+      "reverse": {
+        "firstDeparture": "06:06",
+        "lastDeparture": "23:46"
+      }
+    },
+    "bj4_09": {
+      "forward": {
+        "firstDeparture": "05:15",
+        "lastDeparture": "22:52"
+      },
+      "reverse": {
+        "firstDeparture": "06:04",
+        "lastDeparture": "23:44"
+      }
+    },
+    "bj4_10": {
+      "forward": {
+        "firstDeparture": "05:17",
+        "lastDeparture": "22:54"
+      },
+      "reverse": {
+        "firstDeparture": "06:02",
+        "lastDeparture": "23:42"
+      }
+    },
+    "bj4_11": {
+      "forward": {
+        "firstDeparture": "05:19",
+        "lastDeparture": "22:56"
+      },
+      "reverse": {
+        "firstDeparture": "05:59",
+        "lastDeparture": "23:39"
+      }
+    },
+    "bj4_12": {
+      "forward": {
+        "firstDeparture": "05:21",
+        "lastDeparture": "22:58"
+      },
+      "reverse": {
+        "firstDeparture": "05:57",
+        "lastDeparture": "23:37"
+      }
+    },
+    "bj4_13": {
+      "forward": {
+        "firstDeparture": "05:24",
+        "lastDeparture": "23:01"
+      },
+      "reverse": {
+        "firstDeparture": "05:55",
+        "lastDeparture": "23:35"
+      }
+    },
+    "bj4_14": {
+      "forward": {
+        "firstDeparture": "05:26",
+        "lastDeparture": "23:03"
+      },
+      "reverse": {
+        "firstDeparture": "05:53",
+        "lastDeparture": "23:33"
+      }
+    },
+    "bj4_15": {
+      "forward": {
+        "firstDeparture": "05:28",
+        "lastDeparture": "23:05"
+      },
+      "reverse": {
+        "firstDeparture": "05:51",
+        "lastDeparture": "23:31"
+      }
+    },
+    "bj4_16": {
+      "forward": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:07"
+      },
+      "reverse": {
+        "firstDeparture": "05:49",
+        "lastDeparture": "23:29"
+      }
+    },
+    "bj4_17": {
+      "forward": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:09"
+      },
+      "reverse": {
+        "firstDeparture": "05:46",
+        "lastDeparture": "23:26"
+      }
+    },
+    "bj4_18": {
+      "forward": {
+        "firstDeparture": "05:34",
+        "lastDeparture": "23:11"
+      },
+      "reverse": {
+        "firstDeparture": "05:44",
+        "lastDeparture": "23:24"
+      }
+    },
+    "bj4_19": {
+      "forward": {
+        "firstDeparture": "05:37",
+        "lastDeparture": "23:14"
+      },
+      "reverse": {
+        "firstDeparture": "05:42",
+        "lastDeparture": "23:22"
+      }
+    },
+    "bj4_20": {
+      "forward": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:16"
+      },
+      "reverse": {
+        "firstDeparture": "05:40",
+        "lastDeparture": "23:20"
+      }
+    },
+    "bj4_21": {
+      "forward": {
+        "firstDeparture": "05:41",
+        "lastDeparture": "23:18"
+      },
+      "reverse": {
+        "firstDeparture": "05:38",
+        "lastDeparture": "23:18"
+      }
+    },
+    "bj4_22": {
+      "forward": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:20"
+      },
+      "reverse": {
+        "firstDeparture": "05:36",
+        "lastDeparture": "23:16"
+      }
+    },
+    "bj4_23": {
+      "forward": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:22"
+      },
+      "reverse": {
+        "firstDeparture": "05:33",
+        "lastDeparture": "23:13"
+      }
+    },
+    "bj4_24": {
+      "forward": {
+        "firstDeparture": "05:47",
+        "lastDeparture": "23:24"
+      },
+      "reverse": {
+        "firstDeparture": "05:31",
+        "lastDeparture": "23:11"
+      }
+    },
+    "bj4_25": {
+      "forward": {
+        "firstDeparture": "05:50",
+        "lastDeparture": "23:27"
+      },
+      "reverse": {
+        "firstDeparture": "05:29",
+        "lastDeparture": "23:09"
+      }
+    },
+    "bj4_26": {
+      "forward": {
+        "firstDeparture": "05:55",
+        "lastDeparture": "23:32"
+      },
+      "reverse": {
+        "firstDeparture": "05:24",
+        "lastDeparture": "23:04"
+      }
+    },
+    "bj4_27": {
+      "forward": {
+        "firstDeparture": "05:57",
+        "lastDeparture": "23:34"
+      },
+      "reverse": {
+        "firstDeparture": "05:22",
+        "lastDeparture": "23:02"
+      }
+    },
+    "bj4_28": {
+      "forward": {
+        "firstDeparture": "05:59",
+        "lastDeparture": "23:36"
+      },
+      "reverse": {
+        "firstDeparture": "05:20",
+        "lastDeparture": "23:00"
+      }
+    },
+    "bj4_29": {
+      "forward": {
+        "firstDeparture": "06:01",
+        "lastDeparture": "23:38"
+      },
+      "reverse": {
+        "firstDeparture": "05:18",
+        "lastDeparture": "22:58"
+      }
+    },
+    "bj4_30": {
+      "forward": {
+        "firstDeparture": "06:03",
+        "lastDeparture": "23:40"
+      },
+      "reverse": {
+        "firstDeparture": "05:15",
+        "lastDeparture": "22:55"
+      }
+    },
+    "bj4_31": {
+      "forward": {
+        "firstDeparture": "06:05",
+        "lastDeparture": "23:42"
+      },
+      "reverse": {
+        "firstDeparture": "05:13",
+        "lastDeparture": "22:53"
+      }
+    },
+    "bj4_32": {
+      "forward": {
+        "firstDeparture": "06:08",
+        "lastDeparture": "23:45"
+      },
+      "reverse": {
+        "firstDeparture": "05:11",
+        "lastDeparture": "22:51"
+      }
+    },
+    "bj4_33": {
+      "forward": {
+        "firstDeparture": "06:10",
+        "lastDeparture": "23:47"
+      },
+      "reverse": {
+        "firstDeparture": "05:09",
+        "lastDeparture": "22:49"
+      }
+    },
+    "bj4_34": {
+      "forward": {
+        "firstDeparture": "06:12",
+        "lastDeparture": "23:49"
+      },
+      "reverse": {
+        "firstDeparture": "05:07",
+        "lastDeparture": "22:47"
+      }
+    },
+    "bj4_35": {
+      "forward": {
+        "firstDeparture": "06:14",
+        "lastDeparture": "23:51"
+      },
+      "reverse": {
+        "firstDeparture": "05:05",
+        "lastDeparture": "22:45"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj4_01",
+      "to": "bj4_02",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_02",
+      "to": "bj4_03",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_03",
+      "to": "bj4_04",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_04",
+      "to": "bj4_05",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_05",
+      "to": "bj4_06",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_06",
+      "to": "bj4_07",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_07",
+      "to": "bj4_08",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_08",
+      "to": "bj4_09",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_09",
+      "to": "bj4_10",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_10",
+      "to": "bj4_11",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_11",
+      "to": "bj4_12",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_12",
+      "to": "bj4_13",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_13",
+      "to": "bj4_14",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_14",
+      "to": "bj4_15",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_15",
+      "to": "bj4_16",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_16",
+      "to": "bj4_17",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_17",
+      "to": "bj4_18",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_18",
+      "to": "bj4_19",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_19",
+      "to": "bj4_20",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_20",
+      "to": "bj4_21",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_21",
+      "to": "bj4_22",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_22",
+      "to": "bj4_23",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_23",
+      "to": "bj4_24",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_24",
+      "to": "bj4_25",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_25",
+      "to": "bj4_26",
+      "runSeconds": 300
+    },
+    {
+      "from": "bj4_26",
+      "to": "bj4_27",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_27",
+      "to": "bj4_28",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_28",
+      "to": "bj4_29",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_29",
+      "to": "bj4_30",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_30",
+      "to": "bj4_31",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_31",
+      "to": "bj4_32",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_32",
+      "to": "bj4_33",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_33",
+      "to": "bj4_34",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj4_34",
+      "to": "bj4_35",
+      "runSeconds": 130
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 天宫院",
+      "startStationId": "bj4_01",
+      "endStationId": "bj4_35",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "04:58",
+          "lastDeparture": "22:35",
+          "headways": [
+            {
+              "from": "04:58",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "22:35",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "04:58",
+          "lastDeparture": "22:35",
+          "headways": [
+            {
+              "from": "04:58",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "22:35",
+              "intervalSeconds": 420
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 安河桥北",
+      "startStationId": "bj4_35",
+      "endStationId": "bj4_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:05",
+          "lastDeparture": "22:45",
+          "headways": [
+            {
+              "from": "05:05",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "22:45",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:05",
+          "lastDeparture": "22:45",
+          "headways": [
+            {
+              "from": "05:05",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "22:45",
+              "intervalSeconds": 420
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

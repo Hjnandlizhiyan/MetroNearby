@@ -1,0 +1,670 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj15",
+  "lineName": "15号线",
+  "color": "#653279",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj15_01",
+    "bj15_02",
+    "bj15_03",
+    "bj15_04",
+    "bj15_05",
+    "bj15_06",
+    "bj15_07",
+    "bj15_08",
+    "bj15_09",
+    "bj15_10",
+    "bj15_11",
+    "bj15_12",
+    "bj15_13",
+    "bj15_14",
+    "bj15_15",
+    "bj15_16",
+    "bj15_17",
+    "bj15_18",
+    "bj15_19",
+    "bj15_20"
+  ],
+  "stations": [
+    {
+      "id": "bj15_01",
+      "name": "俸伯",
+      "lat": 40.132573,
+      "lng": 116.684732,
+      "aliases": [
+        "俸伯",
+        "俸伯站"
+      ]
+    },
+    {
+      "id": "bj15_02",
+      "name": "顺义",
+      "lat": 40.129994,
+      "lng": 116.657023,
+      "aliases": [
+        "顺义",
+        "顺义站"
+      ]
+    },
+    {
+      "id": "bj15_03",
+      "name": "石门",
+      "lat": 40.129802,
+      "lng": 116.641117,
+      "aliases": [
+        "石门",
+        "石门站"
+      ]
+    },
+    {
+      "id": "bj15_04",
+      "name": "南法信",
+      "lat": 40.128478,
+      "lng": 116.609535,
+      "aliases": [
+        "南法信",
+        "南法信站"
+      ]
+    },
+    {
+      "id": "bj15_05",
+      "name": "后沙峪",
+      "lat": 40.114127,
+      "lng": 116.564211,
+      "aliases": [
+        "后沙峪",
+        "后沙峪站"
+      ]
+    },
+    {
+      "id": "bj15_06",
+      "name": "花梨坎",
+      "lat": 40.084436,
+      "lng": 116.557593,
+      "aliases": [
+        "花梨坎",
+        "花梨坎站"
+      ]
+    },
+    {
+      "id": "bj15_07",
+      "name": "国展",
+      "lat": 40.07003,
+      "lng": 116.555127,
+      "aliases": [
+        "国展",
+        "国展站"
+      ]
+    },
+    {
+      "id": "bj15_08",
+      "name": "孙河",
+      "lat": 40.045113,
+      "lng": 116.5347,
+      "aliases": [
+        "孙河",
+        "孙河站"
+      ]
+    },
+    {
+      "id": "bj15_09",
+      "name": "马泉营",
+      "lat": 40.033721,
+      "lng": 116.50348,
+      "aliases": [
+        "马泉营",
+        "马泉营站"
+      ]
+    },
+    {
+      "id": "bj15_10",
+      "name": "崔各庄",
+      "lat": 40.022201,
+      "lng": 116.492968,
+      "aliases": [
+        "崔各庄",
+        "崔各庄站"
+      ]
+    },
+    {
+      "id": "bj15_11",
+      "name": "望京东",
+      "lat": 40.0032,
+      "lng": 116.487105,
+      "aliases": [
+        "望京东",
+        "望京东站"
+      ]
+    },
+    {
+      "id": "bj15_12",
+      "name": "望京",
+      "lat": 39.998521,
+      "lng": 116.469409,
+      "aliases": [
+        "望京",
+        "望京站"
+      ]
+    },
+    {
+      "id": "bj15_13",
+      "name": "望京西",
+      "lat": 39.9935892,
+      "lng": 116.4411647,
+      "aliases": [
+        "望京西",
+        "望京西站"
+      ]
+    },
+    {
+      "id": "bj15_14",
+      "name": "关庄",
+      "lat": 40.001134,
+      "lng": 116.430947,
+      "aliases": [
+        "关庄",
+        "关庄站"
+      ]
+    },
+    {
+      "id": "bj15_15",
+      "name": "大屯路东",
+      "lat": 40.003841,
+      "lng": 116.417377,
+      "aliases": [
+        "大屯路东",
+        "大屯路东站"
+      ]
+    },
+    {
+      "id": "bj15_16",
+      "name": "安立路",
+      "lat": 40.002619,
+      "lng": 116.407845,
+      "aliases": [
+        "安立路",
+        "安立路站"
+      ]
+    },
+    {
+      "id": "bj15_17",
+      "name": "奥林匹克公园",
+      "lat": 40.002207,
+      "lng": 116.391758,
+      "aliases": [
+        "奥林匹克公园",
+        "奥林匹克公园站"
+      ]
+    },
+    {
+      "id": "bj15_18",
+      "name": "北沙滩",
+      "lat": 40.001492,
+      "lng": 116.368143,
+      "aliases": [
+        "北沙滩",
+        "北沙滩站"
+      ]
+    },
+    {
+      "id": "bj15_19",
+      "name": "六道口",
+      "lat": 40.000958,
+      "lng": 116.35267,
+      "aliases": [
+        "六道口",
+        "六道口站"
+      ]
+    },
+    {
+      "id": "bj15_20",
+      "name": "清华东路西口",
+      "lat": 40.000673,
+      "lng": 116.33953,
+      "aliases": [
+        "清华东路西口",
+        "清华东路西口站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj15_01": {
+      "forward": {
+        "firstDeparture": "05:12",
+        "lastDeparture": "22:10"
+      },
+      "reverse": {
+        "firstDeparture": "07:07",
+        "lastDeparture": "25:22"
+      }
+    },
+    "bj15_02": {
+      "forward": {
+        "firstDeparture": "05:16",
+        "lastDeparture": "22:14"
+      },
+      "reverse": {
+        "firstDeparture": "07:03",
+        "lastDeparture": "25:18"
+      }
+    },
+    "bj15_03": {
+      "forward": {
+        "firstDeparture": "05:19",
+        "lastDeparture": "22:17"
+      },
+      "reverse": {
+        "firstDeparture": "07:00",
+        "lastDeparture": "25:15"
+      }
+    },
+    "bj15_04": {
+      "forward": {
+        "firstDeparture": "05:24",
+        "lastDeparture": "22:22"
+      },
+      "reverse": {
+        "firstDeparture": "06:55",
+        "lastDeparture": "25:10"
+      }
+    },
+    "bj15_05": {
+      "forward": {
+        "firstDeparture": "05:31",
+        "lastDeparture": "22:29"
+      },
+      "reverse": {
+        "firstDeparture": "06:47",
+        "lastDeparture": "25:02"
+      }
+    },
+    "bj15_06": {
+      "forward": {
+        "firstDeparture": "05:37",
+        "lastDeparture": "22:35"
+      },
+      "reverse": {
+        "firstDeparture": "06:41",
+        "lastDeparture": "24:56"
+      }
+    },
+    "bj15_07": {
+      "forward": {
+        "firstDeparture": "05:40",
+        "lastDeparture": "22:38"
+      },
+      "reverse": {
+        "firstDeparture": "06:38",
+        "lastDeparture": "24:53"
+      }
+    },
+    "bj15_08": {
+      "forward": {
+        "firstDeparture": "05:46",
+        "lastDeparture": "22:44"
+      },
+      "reverse": {
+        "firstDeparture": "06:32",
+        "lastDeparture": "24:47"
+      }
+    },
+    "bj15_09": {
+      "forward": {
+        "firstDeparture": "05:52",
+        "lastDeparture": "22:50"
+      },
+      "reverse": {
+        "firstDeparture": "06:27",
+        "lastDeparture": "24:42"
+      }
+    },
+    "bj15_10": {
+      "forward": {
+        "firstDeparture": "05:55",
+        "lastDeparture": "22:53"
+      },
+      "reverse": {
+        "firstDeparture": "06:24",
+        "lastDeparture": "24:39"
+      }
+    },
+    "bj15_11": {
+      "forward": {
+        "firstDeparture": "05:59",
+        "lastDeparture": "22:57"
+      },
+      "reverse": {
+        "firstDeparture": "06:20",
+        "lastDeparture": "24:35"
+      }
+    },
+    "bj15_12": {
+      "forward": {
+        "firstDeparture": "06:02",
+        "lastDeparture": "23:00"
+      },
+      "reverse": {
+        "firstDeparture": "06:17",
+        "lastDeparture": "24:32"
+      }
+    },
+    "bj15_13": {
+      "forward": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "23:05"
+      },
+      "reverse": {
+        "firstDeparture": "06:12",
+        "lastDeparture": "24:27"
+      }
+    },
+    "bj15_14": {
+      "forward": {
+        "firstDeparture": "06:09",
+        "lastDeparture": "23:07"
+      },
+      "reverse": {
+        "firstDeparture": "06:09",
+        "lastDeparture": "24:24"
+      }
+    },
+    "bj15_15": {
+      "forward": {
+        "firstDeparture": "06:12",
+        "lastDeparture": "23:10"
+      },
+      "reverse": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "24:22"
+      }
+    },
+    "bj15_16": {
+      "forward": {
+        "firstDeparture": "06:13",
+        "lastDeparture": "23:11"
+      },
+      "reverse": {
+        "firstDeparture": "06:05",
+        "lastDeparture": "24:20"
+      }
+    },
+    "bj15_17": {
+      "forward": {
+        "firstDeparture": "06:16",
+        "lastDeparture": "23:14"
+      },
+      "reverse": {
+        "firstDeparture": "06:02",
+        "lastDeparture": "24:17"
+      }
+    },
+    "bj15_18": {
+      "forward": {
+        "firstDeparture": "06:20",
+        "lastDeparture": "23:18"
+      },
+      "reverse": {
+        "firstDeparture": "05:59",
+        "lastDeparture": "24:14"
+      }
+    },
+    "bj15_19": {
+      "forward": {
+        "firstDeparture": "06:23",
+        "lastDeparture": "23:21"
+      },
+      "reverse": {
+        "firstDeparture": "05:56",
+        "lastDeparture": "24:11"
+      }
+    },
+    "bj15_20": {
+      "forward": {
+        "firstDeparture": "06:25",
+        "lastDeparture": "23:23"
+      },
+      "reverse": {
+        "firstDeparture": "05:54",
+        "lastDeparture": "24:09"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj15_01",
+      "to": "bj15_02",
+      "runSeconds": 265
+    },
+    {
+      "from": "bj15_02",
+      "to": "bj15_03",
+      "runSeconds": 165
+    },
+    {
+      "from": "bj15_03",
+      "to": "bj15_04",
+      "runSeconds": 300
+    },
+    {
+      "from": "bj15_04",
+      "to": "bj15_05",
+      "runSeconds": 445
+    },
+    {
+      "from": "bj15_05",
+      "to": "bj15_06",
+      "runSeconds": 365
+    },
+    {
+      "from": "bj15_06",
+      "to": "bj15_07",
+      "runSeconds": 190
+    },
+    {
+      "from": "bj15_07",
+      "to": "bj15_08",
+      "runSeconds": 355
+    },
+    {
+      "from": "bj15_08",
+      "to": "bj15_09",
+      "runSeconds": 325
+    },
+    {
+      "from": "bj15_09",
+      "to": "bj15_10",
+      "runSeconds": 185
+    },
+    {
+      "from": "bj15_10",
+      "to": "bj15_11",
+      "runSeconds": 245
+    },
+    {
+      "from": "bj15_11",
+      "to": "bj15_12",
+      "runSeconds": 190
+    },
+    {
+      "from": "bj15_12",
+      "to": "bj15_13",
+      "runSeconds": 275
+    },
+    {
+      "from": "bj15_13",
+      "to": "bj15_14",
+      "runSeconds": 150
+    },
+    {
+      "from": "bj15_14",
+      "to": "bj15_15",
+      "runSeconds": 150
+    },
+    {
+      "from": "bj15_15",
+      "to": "bj15_16",
+      "runSeconds": 110
+    },
+    {
+      "from": "bj15_16",
+      "to": "bj15_17",
+      "runSeconds": 165
+    },
+    {
+      "from": "bj15_17",
+      "to": "bj15_18",
+      "runSeconds": 230
+    },
+    {
+      "from": "bj15_18",
+      "to": "bj15_19",
+      "runSeconds": 160
+    },
+    {
+      "from": "bj15_19",
+      "to": "bj15_20",
+      "runSeconds": 140
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 清华东路西口",
+      "startStationId": "bj15_01",
+      "endStationId": "bj15_20",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:12",
+          "lastDeparture": "22:10",
+          "headways": [
+            {
+              "from": "05:12",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:10",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:12",
+          "lastDeparture": "22:10",
+          "headways": [
+            {
+              "from": "05:12",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:10",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 俸伯",
+      "startStationId": "bj15_20",
+      "endStationId": "bj15_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:54",
+          "lastDeparture": "24:09",
+          "headways": [
+            {
+              "from": "05:54",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "24:09",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:54",
+          "lastDeparture": "24:09",
+          "headways": [
+            {
+              "from": "05:54",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "24:09",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

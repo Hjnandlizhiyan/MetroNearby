@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MetroNearby" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">#075FC7</item>
+    </style>
+</resources>

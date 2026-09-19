@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_xijiao",
+  "lineName": "西郊线",
+  "color": "#D22630",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_xijiao_01",
+    "bj_xijiao_02",
+    "bj_xijiao_03",
+    "bj_xijiao_04",
+    "bj_xijiao_05",
+    "bj_xijiao_06"
+  ],
+  "stations": [
+    {
+      "id": "bj_xijiao_01",
+      "name": "香山",
+      "lat": 39.994056,
+      "lng": 116.204491,
+      "aliases": [
+        "香山",
+        "香山站"
+      ]
+    },
+    {
+      "id": "bj_xijiao_02",
+      "name": "国家植物园",
+      "lat": 39.993582,
+      "lng": 116.214853,
+      "aliases": [
+        "国家植物园",
+        "国家植物园站"
+      ]
+    },
+    {
+      "id": "bj_xijiao_03",
+      "name": "万安",
+      "lat": 39.984001,
+      "lng": 116.231977,
+      "aliases": [
+        "万安",
+        "万安站"
+      ]
+    },
+    {
+      "id": "bj_xijiao_04",
+      "name": "茶棚",
+      "lat": 39.982113,
+      "lng": 116.2481,
+      "aliases": [
+        "茶棚",
+        "茶棚站"
+      ]
+    },
+    {
+      "id": "bj_xijiao_05",
+      "name": "颐和园西门",
+      "lat": 39.985697,
+      "lng": 116.263248,
+      "aliases": [
+        "颐和园西门",
+        "颐和园西门站"
+      ]
+    },
+    {
+      "id": "bj_xijiao_06",
+      "name": "巴沟",
+      "lat": 39.974408,
+      "lng": 116.293362,
+      "aliases": [
+        "巴沟",
+        "巴沟站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_xijiao_01": {
+      "forward": {
+        "firstDeparture": "06:00",
+        "lastDeparture": "23:06"
+      },
+      "reverse": {
+        "firstDeparture": "06:18",
+        "lastDeparture": "23:25"
+      }
+    },
+    "bj_xijiao_02": {
+      "forward": {
+        "firstDeparture": "06:02",
+        "lastDeparture": "23:08"
+      },
+      "reverse": {
+        "firstDeparture": "06:15",
+        "lastDeparture": "23:22"
+      }
+    },
+    "bj_xijiao_03": {
+      "forward": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "23:13"
+      },
+      "reverse": {
+        "firstDeparture": "06:10",
+        "lastDeparture": "23:17"
+      }
+    },
+    "bj_xijiao_04": {
+      "forward": {
+        "firstDeparture": "06:11",
+        "lastDeparture": "23:17"
+      },
+      "reverse": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "23:14"
+      }
+    },
+    "bj_xijiao_05": {
+      "forward": {
+        "firstDeparture": "06:15",
+        "lastDeparture": "23:21"
+      },
+      "reverse": {
+        "firstDeparture": "06:03",
+        "lastDeparture": "23:10"
+      }
+    },
+    "bj_xijiao_06": {
+      "forward": {
+        "firstDeparture": "06:22",
+        "lastDeparture": "23:28"
+      },
+      "reverse": {
+        "firstDeparture": "05:56",
+        "lastDeparture": "23:03"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_xijiao_01",
+      "to": "bj_xijiao_02",
+      "runSeconds": 155
+    },
+    {
+      "from": "bj_xijiao_02",
+      "to": "bj_xijiao_03",
+      "runSeconds": 290
+    },
+    {
+      "from": "bj_xijiao_03",
+      "to": "bj_xijiao_04",
+      "runSeconds": 230
+    },
+    {
+      "from": "bj_xijiao_04",
+      "to": "bj_xijiao_05",
+      "runSeconds": 225
+    },
+    {
+      "from": "bj_xijiao_05",
+      "to": "bj_xijiao_06",
+      "runSeconds": 440
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 巴沟",
+      "startStationId": "bj_xijiao_01",
+      "endStationId": "bj_xijiao_06",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "06:00",
+          "lastDeparture": "23:06",
+          "headways": [
+            {
+              "from": "06:00",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:06",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "06:00",
+          "lastDeparture": "23:06",
+          "headways": [
+            {
+              "from": "06:00",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:06",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 香山",
+      "startStationId": "bj_xijiao_06",
+      "endStationId": "bj_xijiao_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:56",
+          "lastDeparture": "23:03",
+          "headways": [
+            {
+              "from": "05:56",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:03",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:56",
+          "lastDeparture": "23:03",
+          "headways": [
+            {
+              "from": "05:56",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:03",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

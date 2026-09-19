@@ -1,0 +1,410 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj19",
+  "lineName": "19号线",
+  "color": "#D3A3C9",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj19_01",
+    "bj19_02",
+    "bj19_03",
+    "bj19_04",
+    "bj19_05",
+    "bj19_06",
+    "bj19_07",
+    "bj19_08",
+    "bj19_09",
+    "bj19_10"
+  ],
+  "stations": [
+    {
+      "id": "bj19_01",
+      "name": "牡丹园",
+      "lat": 39.976603,
+      "lng": 116.369844,
+      "aliases": [
+        "牡丹园",
+        "牡丹园站"
+      ]
+    },
+    {
+      "id": "bj19_02",
+      "name": "北太平庄",
+      "lat": 39.967877,
+      "lng": 116.370044,
+      "aliases": [
+        "北太平庄",
+        "北太平庄站"
+      ]
+    },
+    {
+      "id": "bj19_03",
+      "name": "积水潭",
+      "lat": 39.948653,
+      "lng": 116.373126,
+      "aliases": [
+        "积水潭",
+        "积水潭站"
+      ]
+    },
+    {
+      "id": "bj19_04",
+      "name": "平安里",
+      "lat": 39.933949,
+      "lng": 116.372883,
+      "aliases": [
+        "平安里",
+        "平安里站"
+      ]
+    },
+    {
+      "id": "bj19_05",
+      "name": "太平桥",
+      "lat": 39.908627,
+      "lng": 116.363234,
+      "aliases": [
+        "太平桥",
+        "太平桥站"
+      ]
+    },
+    {
+      "id": "bj19_06",
+      "name": "牛街",
+      "lat": 39.889253,
+      "lng": 116.36354,
+      "aliases": [
+        "牛街",
+        "牛街站"
+      ]
+    },
+    {
+      "id": "bj19_07",
+      "name": "景风门",
+      "lat": 39.862723,
+      "lng": 116.365805,
+      "aliases": [
+        "景风门",
+        "景风门站"
+      ]
+    },
+    {
+      "id": "bj19_08",
+      "name": "草桥",
+      "lat": 39.845869,
+      "lng": 116.351387,
+      "aliases": [
+        "草桥",
+        "草桥站"
+      ]
+    },
+    {
+      "id": "bj19_09",
+      "name": "新发地",
+      "lat": 39.823792,
+      "lng": 116.346281,
+      "aliases": [
+        "新发地",
+        "新发地站"
+      ]
+    },
+    {
+      "id": "bj19_10",
+      "name": "新宫",
+      "lat": 39.812592,
+      "lng": 116.365549,
+      "aliases": [
+        "新宫",
+        "新宫站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj19_01": {
+      "forward": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:10"
+      },
+      "reverse": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "23:37"
+      }
+    },
+    "bj19_02": {
+      "forward": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:12"
+      },
+      "reverse": {
+        "firstDeparture": "06:05",
+        "lastDeparture": "23:35"
+      }
+    },
+    "bj19_03": {
+      "forward": {
+        "firstDeparture": "05:36",
+        "lastDeparture": "23:16"
+      },
+      "reverse": {
+        "firstDeparture": "06:01",
+        "lastDeparture": "23:31"
+      }
+    },
+    "bj19_04": {
+      "forward": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:19"
+      },
+      "reverse": {
+        "firstDeparture": "05:57",
+        "lastDeparture": "23:27"
+      }
+    },
+    "bj19_05": {
+      "forward": {
+        "firstDeparture": "05:44",
+        "lastDeparture": "23:24"
+      },
+      "reverse": {
+        "firstDeparture": "05:52",
+        "lastDeparture": "23:22"
+      }
+    },
+    "bj19_06": {
+      "forward": {
+        "firstDeparture": "05:48",
+        "lastDeparture": "23:28"
+      },
+      "reverse": {
+        "firstDeparture": "05:48",
+        "lastDeparture": "23:18"
+      }
+    },
+    "bj19_07": {
+      "forward": {
+        "firstDeparture": "05:54",
+        "lastDeparture": "23:34"
+      },
+      "reverse": {
+        "firstDeparture": "05:42",
+        "lastDeparture": "23:12"
+      }
+    },
+    "bj19_08": {
+      "forward": {
+        "firstDeparture": "05:58",
+        "lastDeparture": "23:38"
+      },
+      "reverse": {
+        "firstDeparture": "05:38",
+        "lastDeparture": "23:08"
+      }
+    },
+    "bj19_09": {
+      "forward": {
+        "firstDeparture": "06:03",
+        "lastDeparture": "23:43"
+      },
+      "reverse": {
+        "firstDeparture": "05:33",
+        "lastDeparture": "23:03"
+      }
+    },
+    "bj19_10": {
+      "forward": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "23:47"
+      },
+      "reverse": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj19_01",
+      "to": "bj19_02",
+      "runSeconds": 125
+    },
+    {
+      "from": "bj19_02",
+      "to": "bj19_03",
+      "runSeconds": 245
+    },
+    {
+      "from": "bj19_03",
+      "to": "bj19_04",
+      "runSeconds": 195
+    },
+    {
+      "from": "bj19_04",
+      "to": "bj19_05",
+      "runSeconds": 325
+    },
+    {
+      "from": "bj19_05",
+      "to": "bj19_06",
+      "runSeconds": 245
+    },
+    {
+      "from": "bj19_06",
+      "to": "bj19_07",
+      "runSeconds": 325
+    },
+    {
+      "from": "bj19_07",
+      "to": "bj19_08",
+      "runSeconds": 255
+    },
+    {
+      "from": "bj19_08",
+      "to": "bj19_09",
+      "runSeconds": 280
+    },
+    {
+      "from": "bj19_09",
+      "to": "bj19_10",
+      "runSeconds": 235
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 新宫",
+      "startStationId": "bj19_01",
+      "endStationId": "bj19_10",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:10",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:10",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:10",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:10",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 牡丹园",
+      "startStationId": "bj19_10",
+      "endStationId": "bj19_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

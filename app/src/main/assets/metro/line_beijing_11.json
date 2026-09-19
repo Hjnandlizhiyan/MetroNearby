@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj11",
+  "lineName": "11号线",
+  "color": "#FF8674",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj11_01",
+    "bj11_02",
+    "bj11_03",
+    "bj11_04"
+  ],
+  "stations": [
+    {
+      "id": "bj11_01",
+      "name": "模式口",
+      "lat": 39.933801,
+      "lng": 116.155815,
+      "aliases": [
+        "模式口",
+        "模式口站"
+      ]
+    },
+    {
+      "id": "bj11_02",
+      "name": "金安桥",
+      "lat": 39.92362,
+      "lng": 116.163167,
+      "aliases": [
+        "金安桥",
+        "金安桥站"
+      ]
+    },
+    {
+      "id": "bj11_03",
+      "name": "北辛安",
+      "lat": 39.914954,
+      "lng": 116.164784,
+      "aliases": [
+        "北辛安",
+        "北辛安站"
+      ]
+    },
+    {
+      "id": "bj11_04",
+      "name": "新首钢",
+      "lat": 39.909056,
+      "lng": 116.164783,
+      "aliases": [
+        "新首钢",
+        "新首钢站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj11_01": {
+      "forward": {
+        "firstDeparture": "05:38",
+        "lastDeparture": "22:28"
+      },
+      "reverse": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "22:29"
+      }
+    },
+    "bj11_02": {
+      "forward": {
+        "firstDeparture": "05:40",
+        "lastDeparture": "22:30"
+      },
+      "reverse": {
+        "firstDeparture": "05:36",
+        "lastDeparture": "22:26"
+      }
+    },
+    "bj11_03": {
+      "forward": {
+        "firstDeparture": "05:42",
+        "lastDeparture": "22:32"
+      },
+      "reverse": {
+        "firstDeparture": "05:34",
+        "lastDeparture": "22:24"
+      }
+    },
+    "bj11_04": {
+      "forward": {
+        "firstDeparture": "05:44",
+        "lastDeparture": "22:34"
+      },
+      "reverse": {
+        "firstDeparture": "05:33",
+        "lastDeparture": "22:23"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj11_01",
+      "to": "bj11_02",
+      "runSeconds": 160
+    },
+    {
+      "from": "bj11_02",
+      "to": "bj11_03",
+      "runSeconds": 125
+    },
+    {
+      "from": "bj11_03",
+      "to": "bj11_04",
+      "runSeconds": 95
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 新首钢",
+      "startStationId": "bj11_01",
+      "endStationId": "bj11_04",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:38",
+          "lastDeparture": "22:28",
+          "headways": [
+            {
+              "from": "05:38",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:28",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:38",
+          "lastDeparture": "22:28",
+          "headways": [
+            {
+              "from": "05:38",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:28",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 模式口",
+      "startStationId": "bj11_04",
+      "endStationId": "bj11_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:33",
+          "lastDeparture": "22:23",
+          "headways": [
+            {
+              "from": "05:33",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "22:23",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:33",
+          "lastDeparture": "22:23",
+          "headways": [
+            {
+              "from": "05:33",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "22:23",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_capital_airport",
+  "lineName": "首都机场线",
+  "color": "#A192B2",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_capital_airport_01",
+    "bj_capital_airport_02",
+    "bj_capital_airport_03",
+    "bj_capital_airport_04",
+    "bj_capital_airport_05"
+  ],
+  "stations": [
+    {
+      "id": "bj_capital_airport_01",
+      "name": "北新桥",
+      "lat": 39.940782,
+      "lng": 116.416884,
+      "aliases": [
+        "北新桥",
+        "北新桥站"
+      ]
+    },
+    {
+      "id": "bj_capital_airport_02",
+      "name": "东直门",
+      "lat": 39.941626,
+      "lng": 116.435842,
+      "aliases": [
+        "东直门",
+        "东直门站"
+      ]
+    },
+    {
+      "id": "bj_capital_airport_03",
+      "name": "三元桥",
+      "lat": 39.960943,
+      "lng": 116.458561,
+      "aliases": [
+        "三元桥",
+        "三元桥站"
+      ]
+    },
+    {
+      "id": "bj_capital_airport_04",
+      "name": "3号航站楼",
+      "lat": 40.052544,
+      "lng": 116.615579,
+      "aliases": [
+        "3号航站楼",
+        "3号航站楼站"
+      ]
+    },
+    {
+      "id": "bj_capital_airport_05",
+      "name": "2号航站楼",
+      "lat": 40.079311,
+      "lng": 116.592808,
+      "aliases": [
+        "2号航站楼",
+        "2号航站楼站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_capital_airport_01": {
+      "forward": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      },
+      "reverse": {
+        "firstDeparture": "07:24",
+        "lastDeparture": "23:57"
+      }
+    },
+    "bj_capital_airport_02": {
+      "forward": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:02"
+      },
+      "reverse": {
+        "firstDeparture": "07:22",
+        "lastDeparture": "23:55"
+      }
+    },
+    "bj_capital_airport_03": {
+      "forward": {
+        "firstDeparture": "05:35",
+        "lastDeparture": "23:05"
+      },
+      "reverse": {
+        "firstDeparture": "07:19",
+        "lastDeparture": "23:52"
+      }
+    },
+    "bj_capital_airport_04": {
+      "forward": {
+        "firstDeparture": "05:50",
+        "lastDeparture": "23:20"
+      },
+      "reverse": {
+        "firstDeparture": "07:04",
+        "lastDeparture": "23:37"
+      }
+    },
+    "bj_capital_airport_05": {
+      "forward": {
+        "firstDeparture": "05:53",
+        "lastDeparture": "23:23"
+      },
+      "reverse": {
+        "firstDeparture": "07:01",
+        "lastDeparture": "23:34"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_capital_airport_01",
+      "to": "bj_capital_airport_02",
+      "runSeconds": 120
+    },
+    {
+      "from": "bj_capital_airport_02",
+      "to": "bj_capital_airport_03",
+      "runSeconds": 190
+    },
+    {
+      "from": "bj_capital_airport_03",
+      "to": "bj_capital_airport_04",
+      "runSeconds": 900
+    },
+    {
+      "from": "bj_capital_airport_04",
+      "to": "bj_capital_airport_05",
+      "runSeconds": 225
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 2号航站楼",
+      "startStationId": "bj_capital_airport_01",
+      "endStationId": "bj_capital_airport_05",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 北新桥",
+      "startStationId": "bj_capital_airport_05",
+      "endStationId": "bj_capital_airport_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "07:01",
+          "lastDeparture": "23:34",
+          "headways": [
+            {
+              "from": "07:01",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:34",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "07:01",
+          "lastDeparture": "23:34",
+          "headways": [
+            {
+              "from": "07:01",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:34",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

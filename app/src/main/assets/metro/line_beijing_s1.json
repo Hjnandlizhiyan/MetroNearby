@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_s1",
+  "lineName": "S1线",
+  "color": "#A45A2A",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_s1_01",
+    "bj_s1_02",
+    "bj_s1_03",
+    "bj_s1_04",
+    "bj_s1_05",
+    "bj_s1_06",
+    "bj_s1_07",
+    "bj_s1_08"
+  ],
+  "stations": [
+    {
+      "id": "bj_s1_01",
+      "name": "石厂",
+      "lat": 39.889378,
+      "lng": 116.100334,
+      "aliases": [
+        "石厂",
+        "石厂站"
+      ]
+    },
+    {
+      "id": "bj_s1_02",
+      "name": "小园",
+      "lat": 39.890465,
+      "lng": 116.114443,
+      "aliases": [
+        "小园",
+        "小园站"
+      ]
+    },
+    {
+      "id": "bj_s1_03",
+      "name": "栗园庄",
+      "lat": 39.89578,
+      "lng": 116.123254,
+      "aliases": [
+        "栗园庄",
+        "栗园庄站"
+      ]
+    },
+    {
+      "id": "bj_s1_04",
+      "name": "上岸",
+      "lat": 39.905138,
+      "lng": 116.122225,
+      "aliases": [
+        "上岸",
+        "上岸站"
+      ]
+    },
+    {
+      "id": "bj_s1_05",
+      "name": "桥户营",
+      "lat": 39.912383,
+      "lng": 116.125809,
+      "aliases": [
+        "桥户营",
+        "桥户营站"
+      ]
+    },
+    {
+      "id": "bj_s1_06",
+      "name": "四道桥",
+      "lat": 39.91603,
+      "lng": 116.13401,
+      "aliases": [
+        "四道桥",
+        "四道桥站"
+      ]
+    },
+    {
+      "id": "bj_s1_07",
+      "name": "金安桥",
+      "lat": 39.92362,
+      "lng": 116.163167,
+      "aliases": [
+        "金安桥",
+        "金安桥站"
+      ]
+    },
+    {
+      "id": "bj_s1_08",
+      "name": "苹果园",
+      "lat": 39.926727,
+      "lng": 116.177388,
+      "aliases": [
+        "苹果园",
+        "苹果园站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_s1_01": {
+      "forward": {
+        "firstDeparture": "05:24",
+        "lastDeparture": "23:06"
+      },
+      "reverse": {
+        "firstDeparture": "05:48",
+        "lastDeparture": "23:18"
+      }
+    },
+    "bj_s1_02": {
+      "forward": {
+        "firstDeparture": "05:26",
+        "lastDeparture": "23:08"
+      },
+      "reverse": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:15"
+      }
+    },
+    "bj_s1_03": {
+      "forward": {
+        "firstDeparture": "05:28",
+        "lastDeparture": "23:10"
+      },
+      "reverse": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:13"
+      }
+    },
+    "bj_s1_04": {
+      "forward": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:12"
+      },
+      "reverse": {
+        "firstDeparture": "05:41",
+        "lastDeparture": "23:11"
+      }
+    },
+    "bj_s1_05": {
+      "forward": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:14"
+      },
+      "reverse": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:09"
+      }
+    },
+    "bj_s1_06": {
+      "forward": {
+        "firstDeparture": "05:34",
+        "lastDeparture": "23:16"
+      },
+      "reverse": {
+        "firstDeparture": "05:37",
+        "lastDeparture": "23:07"
+      }
+    },
+    "bj_s1_07": {
+      "forward": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:21"
+      },
+      "reverse": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:02"
+      }
+    },
+    "bj_s1_08": {
+      "forward": {
+        "firstDeparture": "05:42",
+        "lastDeparture": "23:24"
+      },
+      "reverse": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_s1_01",
+      "to": "bj_s1_02",
+      "runSeconds": 150
+    },
+    {
+      "from": "bj_s1_02",
+      "to": "bj_s1_03",
+      "runSeconds": 125
+    },
+    {
+      "from": "bj_s1_03",
+      "to": "bj_s1_04",
+      "runSeconds": 135
+    },
+    {
+      "from": "bj_s1_04",
+      "to": "bj_s1_05",
+      "runSeconds": 115
+    },
+    {
+      "from": "bj_s1_05",
+      "to": "bj_s1_06",
+      "runSeconds": 110
+    },
+    {
+      "from": "bj_s1_06",
+      "to": "bj_s1_07",
+      "runSeconds": 295
+    },
+    {
+      "from": "bj_s1_07",
+      "to": "bj_s1_08",
+      "runSeconds": 155
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 苹果园",
+      "startStationId": "bj_s1_01",
+      "endStationId": "bj_s1_08",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:24",
+          "lastDeparture": "23:06",
+          "headways": [
+            {
+              "from": "05:24",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:06",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:24",
+          "lastDeparture": "23:06",
+          "headways": [
+            {
+              "from": "05:24",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:06",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 石厂",
+      "startStationId": "bj_s1_08",
+      "endStationId": "bj_s1_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

@@ -1,0 +1,566 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj_fangshan",
+  "lineName": "房山线",
+  "color": "#D86018",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-19",
+  "dataSource": "站序、站名、坐标及两端全程车首末班边界来自北京地铁官方网站；逐段运行时长、沿途到站时间与全天发车间隔为估算",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "官方站序、站名和坐标已核对；官网坐标暂为零值的安贞桥、望京西使用 OSM 站点坐标兜底。两端全程车首末班取自北京地铁官网站点详情；segments 按站距估算，stationServiceTimes 由端点时间和逐段时长推算，工作日/周末发车间隔为分时段估算，仍须逐项核对。所有到站结果仅以“预计”展示。",
+  "stationOrder": [
+    "bj_fangshan_01",
+    "bj_fangshan_02",
+    "bj_fangshan_03",
+    "bj_fangshan_04",
+    "bj_fangshan_05",
+    "bj_fangshan_06",
+    "bj_fangshan_07",
+    "bj_fangshan_08",
+    "bj_fangshan_09",
+    "bj_fangshan_10",
+    "bj_fangshan_11",
+    "bj_fangshan_12",
+    "bj_fangshan_13",
+    "bj_fangshan_14",
+    "bj_fangshan_15",
+    "bj_fangshan_16"
+  ],
+  "stations": [
+    {
+      "id": "bj_fangshan_01",
+      "name": "东管头南",
+      "lat": 39.852395,
+      "lng": 116.321368,
+      "aliases": [
+        "东管头南",
+        "东管头南站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_02",
+      "name": "首经贸",
+      "lat": 39.844463,
+      "lng": 116.320202,
+      "aliases": [
+        "首经贸",
+        "首经贸站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_03",
+      "name": "花乡东桥",
+      "lat": 39.829177,
+      "lng": 116.320472,
+      "aliases": [
+        "花乡东桥",
+        "花乡东桥站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_04",
+      "name": "白盆窑",
+      "lat": 39.819561,
+      "lng": 116.314327,
+      "aliases": [
+        "白盆窑",
+        "白盆窑站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_05",
+      "name": "郭公庄",
+      "lat": 39.814322,
+      "lng": 116.301889,
+      "aliases": [
+        "郭公庄",
+        "郭公庄站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_06",
+      "name": "大葆台",
+      "lat": 39.80781,
+      "lng": 116.291681,
+      "aliases": [
+        "大葆台",
+        "大葆台站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_07",
+      "name": "稻田",
+      "lat": 39.794885,
+      "lng": 116.21884,
+      "aliases": [
+        "稻田",
+        "稻田站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_08",
+      "name": "长阳",
+      "lat": 39.763871,
+      "lng": 116.212692,
+      "aliases": [
+        "长阳",
+        "长阳站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_09",
+      "name": "篱笆房",
+      "lat": 39.760636,
+      "lng": 116.189486,
+      "aliases": [
+        "篱笆房",
+        "篱笆房站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_10",
+      "name": "广阳城",
+      "lat": 39.74793,
+      "lng": 116.184985,
+      "aliases": [
+        "广阳城",
+        "广阳城站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_11",
+      "name": "良乡大学城北",
+      "lat": 39.729906,
+      "lng": 116.18348,
+      "aliases": [
+        "良乡大学城北",
+        "良乡大学城北站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_12",
+      "name": "良乡大学城",
+      "lat": 39.723159,
+      "lng": 116.176541,
+      "aliases": [
+        "良乡大学城",
+        "良乡大学城站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_13",
+      "name": "良乡大学城西",
+      "lat": 39.723157,
+      "lng": 116.156282,
+      "aliases": [
+        "良乡大学城西",
+        "良乡大学城西站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_14",
+      "name": "良乡南关",
+      "lat": 39.723202,
+      "lng": 116.140804,
+      "aliases": [
+        "良乡南关",
+        "良乡南关站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_15",
+      "name": "苏庄",
+      "lat": 39.723188,
+      "lng": 116.125306,
+      "aliases": [
+        "苏庄",
+        "苏庄站"
+      ]
+    },
+    {
+      "id": "bj_fangshan_16",
+      "name": "阎村东",
+      "lat": 39.729028,
+      "lng": 116.100817,
+      "aliases": [
+        "阎村东",
+        "阎村东站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj_fangshan_01": {
+      "forward": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      },
+      "reverse": {
+        "firstDeparture": "06:25",
+        "lastDeparture": "23:55"
+      }
+    },
+    "bj_fangshan_02": {
+      "forward": {
+        "firstDeparture": "05:32",
+        "lastDeparture": "23:02"
+      },
+      "reverse": {
+        "firstDeparture": "06:23",
+        "lastDeparture": "23:53"
+      }
+    },
+    "bj_fangshan_03": {
+      "forward": {
+        "firstDeparture": "05:35",
+        "lastDeparture": "23:05"
+      },
+      "reverse": {
+        "firstDeparture": "06:20",
+        "lastDeparture": "23:50"
+      }
+    },
+    "bj_fangshan_04": {
+      "forward": {
+        "firstDeparture": "05:37",
+        "lastDeparture": "23:07"
+      },
+      "reverse": {
+        "firstDeparture": "06:18",
+        "lastDeparture": "23:48"
+      }
+    },
+    "bj_fangshan_05": {
+      "forward": {
+        "firstDeparture": "05:40",
+        "lastDeparture": "23:10"
+      },
+      "reverse": {
+        "firstDeparture": "06:15",
+        "lastDeparture": "23:45"
+      }
+    },
+    "bj_fangshan_06": {
+      "forward": {
+        "firstDeparture": "05:42",
+        "lastDeparture": "23:12"
+      },
+      "reverse": {
+        "firstDeparture": "06:13",
+        "lastDeparture": "23:43"
+      }
+    },
+    "bj_fangshan_07": {
+      "forward": {
+        "firstDeparture": "05:53",
+        "lastDeparture": "23:23"
+      },
+      "reverse": {
+        "firstDeparture": "06:02",
+        "lastDeparture": "23:32"
+      }
+    },
+    "bj_fangshan_08": {
+      "forward": {
+        "firstDeparture": "06:00",
+        "lastDeparture": "23:30"
+      },
+      "reverse": {
+        "firstDeparture": "05:55",
+        "lastDeparture": "23:25"
+      }
+    },
+    "bj_fangshan_09": {
+      "forward": {
+        "firstDeparture": "06:04",
+        "lastDeparture": "23:34"
+      },
+      "reverse": {
+        "firstDeparture": "05:51",
+        "lastDeparture": "23:21"
+      }
+    },
+    "bj_fangshan_10": {
+      "forward": {
+        "firstDeparture": "06:07",
+        "lastDeparture": "23:37"
+      },
+      "reverse": {
+        "firstDeparture": "05:48",
+        "lastDeparture": "23:18"
+      }
+    },
+    "bj_fangshan_11": {
+      "forward": {
+        "firstDeparture": "06:10",
+        "lastDeparture": "23:40"
+      },
+      "reverse": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:15"
+      }
+    },
+    "bj_fangshan_12": {
+      "forward": {
+        "firstDeparture": "06:12",
+        "lastDeparture": "23:42"
+      },
+      "reverse": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:13"
+      }
+    },
+    "bj_fangshan_13": {
+      "forward": {
+        "firstDeparture": "06:16",
+        "lastDeparture": "23:46"
+      },
+      "reverse": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:09"
+      }
+    },
+    "bj_fangshan_14": {
+      "forward": {
+        "firstDeparture": "06:19",
+        "lastDeparture": "23:49"
+      },
+      "reverse": {
+        "firstDeparture": "05:36",
+        "lastDeparture": "23:06"
+      }
+    },
+    "bj_fangshan_15": {
+      "forward": {
+        "firstDeparture": "06:21",
+        "lastDeparture": "23:51"
+      },
+      "reverse": {
+        "firstDeparture": "05:34",
+        "lastDeparture": "23:04"
+      }
+    },
+    "bj_fangshan_16": {
+      "forward": {
+        "firstDeparture": "06:25",
+        "lastDeparture": "23:55"
+      },
+      "reverse": {
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj_fangshan_01",
+      "to": "bj_fangshan_02",
+      "runSeconds": 120
+    },
+    {
+      "from": "bj_fangshan_02",
+      "to": "bj_fangshan_03",
+      "runSeconds": 200
+    },
+    {
+      "from": "bj_fangshan_03",
+      "to": "bj_fangshan_04",
+      "runSeconds": 150
+    },
+    {
+      "from": "bj_fangshan_04",
+      "to": "bj_fangshan_05",
+      "runSeconds": 150
+    },
+    {
+      "from": "bj_fangshan_05",
+      "to": "bj_fangshan_06",
+      "runSeconds": 145
+    },
+    {
+      "from": "bj_fangshan_06",
+      "to": "bj_fangshan_07",
+      "runSeconds": 670
+    },
+    {
+      "from": "bj_fangshan_07",
+      "to": "bj_fangshan_08",
+      "runSeconds": 380
+    },
+    {
+      "from": "bj_fangshan_08",
+      "to": "bj_fangshan_09",
+      "runSeconds": 230
+    },
+    {
+      "from": "bj_fangshan_09",
+      "to": "bj_fangshan_10",
+      "runSeconds": 175
+    },
+    {
+      "from": "bj_fangshan_10",
+      "to": "bj_fangshan_11",
+      "runSeconds": 230
+    },
+    {
+      "from": "bj_fangshan_11",
+      "to": "bj_fangshan_12",
+      "runSeconds": 125
+    },
+    {
+      "from": "bj_fangshan_12",
+      "to": "bj_fangshan_13",
+      "runSeconds": 205
+    },
+    {
+      "from": "bj_fangshan_13",
+      "to": "bj_fangshan_14",
+      "runSeconds": 160
+    },
+    {
+      "from": "bj_fangshan_14",
+      "to": "bj_fangshan_15",
+      "runSeconds": 165
+    },
+    {
+      "from": "bj_fangshan_15",
+      "to": "bj_fangshan_16",
+      "runSeconds": 250
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 阎村东",
+      "startStationId": "bj_fangshan_01",
+      "endStationId": "bj_fangshan_16",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 东管头南",
+      "startStationId": "bj_fangshan_16",
+      "endStationId": "bj_fangshan_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 150
+            },
+            {
+              "from": "19:30",
+              "to": "23:00",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:00",
+          "headways": [
+            {
+              "from": "05:30",
+              "to": "09:00",
+              "intervalSeconds": 480
+            },
+            {
+              "from": "09:00",
+              "to": "20:00",
+              "intervalSeconds": 360
+            },
+            {
+              "from": "20:00",
+              "to": "23:00",
+              "intervalSeconds": 480
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}

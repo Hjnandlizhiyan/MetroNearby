@@ -1,0 +1,420 @@
+{
+  "schemaVersion": 1,
+  "cityId": "beijing",
+  "cityName": "北京",
+  "lineId": "bj3",
+  "lineName": "3号线",
+  "color": "#D90627",
+  "coordSystem": "wgs84",
+  "updatedAt": "2026-09-18",
+  "dataSource": "站序与坐标来自 OpenStreetMap(北京地铁3号线 东四十条 → 东坝北, relation 18420550)，站序与北京地铁官方 lineStations 逐站核对；双向始发首末班来自北京地铁东四十条、东坝北站当前站点详情接口",
+  "accuracyLevel": "estimated",
+  "needsReview": true,
+  "note": "stationOrder/segments/别名由 tools/line-pipeline/New-LineJson.ps1 自动生成。东四十条→东坝北始发首末班 05:35/23:25、东坝北→东四十条 05:05/22:50 已按北京地铁官方端点站详情核对。沿途 stationServiceTimes 仍由始发边界叠加每站 130 秒估算，不是官方逐站值；全天发车间隔仍为占位估算，工作日和周末暂用同一组间隔。仅收录双向全程交路。stationServiceTimes 优先于 segments 生效，调整站间时长时须同步重算对应条目。站序与坐标来自 OSM relation 18420550，坐标系统 WGS-84。",
+  "stationOrder": [
+    "bj3_01",
+    "bj3_02",
+    "bj3_03",
+    "bj3_04",
+    "bj3_05",
+    "bj3_06",
+    "bj3_07",
+    "bj3_08",
+    "bj3_09",
+    "bj3_10"
+  ],
+  "stations": [
+    {
+      "id": "bj3_01",
+      "name": "东四十条",
+      "lat": 39.9322455,
+      "lng": 116.4280133,
+      "aliases": [
+        "东四十条站"
+      ]
+    },
+    {
+      "id": "bj3_02",
+      "name": "工人体育场",
+      "lat": 39.9323193,
+      "lng": 116.4448576,
+      "aliases": [
+        "工人体育场站"
+      ]
+    },
+    {
+      "id": "bj3_03",
+      "name": "团结湖",
+      "lat": 39.9323442,
+      "lng": 116.4554633,
+      "aliases": [
+        "团结湖站"
+      ]
+    },
+    {
+      "id": "bj3_04",
+      "name": "朝阳公园",
+      "lat": 39.9323817,
+      "lng": 116.4734001,
+      "aliases": [
+        "朝阳公园站"
+      ]
+    },
+    {
+      "id": "bj3_05",
+      "name": "石佛营",
+      "lat": 39.9341304,
+      "lng": 116.4934591,
+      "aliases": [
+        "石佛营站"
+      ]
+    },
+    {
+      "id": "bj3_06",
+      "name": "朝阳站",
+      "lat": 39.9430017,
+      "lng": 116.4999543,
+      "aliases": [
+        "朝阳站"
+      ]
+    },
+    {
+      "id": "bj3_07",
+      "name": "姚家园",
+      "lat": 39.9465407,
+      "lng": 116.5213056,
+      "aliases": [
+        "姚家园站"
+      ]
+    },
+    {
+      "id": "bj3_08",
+      "name": "东坝南",
+      "lat": 39.9507902,
+      "lng": 116.5411896,
+      "aliases": [
+        "东坝南站"
+      ]
+    },
+    {
+      "id": "bj3_09",
+      "name": "东坝",
+      "lat": 39.9646459,
+      "lng": 116.5414361,
+      "aliases": [
+        "东坝站"
+      ]
+    },
+    {
+      "id": "bj3_10",
+      "name": "东坝北",
+      "lat": 39.9744445,
+      "lng": 116.5519843,
+      "aliases": [
+        "东坝北站"
+      ]
+    }
+  ],
+  "stationServiceTimes": {
+    "bj3_01": {
+      "forward": {
+        "firstDeparture": "05:35",
+        "lastDeparture": "23:25"
+      },
+      "reverse": {
+        "firstDeparture": "05:24",
+        "lastDeparture": "23:09"
+      }
+    },
+    "bj3_02": {
+      "forward": {
+        "firstDeparture": "05:37",
+        "lastDeparture": "23:27"
+      },
+      "reverse": {
+        "firstDeparture": "05:22",
+        "lastDeparture": "23:07"
+      }
+    },
+    "bj3_03": {
+      "forward": {
+        "firstDeparture": "05:39",
+        "lastDeparture": "23:29"
+      },
+      "reverse": {
+        "firstDeparture": "05:20",
+        "lastDeparture": "23:05"
+      }
+    },
+    "bj3_04": {
+      "forward": {
+        "firstDeparture": "05:41",
+        "lastDeparture": "23:31"
+      },
+      "reverse": {
+        "firstDeparture": "05:18",
+        "lastDeparture": "23:03"
+      }
+    },
+    "bj3_05": {
+      "forward": {
+        "firstDeparture": "05:43",
+        "lastDeparture": "23:33"
+      },
+      "reverse": {
+        "firstDeparture": "05:15",
+        "lastDeparture": "23:00"
+      }
+    },
+    "bj3_06": {
+      "forward": {
+        "firstDeparture": "05:45",
+        "lastDeparture": "23:35"
+      },
+      "reverse": {
+        "firstDeparture": "05:13",
+        "lastDeparture": "22:58"
+      }
+    },
+    "bj3_07": {
+      "forward": {
+        "firstDeparture": "05:48",
+        "lastDeparture": "23:38"
+      },
+      "reverse": {
+        "firstDeparture": "05:11",
+        "lastDeparture": "22:56"
+      }
+    },
+    "bj3_08": {
+      "forward": {
+        "firstDeparture": "05:50",
+        "lastDeparture": "23:40"
+      },
+      "reverse": {
+        "firstDeparture": "05:09",
+        "lastDeparture": "22:54"
+      }
+    },
+    "bj3_09": {
+      "forward": {
+        "firstDeparture": "05:52",
+        "lastDeparture": "23:42"
+      },
+      "reverse": {
+        "firstDeparture": "05:07",
+        "lastDeparture": "22:52"
+      }
+    },
+    "bj3_10": {
+      "forward": {
+        "firstDeparture": "05:54",
+        "lastDeparture": "23:44"
+      },
+      "reverse": {
+        "firstDeparture": "05:05",
+        "lastDeparture": "22:50"
+      }
+    }
+  },
+  "segments": [
+    {
+      "from": "bj3_01",
+      "to": "bj3_02",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_02",
+      "to": "bj3_03",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_03",
+      "to": "bj3_04",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_04",
+      "to": "bj3_05",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_05",
+      "to": "bj3_06",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_06",
+      "to": "bj3_07",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_07",
+      "to": "bj3_08",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_08",
+      "to": "bj3_09",
+      "runSeconds": 130
+    },
+    {
+      "from": "bj3_09",
+      "to": "bj3_10",
+      "runSeconds": 130
+    }
+  ],
+  "patterns": [
+    {
+      "id": "forward",
+      "name": "全程车",
+      "directionId": "forward",
+      "directionLabel": "开往 东坝北",
+      "startStationId": "bj3_01",
+      "endStationId": "bj3_10",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:35",
+          "lastDeparture": "23:25",
+          "headways": [
+            {
+              "from": "05:35",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "23:25",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:35",
+          "lastDeparture": "23:25",
+          "headways": [
+            {
+              "from": "05:35",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "23:25",
+              "intervalSeconds": 420
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "全程车",
+      "directionId": "reverse",
+      "directionLabel": "开往 东四十条",
+      "startStationId": "bj3_10",
+      "endStationId": "bj3_01",
+      "isShortTurn": false,
+      "services": [
+        {
+          "serviceType": "weekday",
+          "firstDeparture": "05:05",
+          "lastDeparture": "22:50",
+          "headways": [
+            {
+              "from": "05:05",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "22:50",
+              "intervalSeconds": 420
+            }
+          ]
+        },
+        {
+          "serviceType": "weekend",
+          "firstDeparture": "05:05",
+          "lastDeparture": "22:50",
+          "headways": [
+            {
+              "from": "05:05",
+              "to": "07:00",
+              "intervalSeconds": 420
+            },
+            {
+              "from": "07:00",
+              "to": "09:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "09:30",
+              "to": "17:00",
+              "intervalSeconds": 300
+            },
+            {
+              "from": "17:00",
+              "to": "19:30",
+              "intervalSeconds": 120
+            },
+            {
+              "from": "19:30",
+              "to": "22:50",
+              "intervalSeconds": 420
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exactDepartures": {}
+}
