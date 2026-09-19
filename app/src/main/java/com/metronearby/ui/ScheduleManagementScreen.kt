@@ -58,6 +58,7 @@ fun ScheduleManagementScreen(
     initialLineId: String?,
     onSave: (line: MetroLine, patternId: String, serviceType: String, trips: List<ManagedTrip>) -> Unit,
     onRestoreSystem: (lineId: String, patternId: String, serviceType: String) -> Unit,
+    onRestoreAllSystem: (lineId: String) -> Unit,
     bottomBar: @Composable () -> Unit = {},
     onBack: () -> Unit
 ) {
@@ -94,7 +95,34 @@ fun ScheduleManagementScreen(
     var addingTrip by remember { mutableStateOf(false) }
     var addTripError by remember { mutableStateOf<String?>(null) }
     var openedTripId by remember { mutableStateOf<String?>(null) }
+    var showRestoreAllConfirmation by remember { mutableStateOf(false) }
+    val hasAnyManualSchedule = selectedLine?.overrides?.let {
+        it.serviceTrips.isNotEmpty() || it.serviceDepartures.isNotEmpty()
+    } == true
 
+    if (showRestoreAllConfirmation && selectedLine != null) {
+        AlertDialog(
+            onDismissRequest = { showRestoreAllConfirmation = false },
+            title = { Text("恢复本线路全部默认班次？") },
+            text = {
+                Text("将清除 ${selectedLine.line.lineName} 所有交路在工作日和周末的手工班次表，并重新采用系统内置时刻或间隔估算。到站校准、区间车和其它线路不会受影响。")
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    onRestoreAllSystem(selectedLine.line.lineId)
+                    trips = pattern?.let {
+                        TripStationPlanner.tripsFromDepartures(it.id, serviceType, systemTimes)
+                    }.orEmpty()
+                    countText = systemTimes.size.toString()
+                    message = "已恢复本线路全部默认班次"
+                    showRestoreAllConfirmation = false
+                }) { Text("恢复默认") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRestoreAllConfirmation = false }) { Text("取消") }
+            }
+        )
+    }
     val openedTrip = trips.firstOrNull { it.id == openedTripId }
     if (openedTrip != null && selectedLine != null && pattern != null) {
         TripStationDetailScreen(
@@ -243,6 +271,11 @@ fun ScheduleManagementScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     message?.let { StatusText(it) }
+                    if (hasAnyManualSchedule) {
+                        TextButton(onClick = { showRestoreAllConfirmation = true }) {
+                            Text("恢复本线路全部默认")
+                        }
+                    }
                     Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                         Button(
                             enabled = trips.isNotEmpty(),

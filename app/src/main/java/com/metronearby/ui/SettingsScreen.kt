@@ -113,9 +113,13 @@ fun SettingsScreen(
     val uriHandler = LocalUriHandler.current
     var showShortTurnDialog by remember { mutableStateOf(false) }
     var showCustomLineDialog by remember { mutableStateOf(false) }
+    var showUserGuide by remember { mutableStateOf(false) }
     var customLineToDelete by remember { mutableStateOf<MetroLine?>(null) }
     var expandedCities by remember { mutableStateOf<Set<String>>(emptySet()) }
 
+    if (showUserGuide) {
+        UserGuideDialog(onDismiss = { showUserGuide = false })
+    }
     if (showCustomLineDialog) {
         CustomLineDialog(
             onDismiss = { showCustomLineDialog = false },
@@ -283,6 +287,18 @@ fun SettingsScreen(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                 )
                 TextButton(
+                    onClick = { showUserGuide = true },
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                ) {
+                    Text("使用指引")
+                }
+                Text(
+                    text = "官方QQ群：305402575",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
+                )
+                TextButton(
                     onClick = { uriHandler.openUri(METRO_NEARBY_REPOSITORY_URL) },
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
@@ -329,6 +345,36 @@ fun SettingsScreen(
     }
 }
 
+@Composable
+private fun UserGuideDialog(onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Metro Nearby 使用指引") },
+        text = {
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                GuideStep("1", "定位与选站", "允许定位后，首页会寻找附近地铁站；也可以用搜索手动选择任意已收录站点。")
+                GuideStep("2", "查看预计到站", "同站多线路和两个方向会分别展示。时间均为离线预计，不代表运营方实时数据。")
+                GuideStep("3", "订阅通勤站", "在“我的订阅”关注常用站，并为每个站指定线路和通勤方向。")
+                GuideStep("4", "记录到站锚点", "看到列车实际到站时记录锚点；积累同线路、方向、日型和时段的样本后，用户校准会逐步改善。")
+                GuideStep("5", "学习发车间隔", "确认没有漏车后连续记录至少三次到站，系统才能学习该时段的发车间隔。")
+                GuideStep("6", "管理班次表", "可按线路、交路、工作日或周末修改班次和沿途站时刻；需要撤销时可恢复当前表或整条线路默认值。")
+                GuideStep("7", "切换预测口径", "首页可选择系统预计或用户校准；没有适用样本时，用户校准会明确回退到系统预计。")
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("知道了") } }
+    )
+}
+
+@Composable
+private fun GuideStep(number: String, title: String, description: String) {
+    Text("$number. $title", fontWeight = FontWeight.SemiBold)
+    Text(
+        description,
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+    Spacer(Modifier.height(12.dp))
+}
 private const val METRO_NEARBY_REPOSITORY_URL =
     "https://github.com/Hjnandlizhiyan/MetroNearby"
 

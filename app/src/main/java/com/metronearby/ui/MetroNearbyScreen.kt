@@ -401,6 +401,10 @@ fun MetroNearbyScreen(
                 repository.clearServiceDepartures(lineId, patternId, serviceType)
                 reloadKey += 1
             },
+            onRestoreAllSystem = { lineId ->
+                repository.clearAllServiceSchedules(lineId)
+                reloadKey += 1
+            },
             bottomBar = {
                 MetroBottomDock(
                     selected = if (showLinePicker) DockDestination.LINE_PICKER else DockDestination.SCHEDULE,

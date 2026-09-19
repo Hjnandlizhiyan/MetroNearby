@@ -395,6 +395,31 @@ class MetroRepositoryOverrideTest {
     }
 
     @Test
+    fun `恢复本线路默认会清除全部交路和日型班次表`() {
+        val repo = repository(tempStore())
+        repo.setServiceDepartures("test", "east_full", ServiceTypes.WEEKDAY, listOf("08:00"))
+        repo.setServiceDepartures("test", "east_full", ServiceTypes.WEEKEND, listOf("09:00"))
+        repo.setServiceDepartures("test", "west_full", ServiceTypes.WEEKDAY, listOf("10:00"))
+
+        repo.clearAllServiceSchedules("test")
+
+        val saved = repo.loadResolvedLine("line_test.json").overrides!!
+        assertTrue(saved.serviceDepartures.isEmpty())
+        assertTrue(saved.serviceTrips.isEmpty())
+    }
+
+    @Test
+    fun `恢复本线路默认会保留到站观测`() {
+        val repo = repository(tempStore())
+        repo.setServiceDepartures("test", "east_full", ServiceTypes.WEEKDAY, listOf("08:00"))
+        repo.recordObservation("test", "s2", "east_full", "08:02")
+
+        repo.clearAllServiceSchedules("test")
+
+        val saved = repo.loadResolvedLine("line_test.json").overrides!!
+        assertEquals(1, saved.arrivalObservations.size)
+    }
+    @Test
     fun `用户区间车可分别覆盖工作日和周末班次`() {
         val repo = repository(tempStore())
         repo.addShortTurn("test", "s1", "s3", listOf("08:00"))

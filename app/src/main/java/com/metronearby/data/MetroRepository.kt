@@ -318,6 +318,17 @@ class MetroRepository(
         return updated
     }
 
+    /** 恢复该线路全部交路与日型的系统班次表；其它用户数据保持不变。 */
+    fun clearAllServiceSchedules(lineId: String): UserOverrides {
+        val current = currentOverrides(lineId)
+        if (current.serviceDepartures.isEmpty() && current.serviceTrips.isEmpty()) return current
+        val updated = current.copy(
+            serviceDepartures = emptyMap(),
+            serviceTrips = emptyMap()
+        )
+        persist(updated)
+        return updated
+    }
     /**
      * 新增一条用户自定义的区间车。合法性（站点是否存在、时刻格式）由
      * [ShortTurnPlanner] 在折算时校验，这里只做落盘。
