@@ -354,6 +354,13 @@ class MetroRepository(
         return updated
     }
 
+    /** 批量编辑后一次性替换该线路的区间车列表。 */
+    fun setShortTurns(lineId: String, shortTurns: List<ShortTurn>): UserOverrides {
+        val current = currentOverrides(lineId)
+        val updated = current.copy(shortTurns = shortTurns)
+        persist(updated)
+        return updated
+    }
     /**
      * 删除第 [index] 条区间车，位置与设置界面列出的顺序一致；越界时原样返回。
      */

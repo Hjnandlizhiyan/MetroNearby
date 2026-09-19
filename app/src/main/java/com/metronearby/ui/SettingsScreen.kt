@@ -318,7 +318,8 @@ private const val METRO_NEARBY_REPOSITORY_URL =
 internal fun ShortTurnRow(
     line: MetroLine,
     shortTurn: ShortTurn,
-    onRemove: () -> Unit
+    onRemove: () -> Unit,
+    showRemove: Boolean = true
 ) {
     val startName = line.stationById(shortTurn.startStationId)?.name ?: shortTurn.startStationId
     val endName = line.stationById(shortTurn.endStationId)?.name ?: shortTurn.endStationId
@@ -346,7 +347,7 @@ internal fun ShortTurnRow(
                 )
             }
         }
-        TextButton(onClick = onRemove) { Text("删除") }
+        if (showRemove) TextButton(onClick = onRemove) { Text("删除") }
     }
 }
 

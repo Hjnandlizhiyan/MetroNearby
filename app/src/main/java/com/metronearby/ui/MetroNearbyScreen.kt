@@ -406,6 +406,10 @@ fun MetroNearbyScreen(
                 repository.removeShortTurn(lineId, index)
                 reloadKey += 1
             },
+            onBatchUpdate = { lineId, shortTurns ->
+                repository.setShortTurns(lineId, shortTurns)
+                reloadKey += 1
+            },
             bottomBar = {
                 MetroBottomDock(
                     selected = if (showLinePicker) DockDestination.LINE_PICKER else DockDestination.SHORT_TURN,
