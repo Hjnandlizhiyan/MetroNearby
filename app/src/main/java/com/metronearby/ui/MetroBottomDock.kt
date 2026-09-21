@@ -50,13 +50,14 @@ import com.metronearby.domain.LineVisuals
 enum class DockDestination(val label: String, val icon: DockIcon) {
     HOME("首页", DockIcon.HOME),
     SUBSCRIPTIONS("订阅", DockIcon.HEART),
+    ROUTE("路线", DockIcon.ROUTE),
     SCHEDULE("班次表", DockIcon.SCHEDULE),
     SHORT_TURN("区间车", DockIcon.SHORT_TURN),
     LINE_PICKER("选线路", DockIcon.LINES),
     NETWORK_MAP("线网图", DockIcon.MAP)
 }
 
-enum class DockIcon { HOME, HEART, SCHEDULE, SHORT_TURN, LINES, MAP }
+enum class DockIcon { HOME, HEART, ROUTE, SCHEDULE, SHORT_TURN, LINES, MAP }
 
 @Composable
 fun MetroBottomDock(
@@ -80,7 +81,14 @@ fun MetroBottomDock(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            DockDestination.entries.forEach { destination ->
+            listOf(
+                DockDestination.HOME,
+                DockDestination.SUBSCRIPTIONS,
+                DockDestination.ROUTE,
+                DockDestination.SHORT_TURN,
+                DockDestination.LINE_PICKER,
+                DockDestination.NETWORK_MAP
+            ).forEach { destination ->
                 DockItem(
                     destination = destination,
                     selected = destination == selected,
@@ -198,6 +206,16 @@ private fun DockGlyph(icon: DockIcon, color: Color) {
                 drawPath(heart, color, style = stroke)
             }
 
+            DockIcon.ROUTE -> {
+                drawCircle(color, radius = w * .075f, center = Offset(w * .20f, h * .72f), style = stroke)
+                drawCircle(color, radius = w * .075f, center = Offset(w * .80f, h * .27f), style = stroke)
+                val route = Path().apply {
+                    moveTo(w * .27f, h * .69f)
+                    cubicTo(w * .38f, h * .40f, w * .56f, h * .62f, w * .73f, h * .31f)
+                }
+                drawPath(route, color, style = stroke)
+                drawLine(color, Offset(w * .65f, h * .28f), Offset(w * .80f, h * .27f), stroke.width, StrokeCap.Round)
+            }
             DockIcon.SCHEDULE -> {
                 drawRoundRect(
                     color = color,

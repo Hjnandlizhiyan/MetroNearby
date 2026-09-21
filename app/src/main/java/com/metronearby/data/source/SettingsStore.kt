@@ -16,6 +16,8 @@ import com.metronearby.data.model.MetroLine
 interface SettingsStore {
     fun loadArrivalDisplayMode(): ArrivalDisplayMode
     fun saveArrivalDisplayMode(mode: ArrivalDisplayMode)
+    fun loadShowArrivalEstimates(): Boolean
+    fun saveShowArrivalEstimates(show: Boolean)
     fun loadSubscriptions(): List<StationSubscription>
     fun saveSubscriptions(items: List<StationSubscription>)
     fun loadCustomLines(): List<MetroLine>
@@ -54,6 +56,12 @@ class SharedPreferencesSettingsStore(context: Context) : SettingsStore {
         prefs.edit().putString(KEY_ARRIVAL_DISPLAY_MODE, mode.storageKey).apply()
     }
 
+    override fun loadShowArrivalEstimates(): Boolean =
+        prefs.getBoolean(KEY_SHOW_ARRIVAL_ESTIMATES, false)
+
+    override fun saveShowArrivalEstimates(show: Boolean) {
+        prefs.edit().putBoolean(KEY_SHOW_ARRIVAL_ESTIMATES, show).apply()
+    }
     override fun loadSubscriptions(): List<StationSubscription> =
         MetroJson.parseSubscriptions(prefs.getString("station_subscriptions", null) ?: "[]")
 
@@ -94,6 +102,7 @@ class SharedPreferencesSettingsStore(context: Context) : SettingsStore {
         const val KEY_THEME_MODE = "theme_mode"
         const val KEY_LINE_DATA_FILE = "line_data_file"
         const val KEY_ARRIVAL_DISPLAY_MODE = "arrival_display_mode"
+        const val KEY_SHOW_ARRIVAL_ESTIMATES = "show_arrival_estimates"
         const val KEY_CUSTOM_LINES = "custom_lines"
         const val KEY_NETWORK_MAP_CITY_ID = "network_map_city_id"
     }

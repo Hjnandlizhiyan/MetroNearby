@@ -30,6 +30,7 @@ class ScheduleBatchEditorTest {
     private val line = MetroLine(
         lineId = "test",
         lineName = "测试线",
+        stationOrder = listOf("a", "b"),
         stations = listOf(Station("a", "甲站", 0.0, 0.0), Station("b", "乙站", 0.0, 0.0)),
         segments = listOf(Segment("a", "b", 180)),
         patterns = listOf(pattern)

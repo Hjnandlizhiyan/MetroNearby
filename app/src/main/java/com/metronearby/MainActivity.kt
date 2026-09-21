@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
             var themeMode by remember { mutableStateOf(settingsStore.loadThemeMode()) }
             var subscriptions by remember { mutableStateOf(settingsStore.loadSubscriptions()) }
             var arrivalDisplayMode by remember { mutableStateOf(settingsStore.loadArrivalDisplayMode()) }
+            var showArrivalEstimates by remember { mutableStateOf(settingsStore.loadShowArrivalEstimates()) }
             var customLines by remember { mutableStateOf(settingsStore.loadCustomLines()) }
             var networkMapCityId by remember {
                 mutableStateOf(settingsStore.loadNetworkMapCityId() ?: NetworkMapCatalog.DEFAULT_CITY_ID)
@@ -47,7 +48,11 @@ class MainActivity : ComponentActivity() {
                         arrivalDisplayMode = mode
                         settingsStore.saveArrivalDisplayMode(mode)
                     },
-                    subscriptions = subscriptions,
+                    showArrivalEstimates = showArrivalEstimates,
+                    onShowArrivalEstimatesChange = { show ->
+                        showArrivalEstimates = show
+                        settingsStore.saveShowArrivalEstimates(show)
+                    },                    subscriptions = subscriptions,
                     onSubscriptionsChange = { subscriptions = it; settingsStore.saveSubscriptions(it) },
                     customLines = customLines,
                     onCustomLinesChange = { lines ->

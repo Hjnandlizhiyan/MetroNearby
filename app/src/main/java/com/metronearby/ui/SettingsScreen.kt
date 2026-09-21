@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -88,6 +89,8 @@ fun SettingsScreen(
     onAddCustomLine: (MetroLine) -> Unit = {},
     onRemoveCustomLine: (String) -> Unit = {},
     onManageSchedules: () -> Unit = {},
+    showArrivalEstimates: Boolean = false,
+    onShowArrivalEstimatesChange: (Boolean) -> Unit = {},
     subscriptionCount: Int = 0,
     onManageSubscriptions: () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
@@ -219,15 +222,32 @@ fun SettingsScreen(
             }
             Spacer(Modifier.height(16.dp))
 
-            SettingsSection(title = "班次表") {
+            SettingsSection(title = "实验功能") {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(Modifier.weight(1f)) {
+                        Text("显示预计班次", fontWeight = FontWeight.SemiBold)
+                        Text(
+                            "使用离线时刻表推算，不代表实时到站；默认关闭。",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = showArrivalEstimates,
+                        onCheckedChange = onShowArrivalEstimatesChange
+                    )
+                }
                 Text(
-                    text = "按线路、全程车或区间车、工作日或周末分别管理总班次数和逐班时刻。",
+                    text = "班次表、区间车与用户校准保留给需要自行维护数据的用户。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                 )
                 TextButton(onClick = onManageSchedules, modifier = Modifier.padding(horizontal = 8.dp)) {
-                    Text("管理班次表")
+                    Text("管理实验班次表")
                 }
             }
             Spacer(Modifier.height(16.dp))
@@ -282,14 +302,13 @@ private fun UserGuideDialog(onDismiss: () -> Unit) {
         title = { Text("Metro Nearby 使用指引") },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                GuideStep("1", "定位与选站", "允许定位后，首页会寻找附近地铁站；也可以用搜索手动选择任意已收录站点。")
-                GuideStep("2", "查看预计到站", "同站多线路和两个方向会分别展示。时间均为离线预计，不代表运营方实时数据。")
-                GuideStep("3", "订阅通勤站", "在“我的订阅”关注常用站，并为每个站指定线路和通勤方向。")
-                GuideStep("4", "记录到站锚点", "看到列车实际到站时记录锚点；积累同线路、方向、日型和时段的样本后，用户校准会逐步改善。")
-                GuideStep("5", "学习发车间隔", "确认没有漏车后连续记录至少三次到站，系统才能学习该时段的发车间隔。")
-                GuideStep("6", "管理班次表", "可按线路、交路、工作日或周末修改班次和沿途站时刻；需要撤销时可恢复当前表或整条线路默认值。")
-                GuideStep("7", "切换预测口径", "首页可选择系统预计或用户校准；没有适用样本时，用户校准会明确回退到系统预计。")
-            }
+                GuideStep("1", "定位与附近站", "允许定位后，首页会列出最近车站和多个附近备选站；距离是站点中心之间的直线距离。")
+                GuideStep("2", "规划离线路线", "从底部“路线”选择起终点，可按少换乘或少经过站规划乘车线路、站数与换乘站。")
+                GuideStep("3", "保存常用站", "在“我的订阅”保存常用站、通勤线路和方向，所有内容只保存在本机。")
+                GuideStep("4", "查看线网与线路", "线网图支持缩放移动；选择线路和搜索站点均可离线使用。")
+                GuideStep("5", "预计班次实验功能", "设置中可临时开启离线预计班次。它不是运营方实时数据，默认关闭。")
+                GuideStep("6", "维护实验时刻", "需要自行维护数据时，可管理班次表、区间车、沿途站时间和用户校准。")
+                GuideStep("7", "添加自定义线路", "可按城市添加自己的线路、站序和坐标，并参与定位、搜索与路线规划。")            }
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text("知道了") } }
     )

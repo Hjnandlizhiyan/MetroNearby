@@ -99,6 +99,8 @@ import com.metronearby.domain.present
 import com.metronearby.domain.serviceTypeDisplayName
 import com.metronearby.domain.userArrivalSecondsOfDay
 import com.metronearby.location.AndroidLocationProvider
+import com.metronearby.location.NearbyStationCatalog
+import com.metronearby.location.NearbyStationSummary
 import com.metronearby.location.NearestStationFinder
 import java.io.File
 import java.util.Calendar
@@ -126,6 +128,7 @@ private sealed interface ScreenState {
         val stationName: String,
         val distanceMeters: Double,
         val userLocation: UserLocation? = null,
+        val nearbyStations: List<NearbyStationSummary> = emptyList(),
         /** 站点由用户搜索选定，而非定位推荐的最近站 */
         val isManuallySelected: Boolean = false
     ) : ScreenState
@@ -136,6 +139,8 @@ private sealed interface ScreenState {
 fun MetroNearbyScreen(
     arrivalDisplayMode: ArrivalDisplayMode = ArrivalDisplayMode.DEFAULT,
     onArrivalDisplayModeChange: (ArrivalDisplayMode) -> Unit = {},
+    showArrivalEstimates: Boolean = false,
+    onShowArrivalEstimatesChange: (Boolean) -> Unit = {},
     subscriptions: List<StationSubscription> = emptyList(),
     onSubscriptionsChange: (List<StationSubscription>) -> Unit = {},
     customLines: List<MetroLine> = emptyList(),
@@ -148,7 +153,7 @@ fun MetroNearbyScreen(
     onThemeModeChange: (ThemeMode) -> Unit = {}
 ) {
     val context = LocalContext.current
-    var showSubscriptions by rememberSaveable { mutableStateOf(subscriptions.isNotEmpty()) }
+    var showSubscriptions by rememberSaveable { mutableStateOf(false) }
     var editingSubscription by remember { mutableStateOf<StationSubscription?>(null) }
     var headwayTarget by remember { mutableStateOf<Pair<String, ArrivalItem>?>(null) }
     val locationProvider = remember(context) { AndroidLocationProvider(context.applicationContext) }
@@ -271,6 +276,12 @@ fun MetroNearbyScreen(
             } else {
                 // 最近站在「所有已收录线路的全部站点」里找；换乘站取几何上最近的那个落点即可
                 val allStations = lines.flatMap { it.line.stations }
+                val nearby = NearbyStationCatalog.find(
+                    lines = lines.map { it.line },
+                    lat = coordinates.lat,
+                    lng = coordinates.lng,
+                    limit = 5
+                )
                 val nearest = NearestStationFinder(allStations)
                     .findNearest(coordinates.lat, coordinates.lng, limit = 1)
                     .firstOrNull()
@@ -283,6 +294,7 @@ fun MetroNearbyScreen(
                         stationName = nearest.station.name,
                         distanceMeters = nearest.distanceMeters,
                         userLocation = coordinates,
+                        nearbyStations = nearby,
                         isManuallySelected = false
                     )
                 }
@@ -304,6 +316,7 @@ fun MetroNearbyScreen(
     var showLinePicker by rememberSaveable { mutableStateOf(false) }
     var showNetworkMap by rememberSaveable { mutableStateOf(false) }
     var showShortTurnManagement by rememberSaveable { mutableStateOf(false) }
+    var showRoutePlanner by rememberSaveable { mutableStateOf(false) }
     var settingsDockDestination by remember { mutableStateOf<DockDestination?>(null) }
 
     val onDockNavigate: (DockDestination) -> Unit = { destination ->
@@ -317,6 +330,7 @@ fun MetroNearbyScreen(
                 showLinePicker = false
                 showSubscriptions = false
                 showShortTurnManagement = false
+                showRoutePlanner = false
                 settingsDockDestination = null
             }
             DockDestination.SUBSCRIPTIONS -> {
@@ -326,15 +340,28 @@ fun MetroNearbyScreen(
                 showLinePicker = false
                 showSubscriptions = true
                 showShortTurnManagement = false
+                showRoutePlanner = false
                 settingsDockDestination = null
                 focusManager.clearFocus()
+            }
+            DockDestination.ROUTE -> {
+                showSettings = false
+                showScheduleManagement = false
+                showNetworkMap = false
+                showLinePicker = false
+                showSubscriptions = false
+                showShortTurnManagement = false
+                showRoutePlanner = true
+                settingsDockDestination = null
             }
             DockDestination.SCHEDULE -> {
                 showSettings = false
                 showScheduleManagement = true
                 showNetworkMap = false
                 showLinePicker = false
+                showSubscriptions = false
                 showShortTurnManagement = false
+                showRoutePlanner = false
                 settingsDockDestination = null
             }
             DockDestination.SHORT_TURN -> {
@@ -344,6 +371,7 @@ fun MetroNearbyScreen(
                 showLinePicker = false
                 showSubscriptions = false
                 showShortTurnManagement = true
+                showRoutePlanner = false
                 settingsDockDestination = null
             }
             DockDestination.LINE_PICKER -> showLinePicker = true
@@ -352,12 +380,13 @@ fun MetroNearbyScreen(
                 showScheduleManagement = false
                 showLinePicker = false
                 showNetworkMap = true
+                showSubscriptions = false
                 showShortTurnManagement = false
+                showRoutePlanner = false
                 settingsDockDestination = null
             }
         }
     }
-
     if (showLinePicker) {
         LineSelectionDialog(
             options = lineOptions,
@@ -379,6 +408,20 @@ fun MetroNearbyScreen(
         )
     }
 
+    if (showRoutePlanner) {
+        RoutePlannerScreen(
+            lines = loadedLines.map { it.line },
+            initialOriginName = (state as? ScreenState.Ready)?.stationName,
+            onBack = { showRoutePlanner = false },
+            bottomBar = {
+                MetroBottomDock(
+                    selected = DockDestination.ROUTE,
+                    onNavigate = onDockNavigate
+                )
+            }
+        )
+        return
+    }
     if (showNetworkMap) {
         NetworkMapScreen(
             selectedCityId = networkMapCityId,
@@ -466,6 +509,8 @@ fun MetroNearbyScreen(
                 showScheduleManagement = true
                 settingsDockDestination = null
             },
+            showArrivalEstimates = showArrivalEstimates,
+            onShowArrivalEstimatesChange = onShowArrivalEstimatesChange,
             themeMode = themeMode,
             onThemeModeChange = onThemeModeChange,
             lineOptions = lineOptions,
@@ -548,7 +593,9 @@ fun MetroNearbyScreen(
                         }
                     }
                 )
-                ArrivalModeSelector(arrivalDisplayMode, onArrivalDisplayModeChange)
+                if (showArrivalEstimates) {
+                    ArrivalModeSelector(arrivalDisplayMode, onArrivalDisplayModeChange)
+                }
                 if (!showSubscriptions) StationSearchField(
                     query = query,
                     showClear = query.isNotEmpty() || pickedStationName != null,
@@ -577,7 +624,7 @@ fun MetroNearbyScreen(
             when {
                 showSubscriptions && dataError != null -> MessageView(dataError!!, "重试", { reloadKey += 1 })
                 showSubscriptions && loadedLines.isEmpty() -> LoadingView()
-                showSubscriptions -> SubscriptionBoard(subscriptions, loadedLines, arrivalDisplayMode,
+                showSubscriptions -> SubscriptionBoard(subscriptions, loadedLines, arrivalDisplayMode, showArrivalEstimates,
                     onAdd = { showSubscriptions = false; query = "" },
                     onOpen = { pickedStationName = it; query = ""; showSubscriptions = false },
                     onEdit = { editingSubscription = it },
@@ -618,41 +665,69 @@ fun MetroNearbyScreen(
                         illustrationRes = R.drawable.empty_location
                     )
 
-                    is ScreenState.Ready -> ArrivalBoard(
-                        onStartContinuous = { onLine, item -> headwayTarget = onLine.line.lineId to item },
-                        ready = current,
-                        arrivalDisplayMode = arrivalDisplayMode,
-                        onRelocate = {
+                    is ScreenState.Ready -> {
+                        val subscriptionLabel =
+                            if (StationSubscriptions.find(subscriptions, current.stationName) == null) {
+                                "订阅本站"
+                            } else {
+                                "编辑订阅"
+                            }
+                        val relocate = {
                             pickedStationName = null
                             granted = locationProvider.hasPermission()
                             retryKey += 1
-                        },
-                        subscriptionLabel = if (StationSubscriptions.find(subscriptions, current.stationName) == null) "订阅本站" else "编辑订阅",
-                        onSubscribe = { editingSubscription = StationSubscriptions.find(subscriptions, current.stationName)
-                            ?: StationSubscription(current.stationName) },
-                        onRecordObservation = { onLine, observation ->
-                            repository.recordObservation(onLine.line.lineId, observation)
-                            reloadKey += 1
-                        },
-                        onRemoveObservation = { onLine, item, index ->
-                            repository.removeObservation(
-                                lineId = onLine.line.lineId,
-                                stationId = onLine.stationId,
-                                patternId = item.patternId,
-                                index = index
-                            )
-                            reloadKey += 1
-                        },
-                        onClearObservations = { onLine, item ->
-                            repository.clearObservations(
-                                lineId = onLine.line.lineId,
-                                stationId = onLine.stationId,
-                                patternId = item.patternId
-                            )
-                            reloadKey += 1
                         }
-                    )
-                }
+                        val subscribe = {
+                            editingSubscription = StationSubscriptions.find(subscriptions, current.stationName)
+                                ?: StationSubscription(current.stationName)
+                        }
+                        if (showArrivalEstimates) {
+                            ArrivalBoard(
+                                onStartContinuous = { onLine, item ->
+                                    headwayTarget = onLine.line.lineId to item
+                                },
+                                ready = current,
+                                arrivalDisplayMode = arrivalDisplayMode,
+                                onRelocate = relocate,
+                                subscriptionLabel = subscriptionLabel,
+                                onSubscribe = subscribe,
+                                onRecordObservation = { onLine, observation ->
+                                    repository.recordObservation(onLine.line.lineId, observation)
+                                    reloadKey += 1
+                                },
+                                onRemoveObservation = { onLine, item, index ->
+                                    repository.removeObservation(
+                                        lineId = onLine.line.lineId,
+                                        stationId = onLine.stationId,
+                                        patternId = item.patternId,
+                                        index = index
+                                    )
+                                    reloadKey += 1
+                                },
+                                onClearObservations = { onLine, item ->
+                                    repository.clearObservations(
+                                        lineId = onLine.line.lineId,
+                                        stationId = onLine.stationId,
+                                        patternId = item.patternId
+                                    )
+                                    reloadKey += 1
+                                }
+                            )
+                        } else {
+                            StationOverviewBoard(
+                                ready = current,
+                                subscriptionLabel = subscriptionLabel,
+                                onSubscribe = subscribe,
+                                onRelocate = relocate,
+                                onStationSelect = { stationName ->
+                                    pickedStationName = stationName
+                                    query = ""
+                                },
+                                onPlanRoute = { showRoutePlanner = true },
+                                onEnableEstimates = { onShowArrivalEstimatesChange(true) }
+                            )
+                        }
+                    }                }
             }
         }
     }
@@ -670,6 +745,7 @@ private fun buildReady(
     stationName: String,
     distanceMeters: Double,
     userLocation: UserLocation? = null,
+    nearbyStations: List<NearbyStationSummary> = emptyList(),
     isManuallySelected: Boolean
 ): ScreenState {
     val overridesByLineId = lines.associate { it.line.lineId to it.overrides }
@@ -692,6 +768,7 @@ private fun buildReady(
         stationName = stationName,
         distanceMeters = distanceMeters,
         userLocation = userLocation,
+        nearbyStations = nearbyStations,
         isManuallySelected = isManuallySelected
     )
 }
@@ -819,6 +896,122 @@ private fun lineTokensOf(lineColorHex: String?, fallback: Color): LineTokens {
  * [serviceWindow] 为空表示该站当天没有任何可推算班次；它与"班次都开走了"是两回事，
  * 空态文案据此分档。
  */
+@Composable
+private fun StationOverviewBoard(
+    ready: ScreenState.Ready,
+    subscriptionLabel: String,
+    onSubscribe: () -> Unit,
+    onRelocate: () -> Unit,
+    onStationSelect: (String) -> Unit,
+    onPlanRoute: () -> Unit,
+    onEnableEstimates: () -> Unit
+) {
+    var nowEpochMillis by remember { mutableStateOf(System.currentTimeMillis()) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(60_000L)
+            nowEpochMillis = System.currentTimeMillis()
+        }
+    }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        item {
+            StationHeader(
+                stationName = ready.stationName,
+                distanceMeters = ready.distanceMeters,
+                isManuallySelected = ready.isManuallySelected,
+                userLocation = ready.userLocation,
+                nowEpochMillis = nowEpochMillis,
+                onRelocate = onRelocate
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(onClick = onPlanRoute) { Text("从本站规划路线") }
+                TextButton(onClick = onSubscribe) { Text(subscriptionLabel) }
+            }
+        }
+        if (ready.nearbyStations.isNotEmpty() && !ready.isManuallySelected) {
+            item {
+                Text("附近车站", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(
+                    "按站点中心的直线距离排序，不代表实际步行距离。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            items(ready.nearbyStations, key = { it.cityName + ":" + it.stationName }) { nearby ->
+                Card(
+                    modifier = Modifier.fillMaxWidth().clickable { onStationSelect(nearby.stationName) },
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (nearby.stationName == ready.stationName) {
+                            MaterialTheme.colorScheme.primaryContainer
+                        } else {
+                            MaterialTheme.colorScheme.surfaceVariant
+                        }
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(Modifier.weight(1f)) {
+                            Text(nearby.stationName, fontWeight = FontWeight.SemiBold)
+                            Text(
+                                nearby.lineNames.joinToString(" · "),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Text(formatDistance(nearby.distanceMeters), color = MaterialTheme.colorScheme.primary)
+                    }
+                }
+            }
+        }
+        item {
+            Text("本站线路", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        }
+        items(ready.stationOnLines, key = { it.line.lineId }) { onLine ->
+            val tokens = lineTokensOf(onLine.line.color, MaterialTheme.colorScheme.primary)
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    LineVisuals.badgeText(onLine.line.lineName)?.let {
+                        LineBadge(it, tokens.base, tokens.onBase)
+                        Spacer(Modifier.width(10.dp))
+                    }
+                    Column(Modifier.weight(1f)) {
+                        Text(onLine.line.lineName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text(
+                            "${onLine.line.cityName ?: "未设置城市"} · 可从本站换乘或开始规划",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
+        }
+        item {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            ) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text("预计班次已关闭", fontWeight = FontWeight.SemiBold)
+                    Text(
+                        "北京地铁没有公开完整实时数据。需要自行维护离线时刻时，可临时开启实验功能。",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    TextButton(onClick = onEnableEstimates) { Text("开启预计班次") }
+                }
+            }
+        }
+        item { Spacer(Modifier.height(12.dp)) }
+    }
+}
 private data class LineBoard(
     val stationOnLine: StationOnLine,
     val lineTokens: LineTokens,

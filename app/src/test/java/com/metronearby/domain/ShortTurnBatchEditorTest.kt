@@ -14,6 +14,7 @@ class ShortTurnBatchEditorTest {
         lineId = "test",
         lineName = "测试线",
         coordSystem = "WGS84",
+        stationOrder = listOf("s1", "s2", "s3"),
         stations = listOf(
             Station("s1", "一站", 0.0, 0.0),
             Station("s2", "二站", 0.0, 0.0),
