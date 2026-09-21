@@ -93,6 +93,7 @@ fun SettingsScreen(
     onShowArrivalEstimatesChange: (Boolean) -> Unit = {},
     subscriptionCount: Int = 0,
     onManageSubscriptions: () -> Unit = {},
+    onOpenFutureRoadmap: () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     onBack: () -> Unit
 ) {
@@ -264,6 +265,12 @@ fun SettingsScreen(
             Spacer(Modifier.height(16.dp))
 
             SettingsSection(title = "关于") {
+                TextButton(
+                    onClick = onOpenFutureRoadmap,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                ) {
+                    Text("未来规划")
+                }
                 Text(
                     text = "查看 Metro Nearby 的源代码、使用说明与开发进度。",
                     style = MaterialTheme.typography.bodySmall,

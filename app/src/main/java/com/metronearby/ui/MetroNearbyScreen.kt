@@ -317,6 +317,7 @@ fun MetroNearbyScreen(
     var showNetworkMap by rememberSaveable { mutableStateOf(false) }
     var showShortTurnManagement by rememberSaveable { mutableStateOf(false) }
     var showRoutePlanner by rememberSaveable { mutableStateOf(false) }
+    var showFutureRoadmap by rememberSaveable { mutableStateOf(false) }
     var settingsDockDestination by remember { mutableStateOf<DockDestination?>(null) }
 
     val onDockNavigate: (DockDestination) -> Unit = { destination ->
@@ -494,6 +495,21 @@ fun MetroNearbyScreen(
         return
     }
 
+    if (showFutureRoadmap) {
+        FutureRoadmapScreen(
+            bottomBar = {
+                MetroBottomDock(
+                    selected = settingsDockDestination,
+                    onNavigate = onDockNavigate
+                )
+            },
+            onBack = {
+                showFutureRoadmap = false
+                showSettings = true
+            }
+        )
+        return
+    }
     // 设置界面整屏覆盖：提前返回可让上面的线路/定位/搜索状态原样保留，
     // 返回主界面时不必重新定位
     if (showSettings) {
@@ -508,6 +524,10 @@ fun MetroNearbyScreen(
                 showSettings = false
                 showScheduleManagement = true
                 settingsDockDestination = null
+            },
+            onOpenFutureRoadmap = {
+                showSettings = false
+                showFutureRoadmap = true
             },
             showArrivalEstimates = showArrivalEstimates,
             onShowArrivalEstimatesChange = onShowArrivalEstimatesChange,

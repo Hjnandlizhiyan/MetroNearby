@@ -20,6 +20,7 @@ Android 离线地铁位置与换乘 App：打开即定位 → 展示最近及附
 | --- | --- |
 | 最近站 + 多个附近备选站（合并换乘站） | `location/NearbyStationCatalog.kt`、`ui/MetroNearbyScreen.kt` |
 | 离线路线规划（少换乘 / 少经过站、跨城市隔离） | `domain/OfflineRoutePlanner.kt`、`ui/RoutePlannerScreen.kt`、`docs/offline-route-planning.md` |
+| 应用内未来规划（优先 / 后续 / 探索） | `ui/FutureRoadmapScreen.kt`，入口在设置页“关于” |
 | 预计班次实验开关（默认关闭） | `data/source/SettingsStore.kt`、`ui/SettingsScreen.kt` |
 | 最近站 + 同站多线路双方向倒计时 | `domain/ArrivalEstimator.kt`、`ui/MetroNearbyScreen.kt` |
 | 换乘站多线路合并展示、按线路折叠 | `domain/TransferStationResolver.kt` |
