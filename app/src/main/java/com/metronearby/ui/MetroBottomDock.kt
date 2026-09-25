@@ -49,15 +49,13 @@ import com.metronearby.domain.LineVisuals
 /** 底部工具栏的稳定入口；后续新增常用素材或页面时从这里统一扩展。 */
 enum class DockDestination(val label: String, val icon: DockIcon) {
     HOME("首页", DockIcon.HOME),
-    SUBSCRIPTIONS("订阅", DockIcon.HEART),
+    SUBSCRIPTIONS("收藏", DockIcon.HEART),
     ROUTE("路线", DockIcon.ROUTE),
-    SCHEDULE("班次表", DockIcon.SCHEDULE),
-    SHORT_TURN("区间车", DockIcon.SHORT_TURN),
-    LINE_PICKER("选线路", DockIcon.LINES),
+    RADAR("雷达", DockIcon.RADAR),
     NETWORK_MAP("线网图", DockIcon.MAP)
 }
 
-enum class DockIcon { HOME, HEART, ROUTE, SCHEDULE, SHORT_TURN, LINES, MAP }
+enum class DockIcon { HOME, HEART, ROUTE, MAP, RADAR }
 
 @Composable
 fun MetroBottomDock(
@@ -85,8 +83,7 @@ fun MetroBottomDock(
                 DockDestination.HOME,
                 DockDestination.SUBSCRIPTIONS,
                 DockDestination.ROUTE,
-                DockDestination.SHORT_TURN,
-                DockDestination.LINE_PICKER,
+                DockDestination.RADAR,
                 DockDestination.NETWORK_MAP
             ).forEach { destination ->
                 DockItem(
@@ -177,6 +174,12 @@ private fun DockGlyph(icon: DockIcon, color: Color) {
             join = StrokeJoin.Round
         )
         when (icon) {
+            DockIcon.RADAR -> {
+                drawCircle(color, size.minDimension * 0.40f, style = Stroke(width = 1.7.dp.toPx()))
+                drawCircle(color, size.minDimension * 0.22f, style = Stroke(width = 1.2.dp.toPx()))
+                drawLine(color, center, Offset(size.width * 0.78f, size.height * 0.22f), 1.8.dp.toPx())
+                drawCircle(color, 2.dp.toPx(), Offset(size.width * 0.30f, size.height * 0.65f))
+            }
             DockIcon.HOME -> {
                 val roof = Path().apply {
                     moveTo(w * .14f, h * .47f)
@@ -216,43 +219,6 @@ private fun DockGlyph(icon: DockIcon, color: Color) {
                 drawPath(route, color, style = stroke)
                 drawLine(color, Offset(w * .65f, h * .28f), Offset(w * .80f, h * .27f), stroke.width, StrokeCap.Round)
             }
-            DockIcon.SCHEDULE -> {
-                drawRoundRect(
-                    color = color,
-                    topLeft = Offset(w * .17f, h * .21f),
-                    size = Size(w * .66f, h * .64f),
-                    cornerRadius = CornerRadius(w * .07f),
-                    style = stroke
-                )
-                drawLine(color, Offset(w * .17f, h * .39f), Offset(w * .83f, h * .39f), stroke.width, StrokeCap.Round)
-                drawLine(color, Offset(w * .34f, h * .12f), Offset(w * .34f, h * .28f), stroke.width, StrokeCap.Round)
-                drawLine(color, Offset(w * .66f, h * .12f), Offset(w * .66f, h * .28f), stroke.width, StrokeCap.Round)
-                drawLine(color, Offset(w * .31f, h * .57f), Offset(w * .69f, h * .57f), stroke.width, StrokeCap.Round)
-                drawLine(color, Offset(w * .31f, h * .70f), Offset(w * .60f, h * .70f), stroke.width, StrokeCap.Round)
-            }
-
-            DockIcon.SHORT_TURN -> {
-                drawLine(color, Offset(w * .31f, h * .16f), Offset(w * .31f, h * .84f), stroke.width, StrokeCap.Round)
-                val branch = Path().apply {
-                    moveTo(w * .31f, h * .48f)
-                    cubicTo(w * .48f, h * .48f, w * .51f, h * .72f, w * .76f, h * .72f)
-                }
-                drawPath(branch, color, style = stroke)
-                drawCircle(color, radius = w * .075f, center = Offset(w * .31f, h * .18f), style = stroke)
-                drawCircle(color, radius = w * .075f, center = Offset(w * .31f, h * .82f), style = stroke)
-                drawCircle(color, radius = w * .075f, center = Offset(w * .78f, h * .72f), style = stroke)
-            }
-
-            DockIcon.LINES -> {
-                listOf(.25f, .50f, .75f).forEachIndexed { index, y ->
-                    val start = if (index == 1) .18f else .27f
-                    val end = if (index == 1) .82f else .73f
-                    drawLine(color, Offset(w * start, h * y), Offset(w * end, h * y), stroke.width, StrokeCap.Round)
-                    drawCircle(color, radius = w * .06f, center = Offset(w * start, h * y), style = stroke)
-                    drawCircle(color, radius = w * .06f, center = Offset(w * end, h * y), style = stroke)
-                }
-            }
-
             DockIcon.MAP -> {
                 val map = Path().apply {
                     moveTo(w * .14f, h * .22f)

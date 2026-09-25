@@ -11,17 +11,19 @@ Android 离线地铁位置与换乘 App：打开即定位 → 展示最近及附
 
 - 包名 `com.metronearby`，单模块 `:app`，Kotlin + Jetpack Compose(Material3) + kotlinx.serialization。
 - **全离线**：没有网络层、没有 `INTERNET` 权限、没有后端。没有 ViewModel、没有 DataStore、没有 material-icons 依赖。
-- 产品默认主线是附近车站、常用站和离线路线；到站推算降为默认关闭的**实验功能**。开启后 UI 仍必须显式写「预计」，不得伪装成实时。
+- 产品主线为附近车站、收藏、路线方向助手、雷达、通勤和行程卡。2026-09-25 已移除预测及所有时刻管理 UI；旧数据和领域逻辑只保留兼容，不能重新暴露旧入口。
 - 当前覆盖北京官网线网中的全部 28 条线路（`app/src/main/assets/metro/line_beijing_*.json`）。每个线路文件带 `cityId=beijing`、`cityName=北京`，界面显示城市标签；新增 16 条线路的数据范围见 `docs/beijing-lines-completion.md`。
 
-已完成的主要能力（均已在模拟器实测通过）：
+当前新增能力见 docs/travel-upgrade.md。下表的预测、校准、时刻管理条目为历史实现指针，相关 UI 已移除，不代表当前功能。
+
+主要能力与历史实现指针：
 
 | 能力 | 关键落点 |
 | --- | --- |
 | 最近站 + 多个附近备选站（合并换乘站） | `location/NearbyStationCatalog.kt`、`ui/MetroNearbyScreen.kt` |
 | 离线路线规划（少换乘 / 少经过站、跨城市隔离） | `domain/OfflineRoutePlanner.kt`、`ui/RoutePlannerScreen.kt`、`docs/offline-route-planning.md` |
 | 应用内未来规划（优先 / 后续 / 探索） | `ui/FutureRoadmapScreen.kt`，入口在设置页“关于” |
-| 预计班次实验开关（默认关闭） | `data/source/SettingsStore.kt`、`ui/SettingsScreen.kt` |
+| 方向助手 / 雷达 / 通勤 / 行程卡 | `domain/TravelTools.kt`、`ui/RoutePlannerScreen.kt`、`ui/StationRadarScreen.kt`、`docs/travel-upgrade.md` |
 | 最近站 + 同站多线路双方向倒计时 | `domain/ArrivalEstimator.kt`、`ui/MetroNearbyScreen.kt` |
 | 换乘站多线路合并展示、按线路折叠 | `domain/TransferStationResolver.kt` |
 | 停站时间窗（已到站仍保留片刻） | `ArrivalEstimator.dwellSeconds`，`waitSeconds` 允许为负 |
@@ -90,7 +92,7 @@ Get-ChildItem $dir -Filter *.xml | ForEach-Object {
 }
 ```
 
-**测试基线：410 个用例全绿（0 failures / 0 errors，2026-09-21 产品方向调整与离线路线规划后）。** 任何改动后该数字只能升、不能有红。
+**测试基线：438 个用例全绿（0 failures / 0 errors，2026-09-25 第一阶段离线出行升级后）。** 任何改动后该数字只能升、不能有红。
 
 用户观测支持秒级现场记录、明确班次、历史加权学习与两小时衰减锚点融合，并用到站前冻结的预测评估误差；仅有旧版数据时兼容原分时段平均。规则和验证条件见 `docs/user-calibration.md`、`domain/CalibrationLearning.kt`。用户可选择“系统预计”或“用户校准”，后者无适用样本时明确回退到系统预计。不能用拟合误差宣称真实准确率。
 
@@ -251,7 +253,7 @@ App 内调试选站入口已按产品要求移除。界面验证优先使用主�
 
 ## 10. 交付前检查清单
 
-- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 410
+- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 438
 - [ ] `:app:compileDebugKotlin` / `:app:assembleDebug` 通过
 - [ ] 新增的可测逻辑在 `domain/` 且有对应单测
 - [ ] 未新增第三方依赖（或已向用户说明必要性）

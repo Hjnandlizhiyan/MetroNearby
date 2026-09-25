@@ -88,9 +88,6 @@ fun SettingsScreen(
     onLineSelect: (String) -> Unit = {},
     onAddCustomLine: (MetroLine) -> Unit = {},
     onRemoveCustomLine: (String) -> Unit = {},
-    onManageSchedules: () -> Unit = {},
-    showArrivalEstimates: Boolean = false,
-    onShowArrivalEstimatesChange: (Boolean) -> Unit = {},
     subscriptionCount: Int = 0,
     onManageSubscriptions: () -> Unit = {},
     onOpenFutureRoadmap: () -> Unit = {},
@@ -119,7 +116,7 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = { customLineToDelete = null },
             title = { Text("删除自定义线路？") },
-            text = { Text("将删除 ${line.cityName.orEmpty()} · ${line.lineName}。已有用户班次修正会保留在本机，重新创建同一线路不会自动关联。") },
+            text = { Text("将删除 ${line.cityName.orEmpty()} · ${line.lineName}。删除后不再参与定位和路线规划；已经保存的行程会保留，相关站点不可用时会提示。") },
             confirmButton = {
                 TextButton(onClick = {
                     onRemoveCustomLine(line.lineId)
@@ -175,7 +172,7 @@ fun SettingsScreen(
             Spacer(Modifier.height(16.dp))
 
             SettingsSection(title = "常用站与通勤方向") {
-                TextButton(onClick = onManageSubscriptions) { Text("管理订阅站点（$subscriptionCount）") }
+                TextButton(onClick = onManageSubscriptions) { Text("管理收藏站点（$subscriptionCount）") }
             }
             Spacer(Modifier.height(16.dp))
             SettingsSection(title = "我的线路") {
@@ -219,36 +216,6 @@ fun SettingsScreen(
                 }
                 TextButton(onClick = { showCustomLineDialog = true }, modifier = Modifier.padding(horizontal = 8.dp)) {
                     Text("＋ 添加自定义线路")
-                }
-            }
-            Spacer(Modifier.height(16.dp))
-
-            SettingsSection(title = "实验功能") {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(Modifier.weight(1f)) {
-                        Text("显示预计班次", fontWeight = FontWeight.SemiBold)
-                        Text(
-                            "使用离线时刻表推算，不代表实时到站；默认关闭。",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    Switch(
-                        checked = showArrivalEstimates,
-                        onCheckedChange = onShowArrivalEstimatesChange
-                    )
-                }
-                Text(
-                    text = "班次表、区间车与用户校准保留给需要自行维护数据的用户。",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                )
-                TextButton(onClick = onManageSchedules, modifier = Modifier.padding(horizontal = 8.dp)) {
-                    Text("管理实验班次表")
                 }
             }
             Spacer(Modifier.height(16.dp))
@@ -313,9 +280,10 @@ private fun UserGuideDialog(onDismiss: () -> Unit) {
                 GuideStep("2", "规划离线路线", "从底部“路线”选择起终点，可按少换乘或少经过站规划乘车线路、站数与换乘站。")
                 GuideStep("3", "保存常用站", "在“我的订阅”保存常用站、通勤线路和方向，所有内容只保存在本机。")
                 GuideStep("4", "查看线网与线路", "线网图支持缩放移动；选择线路和搜索站点均可离线使用。")
-                GuideStep("5", "预计班次实验功能", "设置中可临时开启离线预计班次。它不是运营方实时数据，默认关闭。")
-                GuideStep("6", "维护实验时刻", "需要自行维护数据时，可管理班次表、区间车、沿途站时间和用户校准。")
-                GuideStep("7", "添加自定义线路", "可按城市添加自己的线路、站序和坐标，并参与定位、搜索与路线规划。")            }
+                GuideStep("5", "附近站雷达", "上北下南查看周边车站的方位和直线距离，点击车站可从此站规划路线。")
+                GuideStep("6", "保存通勤与行程", "路线页规划后可收藏行程、设为常用通勤、反向规划，并分享行程图片。")
+                GuideStep("7", "添加自定义线路", "可按城市添加自己的线路、站序和坐标，参与定位、搜索与路线规划。")
+            }
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text("知道了") } }
     )
@@ -334,178 +302,6 @@ private fun GuideStep(number: String, title: String, description: String) {
 private const val METRO_NEARBY_REPOSITORY_URL =
     "https://github.com/Hjnandlizhiyan/MetroNearby"
 
-/**
- * 已记录的一条区间车：起终点、已填时刻与删除入口。
- *
- * 落库前用过的校验在展示时再跑一次，这样手工改坏的修正文件会以「哪里不对」的形式
- * 呈现出来，而不是悄无声息地不生效。
- */
-@Composable
-internal fun ShortTurnRow(
-    line: MetroLine,
-    shortTurn: ShortTurn,
-    onRemove: () -> Unit,
-    showRemove: Boolean = true
-) {
-    val startName = line.stationById(shortTurn.startStationId)?.name ?: shortTurn.startStationId
-    val endName = line.stationById(shortTurn.endStationId)?.name ?: shortTurn.endStationId
-    val rejection = (ShortTurnPlanner.plan(line, shortTurn) as? ShortTurnPlanner.Plan.Rejected)?.reason
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(text = "$startName → $endName", style = MaterialTheme.typography.bodyLarge)
-            Text(
-                text = shortTurn.departures.joinToString("、"),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 2
-            )
-            if (rejection != null) {
-                Text(
-                    text = rejection,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-        }
-        if (showRemove) TextButton(onClick = onRemove) { Text("删除") }
-    }
-}
-
-/**
- * 新增区间车的弹窗：选起终点 + 逐行填起点站的发车时刻。
- *
- * 方向不提供选项——它由起终点在站序中的先后自动决定，让用户选只会多一个出错的机会。
- * 保存按钮只在 [ShortTurnPlanner] 判定合法时可用，因此落库的数据一定是能算出班次的。
- */
-@Composable
-internal fun ShortTurnDialog(
-    line: MetroLine,
-    onDismiss: () -> Unit,
-    onConfirm: (startStationId: String, endStationId: String, departures: List<String>) -> Unit
-) {
-    val stations = line.stations
-    var startStationId by remember { mutableStateOf(stations.firstOrNull()?.id.orEmpty()) }
-    var endStationId by remember { mutableStateOf(stations.lastOrNull()?.id.orEmpty()) }
-    var departuresText by remember { mutableStateOf("") }
-
-    val departures = departuresText.split("\n")
-    val plan = ShortTurnPlanner.plan(
-        line,
-        ShortTurn(
-            startStationId = startStationId,
-            endStationId = endStationId,
-            departures = departures
-        )
-    )
-    val rejection = (plan as? ShortTurnPlanner.Plan.Rejected)?.reason
-    val canSave = plan is ShortTurnPlanner.Plan.Planned
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("添加区间车") },
-        text = {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                Text(
-                    text = "填你在起点站看到的发车时刻，每行一个，用 24 小时制。",
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Spacer(Modifier.height(12.dp))
-                StationDropdown(
-                    label = "起点站",
-                    stations = stations,
-                    selectedStationId = startStationId,
-                    onSelect = { startStationId = it }
-                )
-                Spacer(Modifier.height(8.dp))
-                StationDropdown(
-                    label = "终点站",
-                    stations = stations,
-                    selectedStationId = endStationId,
-                    onSelect = { endStationId = it }
-                )
-                Spacer(Modifier.height(12.dp))
-                OutlinedTextField(
-                    value = departuresText,
-                    onValueChange = { departuresText = it },
-                    modifier = Modifier.fillMaxWidth(),
-                    minLines = 3,
-                    isError = rejection != null && departuresText.isNotBlank(),
-                    label = { Text("发车时刻") },
-                    placeholder = { Text("08:00\n08:10\n08:25") }
-                )
-                // 一打开就报错太吵，只在用户开始填之后才提示
-                if (rejection != null && departuresText.isNotBlank()) {
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = rejection,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(
-                enabled = canSave,
-                onClick = { onConfirm(startStationId, endStationId, departures) }
-            ) {
-                Text("保存")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text("取消") }
-        }
-    )
-}
-
-/**
- * 站点下拉选择。
- *
- * 用下拉菜单而不是横向 chip 列表：一条线动辄三四十站，菜单自带滚动与搜索余量，
- * 也不会把弹窗撑高。
- */
-@Composable
-private fun StationDropdown(
-    label: String,
-    stations: List<Station>,
-    selectedStationId: String,
-    onSelect: (String) -> Unit
-) {
-    var expanded by remember { mutableStateOf(false) }
-    val selectedName = stations.firstOrNull { it.id == selectedStationId }?.name ?: "请选择"
-
-    Column {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Box {
-            TextButton(onClick = { expanded = true }) {
-                Text(text = selectedName, style = MaterialTheme.typography.bodyLarge)
-            }
-            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                stations.forEach { station ->
-                    DropdownMenuItem(
-                        text = { Text(station.name) },
-                        onClick = {
-                            onSelect(station.id)
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
-/** 一个设置分组：分组标题 + 承载若干选项的卡片。 */
 @Composable
 private fun SettingsSection(title: String, content: @Composable () -> Unit) {
     Text(

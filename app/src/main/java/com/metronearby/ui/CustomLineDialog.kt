@@ -33,10 +33,6 @@ fun CustomLineDialog(
     var lineName by remember { mutableStateOf("") }
     var color by remember { mutableStateOf("#2F80ED") }
     var stationsText by remember { mutableStateOf("") }
-    var firstDeparture by remember { mutableStateOf("06:00") }
-    var lastDeparture by remember { mutableStateOf("23:00") }
-    var intervalMinutes by remember { mutableStateOf("6") }
-    var runMinutes by remember { mutableStateOf("2") }
     var error by remember { mutableStateOf<String?>(null) }
 
     AlertDialog(
@@ -48,7 +44,7 @@ fun CustomLineDialog(
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    "每行填写一个站：站名,纬度,经度。保存后可在“班次表”中分别修改工作日、周末和同一趟车的沿途时间。",
+                    "每行填写一个站：站名,纬度,经度。按站序连接成双向线路，保存后参与定位、雷达和路线规划。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 8.dp)
@@ -67,16 +63,6 @@ fun CustomLineDialog(
                     minLines = 4,
                     modifier = Modifier.fillMaxWidth()
                 )
-                OutlinedTextField(firstDeparture, { firstDeparture = it }, label = { Text("首班") },
-                    placeholder = { Text("06:00") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(lastDeparture, { lastDeparture = it }, label = { Text("末班") },
-                    placeholder = { Text("23:00") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(intervalMinutes, { intervalMinutes = it.filter(Char::isDigit) },
-                    label = { Text("初始发车间隔（分钟）") }, singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(runMinutes, { runMinutes = it.filter(Char::isDigit) },
-                    label = { Text("每站初始运行时间（分钟）") }, singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
                 error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
             }
         },
@@ -87,18 +73,9 @@ fun CustomLineDialog(
                     error = parseError
                     return@TextButton
                 }
-                val result = CustomLineBuilder.build(
-                    CustomLineInput(
-                        stableId = System.currentTimeMillis().toString(36),
-                        cityName = cityName,
-                        lineName = lineName,
-                        color = color,
-                        stations = stations,
-                        firstDeparture = firstDeparture,
-                        lastDeparture = lastDeparture,
-                        intervalMinutes = intervalMinutes.toIntOrNull() ?: 0,
-                        runMinutesPerStop = runMinutes.toIntOrNull() ?: 0
-                    )
+                val result = CustomLineBuilder.buildTopology(
+                    stableId = System.currentTimeMillis().toString(36),
+                    cityName = cityName, lineName = lineName, color = color, stations = stations
                 )
                 when (result) {
                     is CustomLineBuilder.Result.Built -> onConfirm(result.line)

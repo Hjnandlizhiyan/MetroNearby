@@ -13,7 +13,7 @@ import com.metronearby.data.source.SharedPreferencesSettingsStore
 import com.metronearby.ui.DEFAULT_LINE_DATA_FILE
 import com.metronearby.ui.MetroNearbyScreen
 import com.metronearby.ui.theme.MetroNearbyTheme
-import com.metronearby.domain.ArrivalDisplayMode
+import com.metronearby.data.source.JourneyStore
 import com.metronearby.domain.NetworkMapCatalog
 
 class MainActivity : ComponentActivity() {
@@ -23,13 +23,13 @@ class MainActivity : ComponentActivity() {
 
         // 设置存储只依赖 ApplicationContext，放在 setContent 外创建，避免重组时重复构造
         val settingsStore = SharedPreferencesSettingsStore(this)
+        val journeyStore = JourneyStore(this)
 
         setContent {
             // 主题模式提到根部持有：改动后直接驱动 MetroNearbyTheme 重建
             var themeMode by remember { mutableStateOf(settingsStore.loadThemeMode()) }
             var subscriptions by remember { mutableStateOf(settingsStore.loadSubscriptions()) }
-            var arrivalDisplayMode by remember { mutableStateOf(settingsStore.loadArrivalDisplayMode()) }
-            var showArrivalEstimates by remember { mutableStateOf(settingsStore.loadShowArrivalEstimates()) }
+            var journeys by remember { mutableStateOf(journeyStore.load()) }
             var customLines by remember { mutableStateOf(settingsStore.loadCustomLines()) }
             var networkMapCityId by remember {
                 mutableStateOf(settingsStore.loadNetworkMapCityId() ?: NetworkMapCatalog.DEFAULT_CITY_ID)
@@ -43,16 +43,9 @@ class MainActivity : ComponentActivity() {
 
             MetroNearbyTheme(darkTheme = themeMode.resolveDarkTheme(isSystemInDarkTheme())) {
                 MetroNearbyScreen(
-                    arrivalDisplayMode = arrivalDisplayMode,
-                    onArrivalDisplayModeChange = { mode ->
-                        arrivalDisplayMode = mode
-                        settingsStore.saveArrivalDisplayMode(mode)
-                    },
-                    showArrivalEstimates = showArrivalEstimates,
-                    onShowArrivalEstimatesChange = { show ->
-                        showArrivalEstimates = show
-                        settingsStore.saveShowArrivalEstimates(show)
-                    },                    subscriptions = subscriptions,
+                    journeys = journeys,
+                    onJourneysChange = { journeys = it; journeyStore.save(it) },
+                    subscriptions = subscriptions,
                     onSubscriptionsChange = { subscriptions = it; settingsStore.saveSubscriptions(it) },
                     customLines = customLines,
                     onCustomLinesChange = { lines ->

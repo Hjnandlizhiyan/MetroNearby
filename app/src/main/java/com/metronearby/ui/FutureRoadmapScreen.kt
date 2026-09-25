@@ -47,13 +47,13 @@ private data class RoadmapStage(
 
 private val roadmapStages = listOf(
     RoadmapStage(
-        label = "优先规划",
+        label = "已实现 · 第一阶段",
         color = Color(0xFF2E7D32),
-        summary = "先完善每天都能用到的离线出行能力。",
+        summary = "这四项已可在底部“路线”和“雷达”中使用。",
         items = listOf(
             RoadmapItem("地铁方向助手", "选好目的地后，直接告诉用户乘哪条线、去哪个方向、在哪里换乘。"),
-            RoadmapItem("附近站雷达", "以当前位置为中心显示车站方位、距离和线路，点击即可开始规划。"),
-            RoadmapItem("通勤快捷模式", "保存家、公司和学校等常用行程，根据所在位置快速切换去程与返程。"),
+            RoadmapItem("附近站雷达", "上北下南展示车站方位、直线距离和线路，点击即可从此站规划。"),
+            RoadmapItem("通勤快捷模式", "保存家、公司和学校等常用行程，命名收藏并设为通勤，一键查看或反向规划。"),
             RoadmapItem("离线行程卡", "把上车方向、经过站、换乘站和下车站整理成适合查看与截图的卡片。")
         )
     ),
@@ -123,7 +123,7 @@ fun FutureRoadmapScreen(
                             )
                             Spacer(Modifier.height(6.dp))
                             Text(
-                                "以下功能仍在规划中，会根据数据条件和实际体验逐步实现。",
+                                "第一阶段已经实现；其余功能将根据数据条件和实际体验逐步升级。",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
@@ -136,7 +136,7 @@ fun FutureRoadmapScreen(
             }
             item {
                 Text(
-                    "规划顺序可能调整。预计班次继续作为可选实验功能，不作为未来发展的核心。",
+                    "后续规划顺序可能调整。应用专注离线位置与出行，旧预测和时刻管理入口已移除。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp)

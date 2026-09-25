@@ -194,7 +194,7 @@ object OfflineRoutePlanner {
         return result
     }
 
-    private fun stationKey(line: MetroLine, stationName: String): String =
+    fun stationKey(line: MetroLine, stationName: String): String =
         cityKey(line) + "|" + TransferStationResolver.normalize(stationName)
 
     private fun cityKey(line: MetroLine): String =

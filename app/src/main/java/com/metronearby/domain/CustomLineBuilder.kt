@@ -24,6 +24,20 @@ data class CustomLineInput(
 )
 
 object CustomLineBuilder {
+    /** 新版仅创建静态线网，兼容结构保留双方向但不填入运营时刻。 */
+    fun buildTopology(stableId: String, cityName: String, lineName: String,
+        color: String, stations: List<CustomStationInput>): Result {
+        return when (val result = build(CustomLineInput(stableId, cityName, lineName,
+            color, stations, "06:00", "23:00", 6, 2))) {
+            is Result.Rejected -> result
+            is Result.Built -> Result.Built(result.line.copy(
+                patterns = result.line.patterns.map { it.copy(services = emptyList()) },
+                stationServiceTimes = emptyMap(), exactDepartures = emptyMap(),
+                note = "用户自定义静态线网，仅用于定位和路线规划"
+            ))
+        }
+    }
+
     sealed interface Result {
         data class Built(val line: MetroLine) : Result
         data class Rejected(val reason: String) : Result

@@ -2,7 +2,6 @@ package com.metronearby.data.source
 
 import android.content.Context
 import com.metronearby.domain.ThemeMode
-import com.metronearby.domain.ArrivalDisplayMode
 import com.metronearby.data.MetroJson
 import com.metronearby.data.model.StationSubscription
 import com.metronearby.data.model.MetroLine
@@ -10,14 +9,10 @@ import com.metronearby.data.model.MetroLine
 /**
  * 应用设置项的读写入口。
  *
- * 主题模式、当前线路、到站时间口径与站点订阅统一从此接口读写，后续新增设置项时在本接口上扩展即可，
+ * 主题模式、当前线路与站点收藏统一从此接口读写，后续新增设置项时在本接口上扩展即可，
  * 避免界面层直接碰具体的存储实现。
  */
 interface SettingsStore {
-    fun loadArrivalDisplayMode(): ArrivalDisplayMode
-    fun saveArrivalDisplayMode(mode: ArrivalDisplayMode)
-    fun loadShowArrivalEstimates(): Boolean
-    fun saveShowArrivalEstimates(show: Boolean)
     fun loadSubscriptions(): List<StationSubscription>
     fun saveSubscriptions(items: List<StationSubscription>)
     fun loadCustomLines(): List<MetroLine>
@@ -49,19 +44,6 @@ class SharedPreferencesSettingsStore(context: Context) : SettingsStore {
     private val prefs = context.applicationContext
         .getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
 
-    override fun loadArrivalDisplayMode(): ArrivalDisplayMode =
-        ArrivalDisplayMode.fromStorageKey(prefs.getString(KEY_ARRIVAL_DISPLAY_MODE, null))
-
-    override fun saveArrivalDisplayMode(mode: ArrivalDisplayMode) {
-        prefs.edit().putString(KEY_ARRIVAL_DISPLAY_MODE, mode.storageKey).apply()
-    }
-
-    override fun loadShowArrivalEstimates(): Boolean =
-        prefs.getBoolean(KEY_SHOW_ARRIVAL_ESTIMATES, false)
-
-    override fun saveShowArrivalEstimates(show: Boolean) {
-        prefs.edit().putBoolean(KEY_SHOW_ARRIVAL_ESTIMATES, show).apply()
-    }
     override fun loadSubscriptions(): List<StationSubscription> =
         MetroJson.parseSubscriptions(prefs.getString("station_subscriptions", null) ?: "[]")
 
@@ -101,8 +83,6 @@ class SharedPreferencesSettingsStore(context: Context) : SettingsStore {
         const val FILE_NAME = "metro_settings"
         const val KEY_THEME_MODE = "theme_mode"
         const val KEY_LINE_DATA_FILE = "line_data_file"
-        const val KEY_ARRIVAL_DISPLAY_MODE = "arrival_display_mode"
-        const val KEY_SHOW_ARRIVAL_ESTIMATES = "show_arrival_estimates"
         const val KEY_CUSTOM_LINES = "custom_lines"
         const val KEY_NETWORK_MAP_CITY_ID = "network_map_city_id"
     }
