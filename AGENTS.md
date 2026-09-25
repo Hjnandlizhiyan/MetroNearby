@@ -24,6 +24,8 @@ Android 离线地铁位置与换乘 App：打开即定位 → 展示最近及附
 | 最近站 + 多个附近备选站（合并换乘站） | `location/NearbyStationCatalog.kt`、`ui/MetroNearbyScreen.kt` |
 | 离线路线规划（少换乘 / 少经过站、跨城市隔离） | `domain/OfflineRoutePlanner.kt`、`ui/RoutePlannerScreen.kt`、`docs/offline-route-planning.md` |
 | 应用内未来规划（优先 / 后续 / 探索） | `ui/FutureRoadmapScreen.kt`，入口在设置页“关于” |
+| 地铁足迹基础版 | `domain/StationFootprints.kt`、`data/source/FootprintStore.kt`、`ui/FootprintScreen.kt`、`docs/station-footprints.md` |
+| 随机探索 | `domain/RandomExplorer.kt`、`ui/RandomExploreScreen.kt`、`docs/random-exploration.md`；排除已点亮站，可限线路、直线距离和换乘次数 |
 | 方向助手 / 雷达 / 通勤 / 行程卡 | `domain/TravelTools.kt`、`ui/RoutePlannerScreen.kt`、`ui/StationRadarScreen.kt`、`docs/travel-upgrade.md` |
 | 最近站 + 同站多线路双方向倒计时 | `domain/ArrivalEstimator.kt`、`ui/MetroNearbyScreen.kt` |
 | 换乘站多线路合并展示、按线路折叠 | `domain/TransferStationResolver.kt` |
@@ -264,4 +266,4 @@ App 内调试选站入口已按产品要求移除。界面验证优先使用主�
 
 站名与线路工具见 docs/station-search-tools.md；StationLookup 供首页、路线和收藏目的地共用，StationPinyin 为内置站点生成索引。
 
-离线应急卡见 docs/emergency-card.md。独立 emergency_card 偏好仅存一份位置/路线和个人联系信息，排除系统备份；手动选站不得写入定位快照，电话只用 ACTION_DIAL。
+地铁足迹规则见 docs/station-footprints.md。自动点亮仅接受非模拟定位、距站点中心不超过180米且精度不大于100米；足迹文件排除系统备份，不保存坐标或轨迹。\n\n离线应急卡见 docs/emergency-card.md。独立 emergency_card 偏好仅存一份位置/路线和个人联系信息，排除系统备份；手动选站不得写入定位快照，电话只用 ACTION_DIAL。

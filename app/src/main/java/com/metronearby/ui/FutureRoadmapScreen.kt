@@ -71,10 +71,10 @@ private val roadmapStages = listOf(
     RoadmapStage(
         label = "有趣探索",
         color = Color(0xFF8E24AA),
-        summary = "给熟悉的地铁增加收集和探索乐趣。",
+        summary = "地铁足迹和随机探索已上线基础版，吉祥物成长仍在规划中。",
         items = listOf(
-            RoadmapItem("北京地铁足迹", "自动点亮到过的车站，记录线路探索进度、首次到访和特色徽章。"),
-            RoadmapItem("随机探索", "随机推荐未去过的车站，可限制距离、线路或换乘次数。"),
+            RoadmapItem("已实现基础版 · 北京地铁足迹", "近站真实定位可自动点亮，也能手动补记；记录线路探索进度、首次到访和阶段徽章。"),
+            RoadmapItem("已实现 · 随机探索", "随机推荐未去过的车站，可限制距离、线路或换乘次数，并直接进入路线规划。"),
             RoadmapItem("吉祥物成长", "随着车站和线路逐渐点亮，解锁吉祥物的新表情、装饰和纪念卡片。")
         )
     )

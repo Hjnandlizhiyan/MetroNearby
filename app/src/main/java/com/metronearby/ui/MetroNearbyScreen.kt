@@ -58,6 +58,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -79,6 +80,7 @@ import com.metronearby.data.model.Station
 import com.metronearby.data.model.UserOverrides
 import com.metronearby.data.source.AssetMetroDataSource
 import com.metronearby.data.source.FileOverrideStore
+import com.metronearby.data.source.FootprintStore
 import com.metronearby.domain.ArrivalEstimator
 import com.metronearby.domain.CalibrationLearning
 import com.metronearby.domain.ArrivalDisplayMode
@@ -91,6 +93,8 @@ import com.metronearby.domain.ObservationTimeBand
 import com.metronearby.domain.NetworkMapCatalog
 import com.metronearby.domain.ServiceTypeResolver
 import com.metronearby.domain.StationLookup
+import com.metronearby.domain.StationFootprint
+import com.metronearby.domain.StationFootprints
 import com.metronearby.domain.OfflineRoutePlanner
 import com.metronearby.domain.StationServiceWindow
 import com.metronearby.domain.ThemeMode
@@ -110,6 +114,7 @@ import java.util.Calendar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 
 /**
  * 「当前站在某条线路上对应的那条记录」。
@@ -157,7 +162,14 @@ fun MetroNearbyScreen(
 ) {
     val context = LocalContext.current
     val emergencyStore = remember(context) { com.metronearby.data.source.EmergencyStore(context) }
+    val footprintStore = remember(context) { FootprintStore(context) }
+    val footprintScope = rememberCoroutineScope()
     var emergencyLocationSaveFailed by remember { mutableStateOf(false) }
+    var footprints by remember { mutableStateOf<List<StationFootprint>>(emptyList()) }
+    var footprintsReady by remember { mutableStateOf(false) }
+    var footprintSaving by remember { mutableStateOf(false) }
+    var footprintError by remember { mutableStateOf(false) }
+    var footprintRetry by remember { mutableStateOf(0) }
     var showSubscriptions by rememberSaveable { mutableStateOf(false) }
     var editingSubscription by remember { mutableStateOf<StationSubscription?>(null) }
     val locationProvider = remember(context) { AndroidLocationProvider(context.applicationContext) }
@@ -166,6 +178,14 @@ fun MetroNearbyScreen(
             dataSource = AssetMetroDataSource(context.applicationContext),
             overrideStore = FileOverrideStore(File(context.filesDir, OVERRIDES_FILE))
         )
+    }
+
+    LaunchedEffect(footprintRetry) {
+        footprintsReady = false
+        footprintError = false
+        runCatching { withContext(Dispatchers.IO) { footprintStore.load() } }
+            .onSuccess { footprints = it; footprintsReady = true }
+            .onFailure { footprintError = true }
     }
 
     // 设置界面的线路候选：来自城市索引，只保留已收录站点数据的线路。
@@ -323,6 +343,8 @@ fun MetroNearbyScreen(
     // 普通 remember 会把用户直接弹出设置界面
     var showSettings by rememberSaveable { mutableStateOf(false) }
     var showEmergency by rememberSaveable { mutableStateOf(false) }
+    var showFootprints by rememberSaveable { mutableStateOf(false) }
+    var showRandomExplore by rememberSaveable { mutableStateOf(false) }
     var showNetworkMap by rememberSaveable { mutableStateOf(false) }
     var showRoutePlanner by rememberSaveable { mutableStateOf(false) }
     var showRadar by rememberSaveable { mutableStateOf(false) }
@@ -335,6 +357,8 @@ fun MetroNearbyScreen(
         facilityStationKey = null
         showSettings = false
         showEmergency = false
+        showFootprints = false
+        showRandomExplore = false
         showFutureRoadmap = false
         showSubscriptions = destination == DockDestination.SUBSCRIPTIONS
         showNetworkMap = destination == DockDestination.NETWORK_MAP
@@ -344,9 +368,11 @@ fun MetroNearbyScreen(
         routeDestinationKey = null
         focusManager.clearFocus()
     }
-    BackHandler(enabled = showEmergency || facilityStationKey != null || showSettings || showFutureRoadmap || showNetworkMap ||
+    BackHandler(enabled = showFootprints || showRandomExplore || showEmergency || facilityStationKey != null || showSettings || showFutureRoadmap || showNetworkMap ||
         showRoutePlanner || showRadar || showSubscriptions) {
-        if (showEmergency) showEmergency = false
+        if (showFootprints) showFootprints = false
+        else if (showRandomExplore) showRandomExplore = false
+        else if (showEmergency) showEmergency = false
         else if (facilityStationKey != null) facilityStationKey = null
         else if (showFutureRoadmap) { showFutureRoadmap = false; showSettings = true }
         else if (showRoutePlanner) {
@@ -355,6 +381,68 @@ fun MetroNearbyScreen(
             routeDestinationKey = null
         }
         else onDockNavigate(DockDestination.HOME)
+    }
+    val readyForFootprint = state as? ScreenState.Ready
+    val currentFootprintKey = readyForFootprint?.stationOnLines?.firstOrNull()?.let {
+        OfflineRoutePlanner.stationKey(it.line, readyForFootprint.stationName)
+    }
+    LaunchedEffect(readyForFootprint?.userLocation?.capturedAtMillis, currentFootprintKey, footprintsReady) {
+        val ready = readyForFootprint ?: return@LaunchedEffect
+        val location = ready.userLocation ?: return@LaunchedEffect
+        val key = currentFootprintKey ?: return@LaunchedEffect
+        if (!footprintsReady || footprintError || footprints.any { it.stationKey == key } ||
+            !StationFootprints.canAutoMark(location, ready.distanceMeters)) return@LaunchedEffect
+        val line = ready.stationOnLines.first().line
+        val newItem = StationFootprint(
+            stationKey = key,
+            stationName = ready.stationName,
+            cityName = line.cityName ?: line.cityId ?: "未设置城市",
+            firstVisitedAtMillis = location.capturedAtMillis,
+            source = StationFootprint.Source.NEARBY_LOCATION.name
+        )
+        val updated = StationFootprints.upsert(footprints, newItem)
+        footprintSaving = true
+        runCatching { withContext(Dispatchers.IO) { footprintStore.save(updated) } }
+            .onSuccess { footprints = updated }
+            .onFailure { footprintError = true }
+        footprintSaving = false
+    }
+    if (showFootprints) {
+        FootprintScreen(
+            footprints = footprints,
+            lines = loadedLines.map { it.line },
+            loadError = footprintError,
+            onRemove = { item ->
+                if (footprintsReady && !footprintError) {
+                    footprintScope.launch {
+                        val updated = StationFootprints.remove(footprints, item.stationKey)
+                        runCatching { withContext(Dispatchers.IO) { footprintStore.save(updated) } }
+                            .onSuccess { footprints = updated }
+                            .onFailure { footprintError = true }
+                    }
+                }
+            },
+            onRetry = { footprintRetry++ },
+            onBack = { showFootprints = false },
+            bottomBar = { MetroBottomDock(null, onDockNavigate) }
+        )
+        return
+    }
+    if (showRandomExplore) {
+        RandomExploreScreen(
+            lines = loadedLines.map { it.line },
+            footprints = footprints,
+            initialOriginKey = currentFootprintKey,
+            onPlan = { origin, destination ->
+                routeOriginKey = origin
+                routeDestinationKey = destination
+                showRandomExplore = false
+                showRoutePlanner = true
+            },
+            onBack = { showRandomExplore = false },
+            bottomBar = { MetroBottomDock(null, onDockNavigate) }
+        )
+        return
     }
     if (showEmergency) {
         EmergencyCardScreen(
@@ -431,6 +519,8 @@ fun MetroNearbyScreen(
             subscriptionCount = subscriptions.size,
             onManageSubscriptions = { showSettings = false; showSubscriptions = true },
             onOpenEmergency = { showEmergency = true },
+            onOpenFootprints = { showFootprints = true },
+            onOpenRandomExplore = { showRandomExplore = true },
             onOpenFutureRoadmap = { showSettings = false; showFutureRoadmap = true },
             themeMode = themeMode,
             onThemeModeChange = onThemeModeChange,
@@ -591,6 +681,8 @@ fun MetroNearbyScreen(
                                 lineColors = loadedLines.associate { it.line.lineId to it.line.color },
                                 ready = current,
                                 subscriptionLabel = subscriptionLabel,
+                                footprint = currentFootprintKey?.let { key -> footprints.firstOrNull { it.stationKey == key } },
+                                footprintEnabled = footprintsReady && !footprintSaving && !footprintError,
                                 onSubscribe = subscribe,
                                 onRelocate = relocate,
                                 onStationSelect = { nearby ->
@@ -607,6 +699,27 @@ fun MetroNearbyScreen(
                                     showRoutePlanner = true
                                 },
                                 onEmergency = { showEmergency = true },
+                                onFootprints = { showFootprints = true },
+                                onRandomExplore = { showRandomExplore = true },
+                                onToggleFootprint = {
+                                    val key = currentFootprintKey
+                                    val line = current.stationOnLines.firstOrNull()?.line
+                                    if (key != null && line != null) {
+                                        footprintSaving = true
+                                        footprintScope.launch {
+                                            val updated = StationFootprints.upsert(footprints, StationFootprint(
+                                                stationKey = key,
+                                                stationName = current.stationName,
+                                                cityName = line.cityName ?: line.cityId ?: "未设置城市",
+                                                firstVisitedAtMillis = System.currentTimeMillis()
+                                            ))
+                                            runCatching { withContext(Dispatchers.IO) { footprintStore.save(updated) } }
+                                                .onSuccess { footprints = updated }
+                                                .onFailure { footprintError = true }
+                                            footprintSaving = false
+                                        }
+                                    }
+                                },
                                 onStationDetails = {
                                     current.stationOnLines.firstOrNull()?.let {
                                         facilityStationKey = com.metronearby.domain.OfflineRoutePlanner.stationKey(
@@ -790,11 +903,16 @@ private fun StationOverviewBoard(
     lineColors: Map<String, String?>,
     ready: ScreenState.Ready,
     subscriptionLabel: String,
+    footprint: StationFootprint?,
+    footprintEnabled: Boolean,
     onSubscribe: () -> Unit,
     onRelocate: () -> Unit,
     onStationSelect: (NearbyStationSummary) -> Unit,
     onPlanRoute: () -> Unit,
     onEmergency: () -> Unit,
+    onFootprints: () -> Unit,
+    onRandomExplore: () -> Unit,
+    onToggleFootprint: () -> Unit,
     onStationDetails: () -> Unit
 ) {
     var nowEpochMillis by remember { mutableStateOf(System.currentTimeMillis()) }
@@ -822,6 +940,21 @@ private fun StationOverviewBoard(
                 TextButton(onClick = onSubscribe) { Text(subscriptionLabel) }
             }
             OutlinedStationDetailsButton(onStationDetails)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                androidx.compose.material3.OutlinedButton(
+                    enabled = footprintEnabled,
+                    onClick = if (footprint == null) onToggleFootprint else onFootprints,
+                    modifier = Modifier.weight(1f)
+                ) { Text(if (footprint == null) "点亮本站" else "本站已点亮 · 查看") }
+                androidx.compose.material3.OutlinedButton(
+                    onClick = onFootprints,
+                    modifier = Modifier.weight(1f)
+                ) { Text("我的足迹") }
+            }
+            androidx.compose.material3.OutlinedButton(
+                onClick = onRandomExplore,
+                modifier = Modifier.fillMaxWidth()
+            ) { Text("随机探索 · 推荐未到访车站") }
             androidx.compose.material3.OutlinedButton(onClick = onEmergency, modifier = Modifier.fillMaxWidth()) {
                 Text("离线应急卡 · 位置与联系信息")
             }
