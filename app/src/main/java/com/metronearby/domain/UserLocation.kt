@@ -4,6 +4,7 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 /** Android 定位结果在业务层的只读快照。 */
+@kotlinx.serialization.Serializable
 data class UserLocation(
     val lat: Double,
     val lng: Double,

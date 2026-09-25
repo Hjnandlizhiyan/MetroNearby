@@ -91,6 +91,7 @@ fun SettingsScreen(
     subscriptionCount: Int = 0,
     onManageSubscriptions: () -> Unit = {},
     onOpenFutureRoadmap: () -> Unit = {},
+    onOpenEmergency: () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     onBack: () -> Unit
 ) {
@@ -171,6 +172,10 @@ fun SettingsScreen(
             }
             Spacer(Modifier.height(16.dp))
 
+            SettingsSection(title = "离线应急卡") {
+                TextButton(onClick = onOpenEmergency) { Text("查看位置、路线与紧急联系信息") }
+            }
+            Spacer(Modifier.height(16.dp))
             SettingsSection(title = "常用站与通勤方向") {
                 TextButton(onClick = onManageSubscriptions) { Text("管理收藏站点（$subscriptionCount）") }
             }
@@ -278,6 +283,7 @@ private fun UserGuideDialog(onDismiss: () -> Unit) {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 GuideStep("1", "定位与附近站", "允许定位后，首页会列出最近车站和多个附近备选站；距离是站点中心之间的直线距离。")
                 GuideStep("2", "规划离线路线", "从底部“路线”选择起终点，可按少换乘或少经过站规划乘车线路、站数与换乘站。")
+                GuideStep("应急", "离线应急卡", "首页或设置打开应急卡，查看最近定位、附近站和最近路线，填写联系人与备注。旧记录不代表当前位置；号码只打开拨号界面，由你确认拨打。")
                 GuideStep("搜索", "更方便地找站", "首页、路线和收藏目的地可输入中文、拼音全拼、首字母或已收录别名。没找到时可能显示错字建议，请核对城市和线路再选择。")
                 GuideStep("3", "保存常用站", "在底部“收藏”编辑常用站，保存通勤方向、家或公司标签、常走出口和备注。选择常用目的地后，可从收藏卡一键规划路线；内容仅存本机。")
                 GuideStep("4", "查看线网与线路", "线网图支持缩放移动；选择线路和搜索站点均可离线使用。")

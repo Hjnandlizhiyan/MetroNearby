@@ -108,6 +108,8 @@ import com.metronearby.location.NearestStationFinder
 import java.io.File
 import java.util.Calendar
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * 「当前站在某条线路上对应的那条记录」。
@@ -154,6 +156,8 @@ fun MetroNearbyScreen(
     onThemeModeChange: (ThemeMode) -> Unit = {}
 ) {
     val context = LocalContext.current
+    val emergencyStore = remember(context) { com.metronearby.data.source.EmergencyStore(context) }
+    var emergencyLocationSaveFailed by remember { mutableStateOf(false) }
     var showSubscriptions by rememberSaveable { mutableStateOf(false) }
     var editingSubscription by remember { mutableStateOf<StationSubscription?>(null) }
     val locationProvider = remember(context) { AndroidLocationProvider(context.applicationContext) }
@@ -275,6 +279,7 @@ fun MetroNearbyScreen(
             if (coordinates == null) {
                 ScreenState.Failed("没能获取到当前位置，请确认已开启定位服务")
             } else {
+                emergencyLocationSaveFailed = withContext(Dispatchers.IO) { runCatching { emergencyStore.saveLocation(coordinates) }.isFailure }
                 // 最近站在「所有已收录线路的全部站点」里找；换乘站取几何上最近的那个落点即可
                 val allStations = lines.flatMap { it.line.stations }
                 val nearby = NearbyStationCatalog.find(
@@ -317,6 +322,7 @@ fun MetroNearbyScreen(
     // 用 rememberSaveable：系统深浅切换等配置变更会重建 Activity，
     // 普通 remember 会把用户直接弹出设置界面
     var showSettings by rememberSaveable { mutableStateOf(false) }
+    var showEmergency by rememberSaveable { mutableStateOf(false) }
     var showNetworkMap by rememberSaveable { mutableStateOf(false) }
     var showRoutePlanner by rememberSaveable { mutableStateOf(false) }
     var showRadar by rememberSaveable { mutableStateOf(false) }
@@ -328,6 +334,7 @@ fun MetroNearbyScreen(
         editingSubscription = null
         facilityStationKey = null
         showSettings = false
+        showEmergency = false
         showFutureRoadmap = false
         showSubscriptions = destination == DockDestination.SUBSCRIPTIONS
         showNetworkMap = destination == DockDestination.NETWORK_MAP
@@ -337,9 +344,10 @@ fun MetroNearbyScreen(
         routeDestinationKey = null
         focusManager.clearFocus()
     }
-    BackHandler(enabled = facilityStationKey != null || showSettings || showFutureRoadmap || showNetworkMap ||
+    BackHandler(enabled = showEmergency || facilityStationKey != null || showSettings || showFutureRoadmap || showNetworkMap ||
         showRoutePlanner || showRadar || showSubscriptions) {
-        if (facilityStationKey != null) facilityStationKey = null
+        if (showEmergency) showEmergency = false
+        else if (facilityStationKey != null) facilityStationKey = null
         else if (showFutureRoadmap) { showFutureRoadmap = false; showSettings = true }
         else if (showRoutePlanner) {
             showRoutePlanner = false
@@ -347,6 +355,23 @@ fun MetroNearbyScreen(
             routeDestinationKey = null
         }
         else onDockNavigate(DockDestination.HOME)
+    }
+    if (showEmergency) {
+        EmergencyCardScreen(
+            captureError = emergencyLocationSaveFailed,
+            locationRevision = (state as? ScreenState.Ready)?.userLocation?.capturedAtMillis ?: 0,
+            lines = loadedLines.map { it.line },
+            onBack = { showEmergency = false },
+            onLocateHome = {
+                onDockNavigate(DockDestination.HOME)
+                pickedStationName = null; pickedStationKey = null
+                query = ""
+                granted = locationProvider.hasPermission()
+                retryKey++
+            },
+            bottomBar = { MetroBottomDock(null, onDockNavigate) }
+        )
+        return
     }
     facilityStationKey?.let { key ->
         StationDetailsScreen(
@@ -405,6 +430,7 @@ fun MetroNearbyScreen(
         SettingsScreen(
             subscriptionCount = subscriptions.size,
             onManageSubscriptions = { showSettings = false; showSubscriptions = true },
+            onOpenEmergency = { showEmergency = true },
             onOpenFutureRoadmap = { showSettings = false; showFutureRoadmap = true },
             themeMode = themeMode,
             onThemeModeChange = onThemeModeChange,
@@ -580,6 +606,7 @@ fun MetroNearbyScreen(
                                     }
                                     showRoutePlanner = true
                                 },
+                                onEmergency = { showEmergency = true },
                                 onStationDetails = {
                                     current.stationOnLines.firstOrNull()?.let {
                                         facilityStationKey = com.metronearby.domain.OfflineRoutePlanner.stationKey(
@@ -767,6 +794,7 @@ private fun StationOverviewBoard(
     onRelocate: () -> Unit,
     onStationSelect: (NearbyStationSummary) -> Unit,
     onPlanRoute: () -> Unit,
+    onEmergency: () -> Unit,
     onStationDetails: () -> Unit
 ) {
     var nowEpochMillis by remember { mutableStateOf(System.currentTimeMillis()) }
@@ -794,6 +822,9 @@ private fun StationOverviewBoard(
                 TextButton(onClick = onSubscribe) { Text(subscriptionLabel) }
             }
             OutlinedStationDetailsButton(onStationDetails)
+            androidx.compose.material3.OutlinedButton(onClick = onEmergency, modifier = Modifier.fillMaxWidth()) {
+                Text("离线应急卡 · 位置与联系信息")
+            }
         }
         if (ready.nearbyStations.isNotEmpty() && !ready.isManuallySelected) {
             item {

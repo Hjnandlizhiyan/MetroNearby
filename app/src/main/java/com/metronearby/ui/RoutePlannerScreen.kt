@@ -69,6 +69,15 @@ fun RoutePlannerScreen(
         }
     }
 
+    var emergencySaveError by remember { mutableStateOf(false) }
+    val emergencyStore = remember(context) { com.metronearby.data.source.EmergencyStore(context) }
+    LaunchedEffect(result) {
+        val found = result as? OfflineRoutePlanner.PlanResult.Found ?: return@LaunchedEffect
+        emergencySaveError = withContext(Dispatchers.IO) {
+            runCatching { emergencyStore.saveRoute(EmergencyCardPolicy.snapshot(found.route, System.currentTimeMillis())) }.isFailure
+        }
+    }
+
     if (pickingOrigin || pickingDestination) StationPickerDialog(
         title = if (pickingOrigin) "选择起点" else "选择终点",
         choices = choices,
@@ -150,6 +159,7 @@ fun RoutePlannerScreen(
                         }
                     }
                 }
+                if (emergencySaveError) item { Text("最近路线未能保存到应急卡，请重新规划后重试。") }
                 item { Text("乘车方向助手", style = MaterialTheme.typography.titleMedium) }
                 items(TravelGuide.steps(route)) { step ->
                     Card(Modifier.fillMaxWidth()) {

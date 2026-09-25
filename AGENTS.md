@@ -93,7 +93,7 @@ Get-ChildItem $dir -Filter *.xml | ForEach-Object {
 }
 ```
 
-**测试基线：510 个用例全绿（0 failures / 0 errors，2026-09-25 站名与线路工具后）。** 任何改动后该数字只能升、不能有红。
+**测试基线：536 个用例全绿（0 failures / 0 errors，2026-09-25 离线应急卡后）。** 任何改动后该数字只能升、不能有红。
 
 用户观测支持秒级现场记录、明确班次、历史加权学习与两小时衰减锚点融合，并用到站前冻结的预测评估误差；仅有旧版数据时兼容原分时段平均。规则和验证条件见 `docs/user-calibration.md`、`domain/CalibrationLearning.kt`。用户可选择“系统预计”或“用户校准”，后者无适用样本时明确回退到系统预计。不能用拟合误差宣称真实准确率。
 
@@ -254,7 +254,7 @@ App 内调试选站入口已按产品要求移除。界面验证优先使用主�
 
 ## 10. 交付前检查清单
 
-- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 510
+- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 536
 - [ ] `:app:compileDebugKotlin` / `:app:assembleDebug` 通过
 - [ ] 新增的可测逻辑在 `domain/` 且有对应单测
 - [ ] 未新增第三方依赖（或已向用户说明必要性）
@@ -263,3 +263,5 @@ App 内调试选站入口已按产品要求移除。界面验证优先使用主�
 - [ ] 模拟器上实测过改动路径，测试数据（`files/user_overrides.json`、IME）已复原
 
 站名与线路工具见 docs/station-search-tools.md；StationLookup 供首页、路线和收藏目的地共用，StationPinyin 为内置站点生成索引。
+
+离线应急卡见 docs/emergency-card.md。独立 emergency_card 偏好仅存一份位置/路线和个人联系信息，排除系统备份；手动选站不得写入定位快照，电话只用 ACTION_DIAL。
