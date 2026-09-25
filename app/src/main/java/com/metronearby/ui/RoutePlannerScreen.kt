@@ -158,7 +158,14 @@ fun RoutePlannerScreen(
                             Text(step.lineName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                             Text("从 ${step.board} 上车")
                             Text(step.directionText, style = MaterialTheme.typography.titleLarge)
-                            Text("乘坐 ${step.stopCount} 站 · ${step.finishText}")
+                            Text("乘坐 ${step.stopCount} 站")
+                            if (step.transferTo != null) {
+                                Surface(color = MaterialTheme.colorScheme.tertiaryContainer,
+                                    shape = MaterialTheme.shapes.medium) {
+                                    Text("换乘提醒 · ${step.finishText}", Modifier.fillMaxWidth().padding(12.dp),
+                                        fontWeight = FontWeight.Bold)
+                                }
+                            } else Text(step.finishText)
                             var expanded by remember { mutableStateOf(false) }
                             TextButton(onClick = { expanded = !expanded }) {
                                 Text(if (expanded) "收起沿途站" else "查看沿途站")
@@ -292,15 +299,8 @@ internal fun StationPickerDialog(
     onDismiss: () -> Unit
 ) {
     var query by remember { mutableStateOf("") }
-    val filtered = remember(choices, query, excludedKey) {
-        val keyword = TransferText.normalize(query)
-        choices.filter { choice ->
-            choice.key != excludedKey &&
-                (keyword.isEmpty() ||
-                    TransferText.normalize(choice.stationName).contains(keyword) ||
-                    choice.lineNames.any { TransferText.normalize(it).contains(keyword) })
-        }.take(80)
-    }
+    val searchIndex = remember(choices, excludedKey) { StationLookup.Index(choices.filter { it.key != excludedKey }) }
+    val filtered = remember(searchIndex, query) { searchIndex.search(query, showAllWhenBlank = true) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
@@ -311,11 +311,15 @@ internal fun StationPickerDialog(
                     onValueChange = { query = it },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    label = { Text("搜索站名或线路") }
+                    label = { Text("站名、拼音、首字母或线路") }
                 )
                 Spacer(Modifier.height(8.dp))
                 LazyColumn(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
-                    items(filtered, key = { it.key }) { choice ->
+                    if (filtered.isEmpty()) item { Text("没有找到匹配车站，请换个关键词") }
+                    items(filtered, key = { it.station.key }) { hit ->
+                        val choice = hit.station
+                        Column {
+                        LineColorStrip(choice.lineColors)
                         Row(
                             modifier = Modifier.fillMaxWidth()
                                 .clickable { onSelect(choice) }
@@ -323,6 +327,7 @@ internal fun StationPickerDialog(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(Modifier.weight(1f)) {
+                                if (hit.suggestion) Text("可能想找 · 请确认", color = MaterialTheme.colorScheme.primary)
                                 Text(choice.stationName, fontWeight = FontWeight.SemiBold)
                                 Text(
                                     "${choice.cityName} · ${choice.lineNames.joinToString(" / ")}",
@@ -331,14 +336,11 @@ internal fun StationPickerDialog(
                                 )
                             }
                         }
+                        }
                     }
                 }
             }
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text("关闭") } }
     )
-}
-
-private object TransferText {
-    fun normalize(value: String): String = value.trim().lowercase().replace(" ", "")
 }

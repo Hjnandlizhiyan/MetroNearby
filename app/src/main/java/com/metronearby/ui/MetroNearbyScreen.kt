@@ -90,7 +90,8 @@ import com.metronearby.domain.LineVisuals
 import com.metronearby.domain.ObservationTimeBand
 import com.metronearby.domain.NetworkMapCatalog
 import com.metronearby.domain.ServiceTypeResolver
-import com.metronearby.domain.StationSearch
+import com.metronearby.domain.StationLookup
+import com.metronearby.domain.OfflineRoutePlanner
 import com.metronearby.domain.StationServiceWindow
 import com.metronearby.domain.ThemeMode
 import com.metronearby.domain.TimeUtils
@@ -224,6 +225,7 @@ fun MetroNearbyScreen(
     var retryKey by remember { mutableStateOf(0) }
     // 用户选定的站。跨线路的身份用「站名」而不是站点 id——id 只在线路内唯一
     var pickedStationName by remember { mutableStateOf<String?>(null) }
+    var pickedStationKey by remember { mutableStateOf<String?>(null) }
     var query by remember { mutableStateOf("") }
     var state by remember { mutableStateOf<ScreenState>(ScreenState.Loading) }
 
@@ -243,7 +245,7 @@ fun MetroNearbyScreen(
         if (!showSubscriptions && !granted && pickedStationName == null) launcher.launch(permissions)
     }
 
-    LaunchedEffect(loadedLines, dataError, granted, retryKey, pickedStationName) {
+    LaunchedEffect(loadedLines, dataError, granted, retryKey, pickedStationName, pickedStationKey) {
         val lines = loadedLines
         val error = dataError
         if (error != null) {
@@ -258,7 +260,7 @@ fun MetroNearbyScreen(
         // 用户从搜索里显式选站：无需定位权限，直接用站名把各条线路的落点找出来
         val picked = pickedStationName
         if (picked != null) {
-            state = buildReady(lines, picked, distanceMeters = 0.0, isManuallySelected = true)
+            state = buildReady(lines, picked, distanceMeters = 0.0, isManuallySelected = true, stationKey = pickedStationKey)
             return@LaunchedEffect
         }
 
@@ -294,7 +296,10 @@ fun MetroNearbyScreen(
                         distanceMeters = nearest.distanceMeters,
                         userLocation = coordinates,
                         nearbyStations = nearby,
-                        isManuallySelected = false
+                        isManuallySelected = false,
+                        stationKey = lines.firstOrNull { row -> row.line.stations.any { it === nearest.station } }?.let {
+                            OfflineRoutePlanner.stationKey(it.line, nearest.station.name)
+                        }
                     )
                 }
             }
@@ -304,10 +309,11 @@ fun MetroNearbyScreen(
     }
 
     val focusManager = LocalFocusManager.current
-    // 搜索范围是全部已收录线路；同名换乘站只留一条，避免「复兴门」重复出现
-    val searchResults = remember(loadedLines, query) {
-        StationSearch.matchDistinctByName(loadedLines.flatMap { it.line.stations }, query)
+    // 搜索按城市和站名合并换乘线路，跨城市同名站分别展示。
+    val searchIndex = remember(loadedLines) {
+        StationLookup.Index(OfflineRoutePlanner.stationChoices(loadedLines.map { it.line }))
     }
+    val searchResults = remember(searchIndex, query) { searchIndex.search(query) }
     // 用 rememberSaveable：系统深浅切换等配置变更会重建 Activity，
     // 普通 remember 会把用户直接弹出设置界面
     var showSettings by rememberSaveable { mutableStateOf(false) }
@@ -368,7 +374,9 @@ fun MetroNearbyScreen(
         RoutePlannerScreen(
             lines = loadedLines.map { it.line },
             initialOriginName = (state as? ScreenState.Ready)?.stationName,
-            initialOriginKey = routeOriginKey,
+            initialOriginKey = routeOriginKey ?: (state as? ScreenState.Ready)?.let { ready ->
+                ready.stationOnLines.firstOrNull()?.let { OfflineRoutePlanner.stationKey(it.line, ready.stationName) }
+            },
             initialDestinationKey = routeDestinationKey,
             journeys = journeys,
             onJourneysChange = onJourneysChange,
@@ -406,7 +414,7 @@ fun MetroNearbyScreen(
             onAddCustomLine = { line ->
                 onCustomLinesChange(customLines + line)
                 onLineChange("custom:${line.lineId}")
-                pickedStationName = null
+                pickedStationName = null; pickedStationKey = null
                 query = ""
             },
             onRemoveCustomLine = { lineId ->
@@ -440,7 +448,7 @@ fun MetroNearbyScreen(
                     actions = {
                         if (!showSubscriptions && pickedStationName != null) {
                             TextButton(onClick = {
-                                pickedStationName = null
+                                pickedStationName = null; pickedStationKey = null
                                 query = ""
                                 granted = locationProvider.hasPermission()
                                 retryKey += 1
@@ -462,7 +470,7 @@ fun MetroNearbyScreen(
                     onQueryChange = { query = it },
                     onClear = {
                         query = ""
-                        pickedStationName = null
+                        pickedStationName = null; pickedStationKey = null
                         focusManager.clearFocus()
                     }
                 )
@@ -491,14 +499,21 @@ fun MetroNearbyScreen(
                         showRoutePlanner = true
                     },
                     onAdd = { showSubscriptions = false; query = "" },
-                    onOpen = { pickedStationName = it; query = ""; showSubscriptions = false },
+                    onOpen = { name ->
+                        pickedStationName = name
+                        pickedStationKey = com.metronearby.domain.StationSubscriptions.find(subscriptions, name)?.let {
+                            com.metronearby.domain.SubscriptionPreferences.originKey(it, loadedLines.map { row -> row.line })
+                        }
+                        query = ""; showSubscriptions = false
+                    },
                     onEdit = { editingSubscription = it },
                     onRemove = { onSubscriptionsChange(StationSubscriptions.remove(subscriptions, it.stationName)) })
                 // 搜索态优先于定位结果：有输入就直接给候选，避免用户以为要等定位
                 searchResults.isNotEmpty() -> StationSearchResults(
                     stations = searchResults,
                     onSelect = { station ->
-                        pickedStationName = station.name
+                        pickedStationName = station.stationName
+                        pickedStationKey = station.key
                         query = ""
                         focusManager.clearFocus()
                     }
@@ -538,7 +553,7 @@ fun MetroNearbyScreen(
                                 "编辑收藏"
                             }
                         val relocate = {
-                            pickedStationName = null
+                            pickedStationName = null; pickedStationKey = null
                             granted = locationProvider.hasPermission()
                             retryKey += 1
                         }
@@ -552,11 +567,19 @@ fun MetroNearbyScreen(
                                 subscriptionLabel = subscriptionLabel,
                                 onSubscribe = subscribe,
                                 onRelocate = relocate,
-                                onStationSelect = { stationName ->
-                                    pickedStationName = stationName
+                                onStationSelect = { nearby ->
+                                    pickedStationName = nearby.stationName
+                                    pickedStationKey = loadedLines.firstOrNull { it.line.lineId in nearby.lineIds }?.let {
+                                        OfflineRoutePlanner.stationKey(it.line, nearby.stationName)
+                                    }
                                     query = ""
                                 },
-                                onPlanRoute = { showRoutePlanner = true },
+                                onPlanRoute = {
+                                    routeOriginKey = current.stationOnLines.firstOrNull()?.let {
+                                        OfflineRoutePlanner.stationKey(it.line, current.stationName)
+                                    }
+                                    showRoutePlanner = true
+                                },
                                 onStationDetails = {
                                     current.stationOnLines.firstOrNull()?.let {
                                         facilityStationKey = com.metronearby.domain.OfflineRoutePlanner.stationKey(
@@ -583,11 +606,13 @@ private fun buildReady(
     distanceMeters: Double,
     userLocation: UserLocation? = null,
     nearbyStations: List<NearbyStationSummary> = emptyList(),
-    isManuallySelected: Boolean
+    isManuallySelected: Boolean,
+    stationKey: String? = null
 ): ScreenState {
     val overridesByLineId = lines.associate { it.line.lineId to it.overrides }
     val stationOnLines = TransferStationResolver
         .match(lines.map { it.line }, stationName)
+        .filter { stationKey == null || OfflineRoutePlanner.stationKey(it.line, stationName) == stationKey }
         .map { matched ->
             StationOnLine(
                 line = matched.line,
@@ -740,7 +765,7 @@ private fun StationOverviewBoard(
     subscriptionLabel: String,
     onSubscribe: () -> Unit,
     onRelocate: () -> Unit,
-    onStationSelect: (String) -> Unit,
+    onStationSelect: (NearbyStationSummary) -> Unit,
     onPlanRoute: () -> Unit,
     onStationDetails: () -> Unit
 ) {
@@ -781,7 +806,7 @@ private fun StationOverviewBoard(
             }
             items(ready.nearbyStations, key = { it.cityName + ":" + it.stationName }) { nearby ->
                 Card(
-                    modifier = Modifier.fillMaxWidth().clickable { onStationSelect(nearby.stationName) },
+                    modifier = Modifier.fillMaxWidth().clickable { onStationSelect(nearby) },
                     colors = CardDefaults.cardColors(
                         containerColor = if (nearby.stationName == ready.stationName) {
                             MaterialTheme.colorScheme.primaryContainer
@@ -957,7 +982,7 @@ private fun StationSearchField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp),
-        placeholder = { Text("搜索地铁站") },
+        placeholder = { Text("站名 / 拼音 / 首字母 / 线路") },
         trailingIcon = {
             if (showClear) {
                 IconButton(onClick = onClear) {
@@ -972,8 +997,8 @@ private fun StationSearchField(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun StationSearchResults(
-    stations: List<Station>,
-    onSelect: (Station) -> Unit
+    stations: List<StationLookup.Hit>,
+    onSelect: (OfflineRoutePlanner.StationChoice) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -987,18 +1012,23 @@ private fun StationSearchResults(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        items(stations, key = { it.id }) { station ->
+        items(stations, key = { it.station.key }) { hit ->
+            val station = hit.station
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { onSelect(station) },
                 elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
             ) {
+                LineColorStrip(station.lineColors)
                 Column(modifier = Modifier.padding(16.dp)) {
+                    if (hit.suggestion) Text("可能想找 · 请确认", color = MaterialTheme.colorScheme.primary)
                     Text(
-                        text = station.name,
+                        text = station.stationName,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
+                    Text("${station.cityName} · ${station.lineNames.joinToString(" / ")}",
+                        style = MaterialTheme.typography.bodySmall)
                     if (station.aliases.isNotEmpty()) {
                         Spacer(Modifier.height(4.dp))
                         Text(

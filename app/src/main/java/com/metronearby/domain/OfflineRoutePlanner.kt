@@ -14,7 +14,9 @@ object OfflineRoutePlanner {
         val key: String,
         val cityName: String,
         val stationName: String,
-        val lineNames: List<String>
+        val lineNames: List<String>,
+        val aliases: List<String> = emptyList(),
+        val lineColors: List<String?> = emptyList()
     )
 
     data class RouteLeg(
@@ -65,11 +67,15 @@ object OfflineRoutePlanner {
     fun stationChoices(lines: List<MetroLine>): List<StationChoice> {
         val lineNamesByStation = linkedMapOf<String, MutableSet<String>>()
         val names = linkedMapOf<String, Pair<String, String>>()
+        val aliases = linkedMapOf<String, MutableSet<String>>()
+        val colors = linkedMapOf<String, MutableSet<String?>>()
         lines.forEach { line ->
             line.stations.forEach { station ->
                 val key = stationKey(line, station.name)
                 names.putIfAbsent(key, cityName(line) to station.name)
                 lineNamesByStation.getOrPut(key) { linkedSetOf() }.add(line.lineName)
+                aliases.getOrPut(key) { linkedSetOf() }.addAll(station.aliases)
+                colors.getOrPut(key) { linkedSetOf() }.add(line.color)
             }
         }
         return names.map { (key, cityAndStation) ->
@@ -77,7 +83,9 @@ object OfflineRoutePlanner {
                 key = key,
                 cityName = cityAndStation.first,
                 stationName = cityAndStation.second,
-                lineNames = lineNamesByStation[key].orEmpty().toList()
+                lineNames = lineNamesByStation[key].orEmpty().toList(),
+                aliases = aliases[key].orEmpty().toList(),
+                lineColors = colors[key].orEmpty().toList()
             )
         }.sortedWith(compareBy<StationChoice> { it.cityName }.thenBy { it.stationName })
     }
