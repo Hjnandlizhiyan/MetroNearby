@@ -7,5 +7,9 @@ import kotlinx.serialization.Serializable
 data class StationSubscription(
     val stationName: String,
     val lineId: String? = null,
-    val directionId: String? = null
+    val directionId: String? = null,
+    val tag: String = "",
+    val destinationKey: String? = null,
+    val preferredExit: String = "",
+    val note: String = ""
 )

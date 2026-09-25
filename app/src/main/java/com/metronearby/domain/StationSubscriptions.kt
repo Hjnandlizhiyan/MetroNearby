@@ -14,7 +14,8 @@ object StationSubscriptions {
 
     fun upsert(items: List<StationSubscription>, item: StationSubscription): List<StationSubscription> {
         if (TransferStationResolver.normalize(item.stationName).isEmpty()) return items
-        val cleaned = item.copy(stationName = item.stationName.trim(), directionId = item.directionId.takeIf { item.lineId != null })
+        val cleaned = item.copy(stationName = item.stationName.trim(), directionId = item.directionId.takeIf { item.lineId != null },
+            tag = item.tag.trim(), preferredExit = item.preferredExit.trim(), note = item.note.trim())
         val index = items.indexOf(find(items, item.stationName))
         return if (index < 0) items + cleaned else items.toMutableList().apply { set(index, cleaned) }
     }

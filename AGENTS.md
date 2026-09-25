@@ -93,11 +93,11 @@ Get-ChildItem $dir -Filter *.xml | ForEach-Object {
 }
 ```
 
-**测试基线：462 个用例全绿（0 failures / 0 errors，2026-09-25 出入口与设施基础版后）。** 任何改动后该数字只能升、不能有红。
+**测试基线：480 个用例全绿（0 failures / 0 errors，2026-09-25 常用站收藏升级后）。** 任何改动后该数字只能升、不能有红。
 
 用户观测支持秒级现场记录、明确班次、历史加权学习与两小时衰减锚点融合，并用到站前冻结的预测评估误差；仅有旧版数据时兼容原分时段平均。规则和验证条件见 `docs/user-calibration.md`、`domain/CalibrationLearning.kt`。用户可选择“系统预计”或“用户校准”，后者无适用样本时明确回退到系统预计。不能用拟合误差宣称真实准确率。
 
-常用站、通勤方向与订阅的确定口径、入口和持久化说明见 `docs/station-subscriptions.md`。订阅即关注，不含后台提醒；每站一组线路/方向偏好，主页集中查看，保持离线。
+收藏新增标签、常用目的地、出口和备注，校验见 domain/SubscriptionPreferences.kt；旧JSON字段默认值兼容。常用站、通勤方向与订阅的确定口径、入口和持久化说明见 `docs/station-subscriptions.md`。订阅即关注，不含后台提醒；每站一组线路/方向偏好，主页集中查看，保持离线。
 
 连续到站间隔学习见 `docs/headway-learning.md`、`domain/HeadwayLearning.kt`。必须确认无漏车，至少三个现场到站点；学习组按线路保存到 `headwaySessions`，不能从零散观测猜测相邻班次。下一班预测提前冻结后才能算验证误差。
 
@@ -254,7 +254,7 @@ App 内调试选站入口已按产品要求移除。界面验证优先使用主�
 
 ## 10. 交付前检查清单
 
-- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 462
+- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 480
 - [ ] `:app:compileDebugKotlin` / `:app:assembleDebug` 通过
 - [ ] 新增的可测逻辑在 `domain/` 且有对应单测
 - [ ] 未新增第三方依赖（或已向用户说明必要性）

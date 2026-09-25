@@ -317,6 +317,7 @@ fun MetroNearbyScreen(
     var showFutureRoadmap by rememberSaveable { mutableStateOf(false) }
     var facilityStationKey by rememberSaveable { mutableStateOf<String?>(null) }
     var routeOriginKey by rememberSaveable { mutableStateOf<String?>(null) }
+    var routeDestinationKey by rememberSaveable { mutableStateOf<String?>(null) }
     val onDockNavigate: (DockDestination) -> Unit = { destination ->
         editingSubscription = null
         facilityStationKey = null
@@ -327,12 +328,18 @@ fun MetroNearbyScreen(
         showRadar = destination == DockDestination.RADAR
         showRoutePlanner = destination == DockDestination.ROUTE
         routeOriginKey = null
+        routeDestinationKey = null
         focusManager.clearFocus()
     }
     BackHandler(enabled = facilityStationKey != null || showSettings || showFutureRoadmap || showNetworkMap ||
         showRoutePlanner || showRadar || showSubscriptions) {
         if (facilityStationKey != null) facilityStationKey = null
         else if (showFutureRoadmap) { showFutureRoadmap = false; showSettings = true }
+        else if (showRoutePlanner) {
+            showRoutePlanner = false
+            routeOriginKey = null
+            routeDestinationKey = null
+        }
         else onDockNavigate(DockDestination.HOME)
     }
     facilityStationKey?.let { key ->
@@ -362,9 +369,10 @@ fun MetroNearbyScreen(
             lines = loadedLines.map { it.line },
             initialOriginName = (state as? ScreenState.Ready)?.stationName,
             initialOriginKey = routeOriginKey,
+            initialDestinationKey = routeDestinationKey,
             journeys = journeys,
             onJourneysChange = onJourneysChange,
-            onBack = { showRoutePlanner = false; routeOriginKey = null },
+            onBack = { showRoutePlanner = false; routeOriginKey = null; routeDestinationKey = null },
             bottomBar = { MetroBottomDock(DockDestination.ROUTE, onDockNavigate) }
         )
         return
@@ -477,6 +485,11 @@ fun MetroNearbyScreen(
                 showSubscriptions && loadedLines.isEmpty() -> LoadingView()
                 showSubscriptions -> SubscriptionBoard(subscriptions, loadedLines,
                     onDetails = { facilityStationKey = it },
+                    onPlan = { origin, destination ->
+                        routeOriginKey = origin
+                        routeDestinationKey = destination
+                        showRoutePlanner = true
+                    },
                     onAdd = { showSubscriptions = false; query = "" },
                     onOpen = { pickedStationName = it; query = ""; showSubscriptions = false },
                     onEdit = { editingSubscription = it },

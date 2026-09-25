@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +30,7 @@ fun SubscriptionBoard(
     subscriptions: List<StationSubscription>, lines: List<MetroRepository.ResolvedLine>,
     onAdd: () -> Unit, onOpen: (String) -> Unit,
     onDetails: (String) -> Unit,
+    onPlan: (String, String) -> Unit,
     onEdit: (StationSubscription) -> Unit, onRemove: (StationSubscription) -> Unit
 ) {
     val models = remember(lines) { lines.map { it.line } }
@@ -56,7 +58,28 @@ fun SubscriptionBoard(
                         Spacer(Modifier.width(10.dp))
                         Text(subscription.stationName, style = MaterialTheme.typography.titleLarge)
                     }
+                    if (subscription.tag.isNotBlank()) {
+                        Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(8.dp)) {
+                            Text(subscription.tag, Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                                style = MaterialTheme.typography.labelMedium)
+                        }
+                    }
                     Text(StationSubscriptions.description(subscription, models))
+                    if (subscription.preferredExit.isNotBlank()) Text("常走出口 · ${subscription.preferredExit}")
+                    if (subscription.note.isNotBlank()) Text(subscription.note,
+                        style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (subscription.destinationKey != null) {
+                        val origin = SubscriptionPreferences.originKey(subscription, models)
+                        val destination = SubscriptionPreferences.destinations(subscription, models)
+                            .firstOrNull { it.key == subscription.destinationKey }
+                        if (origin != null && destination != null) {
+                            FilledTonalButton(onClick = { onPlan(origin, destination.key) }) {
+                                Text("去常用目的地 · ${destination.stationName}")
+                            }
+                            Text("从本站出发 · 路线按少换乘规划，可在路线页调整",
+                                style = MaterialTheme.typography.bodySmall)
+                        } else Text("常用目的地已失效，请编辑收藏", color = MaterialTheme.colorScheme.error)
+                    }
                     selected?.let { line ->
                         TextButton(onClick = { onDetails(OfflineRoutePlanner.stationKey(line, subscription.stationName)) }) {
                             Text("出入口与设施")
@@ -105,16 +128,35 @@ fun SubscriptionDialog(
 ) {
     val models = remember(lines) { lines.map { it.line } }
     val choices = remember(models, initial.stationName) { StationSubscriptions.choices(models, initial.stationName) }
-    var lineId by remember(initial) { mutableStateOf(initial.lineId) }
-    var directionId by remember(initial) { mutableStateOf(initial.directionId) }
+    var lineId by rememberSaveable(initial) { mutableStateOf(initial.lineId) }
+    var directionId by rememberSaveable(initial) { mutableStateOf(initial.directionId) }
     val selected = choices.firstOrNull { it.line.lineId == lineId }
     val directions = remember(selected) { selected?.let { ArrivalEstimator(it.line).boardingDirections(it.stationId) }.orEmpty() }
-    val draft = initial.copy(lineId = lineId, directionId = directionId)
+    var tag by rememberSaveable(initial) { mutableStateOf(initial.tag) }
+    var destinationKey by rememberSaveable(initial) { mutableStateOf(initial.destinationKey) }
+    var preferredExit by rememberSaveable(initial) { mutableStateOf(initial.preferredExit) }
+    var note by rememberSaveable(initial) { mutableStateOf(initial.note) }
+    var pickingDestination by rememberSaveable { mutableStateOf(false) }
+    val draft = initial.copy(lineId = lineId, directionId = directionId, tag = tag,
+        destinationKey = destinationKey, preferredExit = preferredExit, note = note)
+    val destinations = remember(models, lineId, initial.stationName) {
+        SubscriptionPreferences.destinations(draft, models)
+    }
+    val error = SubscriptionPreferences.error(draft, models)
+    if (pickingDestination) {
+        StationPickerDialog("常用目的地", destinations, null,
+            onSelect = { destinationKey = it.key; pickingDestination = false },
+            onDismiss = { pickingDestination = false })
+        return
+    }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("收藏 · ${initial.stationName}") },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("标签")
+                ChoiceMenu(tag.ifEmpty { "不设标签" },
+                    listOf(null to "不设标签") + SubscriptionPreferences.tags.map { it to it }) { tag = it.orEmpty() }
                 Text("通勤线路")
                 ChoiceMenu(
                     choices.firstOrNull { it.line.lineId == lineId }?.line?.lineName
@@ -128,12 +170,31 @@ fun SubscriptionDialog(
                         listOf(null to "全部方向") + directions.map { it.key to it.value }
                     ) { directionId = it }
                 }
-                Text("每站保存一组通勤偏好，也可选择全部线路或全部方向。收藏后可在主页随时查看。")
+                HorizontalDivider()
+                Text("常用目的地")
+                OutlinedButton(enabled = destinations.isNotEmpty(), onClick = { pickingDestination = true }) {
+                    Text(destinations.firstOrNull { it.key == destinationKey }?.stationName
+                        ?: if (destinationKey == null) "选择目的地车站" else "目的地已失效，重新选择")
+                }
+                if (destinationKey != null) TextButton(onClick = { destinationKey = null }) { Text("清除目的地") }
+                Text("从本站一键规划到目的地；此设置不限制规划时使用的线路和方向。",
+                    style = MaterialTheme.typography.bodySmall)
+                OutlinedTextField(value = preferredExit, onValueChange = { preferredExit = it },
+                    modifier = Modifier.fillMaxWidth(), label = { Text("常走出口（选填）") },
+                    supportingText = { Text("${preferredExit.length}/${SubscriptionPreferences.MAX_EXIT}") },
+                    isError = preferredExit.length > SubscriptionPreferences.MAX_EXIT)
+                OutlinedTextField(value = note, onValueChange = { note = it },
+                    modifier = Modifier.fillMaxWidth(), label = { Text("收藏备注（选填）") }, minLines = 2,
+                    supportingText = { Text("${note.length}/${SubscriptionPreferences.MAX_NOTE}") },
+                    isError = note.length > SubscriptionPreferences.MAX_NOTE)
+                Text("信息仅保存在本机。出口为个人记录，不代表实时开放情况。",
+                    style = MaterialTheme.typography.bodySmall)
+                error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 if (!StationSubscriptions.valid(draft, models)) Text("当前站点、线路或方向不可用，请重新选择。")
             }
         },
         confirmButton = {
-            TextButton(enabled = StationSubscriptions.valid(draft, models), onClick = { onSave(draft) }) {
+            TextButton(enabled = StationSubscriptions.valid(draft, models) && error == null, onClick = { onSave(draft) }) {
                 Text("保存收藏")
             }
         },

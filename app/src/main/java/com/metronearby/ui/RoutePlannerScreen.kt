@@ -31,6 +31,7 @@ fun RoutePlannerScreen(
     lines: List<MetroLine>,
     initialOriginName: String?,
     initialOriginKey: String? = null,
+    initialDestinationKey: String? = null,
     journeys: List<SavedJourney>,
     onJourneysChange: (List<SavedJourney>) -> Unit,
     bottomBar: @Composable () -> Unit = {},
@@ -40,7 +41,7 @@ fun RoutePlannerScreen(
     var originKey by rememberSaveable { mutableStateOf(initialOriginKey ?: initialOriginName?.let {
         OfflineRoutePlanner.findChoice(choices, it)?.key
     }) }
-    var destinationKey by rememberSaveable { mutableStateOf<String?>(null) }
+    var destinationKey by rememberSaveable { mutableStateOf(initialDestinationKey) }
     var preferenceName by rememberSaveable { mutableStateOf(OfflineRoutePlanner.Preference.FEWER_TRANSFERS.name) }
     val preference = OfflineRoutePlanner.Preference.valueOf(preferenceName)
     val origin = choices.firstOrNull { it.key == originKey }
@@ -283,7 +284,7 @@ private fun StationChoiceRow(
 }
 
 @Composable
-private fun StationPickerDialog(
+internal fun StationPickerDialog(
     title: String,
     choices: List<OfflineRoutePlanner.StationChoice>,
     excludedKey: String?,
