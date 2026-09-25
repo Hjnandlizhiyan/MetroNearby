@@ -315,9 +315,11 @@ fun MetroNearbyScreen(
     var showRoutePlanner by rememberSaveable { mutableStateOf(false) }
     var showRadar by rememberSaveable { mutableStateOf(false) }
     var showFutureRoadmap by rememberSaveable { mutableStateOf(false) }
+    var facilityStationKey by rememberSaveable { mutableStateOf<String?>(null) }
     var routeOriginKey by rememberSaveable { mutableStateOf<String?>(null) }
     val onDockNavigate: (DockDestination) -> Unit = { destination ->
         editingSubscription = null
+        facilityStationKey = null
         showSettings = false
         showFutureRoadmap = false
         showSubscriptions = destination == DockDestination.SUBSCRIPTIONS
@@ -327,10 +329,20 @@ fun MetroNearbyScreen(
         routeOriginKey = null
         focusManager.clearFocus()
     }
-    BackHandler(enabled = showSettings || showFutureRoadmap || showNetworkMap ||
+    BackHandler(enabled = facilityStationKey != null || showSettings || showFutureRoadmap || showNetworkMap ||
         showRoutePlanner || showRadar || showSubscriptions) {
-        if (showFutureRoadmap) { showFutureRoadmap = false; showSettings = true }
+        if (facilityStationKey != null) facilityStationKey = null
+        else if (showFutureRoadmap) { showFutureRoadmap = false; showSettings = true }
         else onDockNavigate(DockDestination.HOME)
+    }
+    facilityStationKey?.let { key ->
+        StationDetailsScreen(
+            stationKey = key,
+            lines = loadedLines.map { it.line },
+            onBack = { facilityStationKey = null },
+            bottomBar = { MetroBottomDock(null, onDockNavigate) }
+        )
+        return
     }
     if (showRadar) {
         StationRadarScreen(
@@ -464,6 +476,7 @@ fun MetroNearbyScreen(
                 showSubscriptions && dataError != null -> MessageView(dataError!!, "重试", { reloadKey += 1 })
                 showSubscriptions && loadedLines.isEmpty() -> LoadingView()
                 showSubscriptions -> SubscriptionBoard(subscriptions, loadedLines,
+                    onDetails = { facilityStationKey = it },
                     onAdd = { showSubscriptions = false; query = "" },
                     onOpen = { pickedStationName = it; query = ""; showSubscriptions = false },
                     onEdit = { editingSubscription = it },
@@ -530,7 +543,13 @@ fun MetroNearbyScreen(
                                     pickedStationName = stationName
                                     query = ""
                                 },
-                                onPlanRoute = { showRoutePlanner = true }
+                                onPlanRoute = { showRoutePlanner = true },
+                                onStationDetails = {
+                                    current.stationOnLines.firstOrNull()?.let {
+                                        facilityStationKey = com.metronearby.domain.OfflineRoutePlanner.stationKey(
+                                            it.line, current.stationName)
+                                    }
+                                }
                             )
                     }                }
             }
@@ -709,7 +728,8 @@ private fun StationOverviewBoard(
     onSubscribe: () -> Unit,
     onRelocate: () -> Unit,
     onStationSelect: (String) -> Unit,
-    onPlanRoute: () -> Unit
+    onPlanRoute: () -> Unit,
+    onStationDetails: () -> Unit
 ) {
     var nowEpochMillis by remember { mutableStateOf(System.currentTimeMillis()) }
     LaunchedEffect(Unit) {
@@ -735,6 +755,7 @@ private fun StationOverviewBoard(
                 Button(onClick = onPlanRoute) { Text("从本站规划路线") }
                 TextButton(onClick = onSubscribe) { Text(subscriptionLabel) }
             }
+            OutlinedStationDetailsButton(onStationDetails)
         }
         if (ready.nearbyStations.isNotEmpty() && !ready.isManuallySelected) {
             item {
@@ -986,3 +1007,10 @@ private fun formatDistance(meters: Double): String =
 internal const val DEFAULT_LINE_DATA_FILE = "line_beijing_1.json"
 private const val OVERRIDES_FILE = "user_overrides.json"
 private const val REFRESH_INTERVAL_MILLIS = 1_000L
+
+@Composable
+private fun OutlinedStationDetailsButton(onClick: () -> Unit) {
+    androidx.compose.material3.OutlinedButton(
+        onClick = onClick, modifier = Modifier.fillMaxWidth()
+    ) { Text("出入口与设施 · 我的车站备注") }
+}

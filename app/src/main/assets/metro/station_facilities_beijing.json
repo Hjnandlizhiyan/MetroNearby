@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "checkedOn": "2026-09-25",
+      "sourceUpdatedOn": "2024-12",
+      "evidenceNote": "据官网可检索页面核对；页面标注2024年12月更新。未现场核验开放状态，出口清单不完整。",
+      "stationKey": "beijing|复兴门",
+      "lineId": "bj1",
+      "sourceTitle": "北京地铁官网 · 复兴门（1号线）",
+      "sourceUrl": "https://bjsubway.com/station/xltcx/line1/2013-08-19/14.html",
+      "exits": [
+        {
+          "name": "B口",
+          "description": "售票设施、警务室所在区域（与C口同列）。"
+        },
+        {
+          "name": "C口",
+          "description": "官网列有坡道、升降平台和召援设备。"
+        }
+      ],
+      "facilities": [
+        {
+          "name": "卫生间",
+          "location": "官网标注：往四惠东方向站台前端。该方向名为原页面用语。"
+        },
+        {
+          "name": "无障碍卫生间",
+          "location": "往苹果园方向站台后端（沿用原页面方向名）。"
+        },
+        {
+          "name": "升降平台",
+          "location": "C口。"
+        },
+        {
+          "name": "坡道",
+          "location": "C口。"
+        },
+        {
+          "name": "AED",
+          "location": "东侧站厅楼梯附近。"
+        }
+      ]
+    },
+    {
+      "checkedOn": "2026-09-25",
+      "sourceUpdatedOn": "2024-12",
+      "evidenceNote": "据官网可检索页面核对；页面标注2024年12月更新。未现场核验开放状态，出口清单不完整。",
+      "stationKey": "beijing|复兴门",
+      "lineId": "bj2",
+      "sourceTitle": "北京地铁官网 · 复兴门（2号线）",
+      "sourceUrl": "https://bjsubway.com/station/xltcx/line2/2013-08-26/275.html",
+      "exits": [
+        {
+          "name": "A口",
+          "description": "官网列有售票设施、坡道及升降平台。"
+        },
+        {
+          "name": "C口",
+          "description": "官网列有升降平台。"
+        },
+        {
+          "name": "D口",
+          "description": "官网列有人工及自动售票设施。"
+        }
+      ],
+      "facilities": [
+        {
+          "name": "卫生间",
+          "location": "往长椿街方向站台前端。"
+        },
+        {
+          "name": "无障碍卫生间",
+          "location": "往长椿街方向站台前端。"
+        },
+        {
+          "name": "升降平台",
+          "location": "A口和C口。"
+        },
+        {
+          "name": "坡道",
+          "location": "A口。"
+        }
+      ]
+    },
+    {
+      "checkedOn": "2026-09-25",
+      "sourceUpdatedOn": "2024-12",
+      "evidenceNote": "据官网可检索页面核对；页面标注2024年12月更新。未现场核验开放状态，出口清单不完整。",
+      "stationKey": "beijing|积水潭",
+      "lineId": "bj2",
+      "sourceTitle": "北京地铁官网 · 积水潭（2号线）",
+      "sourceUrl": "https://bjsubway.com/station/xltcx/line2/2013-08-19/28.html",
+      "exits": [
+        {
+          "name": "A口",
+          "description": "西侧站厅一侧；该厅列有售票设施。"
+        },
+        {
+          "name": "B口",
+          "description": "东侧站厅一侧；官网列有出入口直梯和坡道。"
+        },
+        {
+          "name": "C口",
+          "description": "东侧站厅一侧；官网列有升降平台和坡道。"
+        },
+        {
+          "name": "D口",
+          "description": "西侧站厅一侧；该厅列有售票设施。"
+        }
+      ],
+      "facilities": [
+        {
+          "name": "卫生间",
+          "location": "往西直门方向站台后端。"
+        },
+        {
+          "name": "无障碍卫生间",
+          "location": "往西直门方向站台后端。"
+        },
+        {
+          "name": "出入口直梯",
+          "location": "B口。"
+        },
+        {
+          "name": "升降平台",
+          "location": "C口。"
+        },
+        {
+          "name": "坡道",
+          "location": "B口和C口。"
+        }
+      ]
+    },
+    {
+      "checkedOn": "2026-09-25",
+      "sourceUpdatedOn": "2024-12",
+      "evidenceNote": "据官网可检索页面核对；页面标注2024年12月更新。未现场核验开放状态，出口清单不完整。",
+      "stationKey": "beijing|阜成门",
+      "lineId": "bj2",
+      "sourceTitle": "北京地铁官网 · 阜成门（2号线）",
+      "sourceUrl": "https://www.bjsubway.com/station/xltcx/line2/2013-08-26/276.html",
+      "exits": [
+        {
+          "name": "A口、B口",
+          "description": "北侧站厅一侧；该厅列有售票设施及警务室。"
+        },
+        {
+          "name": "C口",
+          "description": "南侧站厅一侧；官网列有坡道及升降平台。"
+        },
+        {
+          "name": "D口",
+          "description": "南侧站厅一侧；官网列有AED。"
+        }
+      ],
+      "facilities": [
+        {
+          "name": "卫生间",
+          "location": "往车公庄方向站台后端。"
+        },
+        {
+          "name": "无障碍卫生间",
+          "location": "往车公庄方向站台后端。"
+        },
+        {
+          "name": "升降平台",
+          "location": "C口。"
+        },
+        {
+          "name": "坡道",
+          "location": "C口。"
+        },
+        {
+          "name": "AED",
+          "location": "D口区域。"
+        }
+      ]
+    }
+  ]
+}

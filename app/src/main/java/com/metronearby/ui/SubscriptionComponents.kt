@@ -28,6 +28,7 @@ import java.util.Calendar
 fun SubscriptionBoard(
     subscriptions: List<StationSubscription>, lines: List<MetroRepository.ResolvedLine>,
     onAdd: () -> Unit, onOpen: (String) -> Unit,
+    onDetails: (String) -> Unit,
     onEdit: (StationSubscription) -> Unit, onRemove: (StationSubscription) -> Unit
 ) {
     val models = remember(lines) { lines.map { it.line } }
@@ -56,6 +57,11 @@ fun SubscriptionBoard(
                         Text(subscription.stationName, style = MaterialTheme.typography.titleLarge)
                     }
                     Text(StationSubscriptions.description(subscription, models))
+                    selected?.let { line ->
+                        TextButton(onClick = { onDetails(OfflineRoutePlanner.stationKey(line, subscription.stationName)) }) {
+                            Text("出入口与设施")
+                        }
+                    }
                     Row {
                         TextButton(onClick = { onOpen(subscription.stationName) }) { Text("查看全站") }
                         TextButton(onClick = { onEdit(subscription) }) { Text("编辑") }

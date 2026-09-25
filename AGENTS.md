@@ -20,6 +20,7 @@ Android 离线地铁位置与换乘 App：打开即定位 → 展示最近及附
 
 | 能力 | 关键落点 |
 | --- | --- |
+| 出入口与设施、个人车站备注 | `domain/StationFacilityPolicy.kt`、`ui/StationDetailsScreen.kt`、`docs/station-facilities.md`；部分官方资料，按城市/线路隔离 |
 | 最近站 + 多个附近备选站（合并换乘站） | `location/NearbyStationCatalog.kt`、`ui/MetroNearbyScreen.kt` |
 | 离线路线规划（少换乘 / 少经过站、跨城市隔离） | `domain/OfflineRoutePlanner.kt`、`ui/RoutePlannerScreen.kt`、`docs/offline-route-planning.md` |
 | 应用内未来规划（优先 / 后续 / 探索） | `ui/FutureRoadmapScreen.kt`，入口在设置页“关于” |
@@ -92,7 +93,7 @@ Get-ChildItem $dir -Filter *.xml | ForEach-Object {
 }
 ```
 
-**测试基线：438 个用例全绿（0 failures / 0 errors，2026-09-25 第一阶段离线出行升级后）。** 任何改动后该数字只能升、不能有红。
+**测试基线：462 个用例全绿（0 failures / 0 errors，2026-09-25 出入口与设施基础版后）。** 任何改动后该数字只能升、不能有红。
 
 用户观测支持秒级现场记录、明确班次、历史加权学习与两小时衰减锚点融合，并用到站前冻结的预测评估误差；仅有旧版数据时兼容原分时段平均。规则和验证条件见 `docs/user-calibration.md`、`domain/CalibrationLearning.kt`。用户可选择“系统预计”或“用户校准”，后者无适用样本时明确回退到系统预计。不能用拟合误差宣称真实准确率。
 
@@ -253,7 +254,7 @@ App 内调试选站入口已按产品要求移除。界面验证优先使用主�
 
 ## 10. 交付前检查清单
 
-- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 438
+- [ ] `:app:testDebugUnitTest --rerun` 全绿，用例数 ≥ 462
 - [ ] `:app:compileDebugKotlin` / `:app:assembleDebug` 通过
 - [ ] 新增的可测逻辑在 `domain/` 且有对应单测
 - [ ] 未新增第三方依赖（或已向用户说明必要性）
